@@ -26,7 +26,11 @@ import './theme/freelancer-card.css'
 /* import page */
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
-import Home from './pages/HomePage';
+import HomePage from './pages/HomePage';
+import ProfilePage from './pages/ProfilePage';
+import SearchPage from './pages/SearchPage';
+
+//dummy
 import Dummy from './pages/Dummy';
 
 
@@ -35,13 +39,21 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonRouterOutlet>
 
-        {/*  */}
+        {/*dummy untuk database  */}
         <Route exact path="/DummyPage">
           <Dummy />
         </Route>
+        {/* SearchPage */}
+        <Route exact path="/SearchPage">
+          <SearchPage />
+        </Route>
+        {/* ProfilePage */}
+        <Route exact path="/ProfilePage">
+          <ProfilePage />
+        </Route>
         {/* HomePage */}
         <Route exact path="/HomePage">
-          <Home />
+          <HomePage />
         </Route>
         {/* register page */}
         <Route exact path="/RegisterPage">

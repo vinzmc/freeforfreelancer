@@ -1,9 +1,7 @@
-import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import firebase from '../firebase';
 import { useEffect, useState } from 'react';
-import './Home.css';
 
-import { brush, camera, codeWorking, megaphone, shirt, videocam } from "ionicons/icons";
 
 const Dummy: React.FC = () => {
     const [data, setData] = useState<any>([]);
