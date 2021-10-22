@@ -6,22 +6,6 @@ import './Home.css';
 import { brush, camera, codeWorking, megaphone, shirt, videocam } from "ionicons/icons";
 
 const HomePage: React.FC = () => {
-  const [data, setData] = useState<any>([]);
-
-  useEffect(() => {
-    firebase
-      .firestore()
-      .collection('dummy')
-      .onSnapshot((snapshot) => {
-        const newData = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data()
-        }))
-
-        setData(newData);
-      })
-  }, [])
-
   return (
     <IonPage>
       <IonHeader>
@@ -30,7 +14,6 @@ const HomePage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        {console.log(data)}
         <IonLabel>Select Categories</IonLabel>
         <IonGrid>
           <IonRow>

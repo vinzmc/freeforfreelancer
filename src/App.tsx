@@ -26,6 +26,7 @@ import './theme/form-styling.css';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import Home from './pages/HomePage';
+import Dummy from './pages/Dummy';
 
 
 const App: React.FC = () => (
@@ -33,14 +34,26 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonRouterOutlet>
 
-        <Route exact path="/">
-          <Redirect to='/LoginPage' />
+        {/*  */}
+        <Route exact path="/DummyPage">
+          <Dummy />
         </Route>
-        <Route exact path="/home">
+        {/* HomePage */}
+        <Route exact path="/HomePage">
           <Home />
         </Route>
-        <Route exact path="/RegisterPage" component={RegisterPage} />
-        <Route exact path="/LoginPage" component={LoginPage} />
+        {/* register page */}
+        <Route exact path="/RegisterPage">
+          <RegisterPage />
+        </Route>
+        {/* Login page */}
+        <Route exact path="/LoginPage">
+          <LoginPage />
+        </Route>
+        {/* root */}
+        <Route exact path="/">
+          <Redirect to="/LoginPage" />
+        </Route>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
