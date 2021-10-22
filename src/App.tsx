@@ -27,6 +27,7 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import Home from './pages/HomePage';
 import Dummy from './pages/Dummy';
+import SearchPage from './pages/SearchPage';
 
 
 const App: React.FC = () => (
@@ -49,6 +50,10 @@ const App: React.FC = () => (
         {/* Login page */}
         <Route exact path="/LoginPage">
           <LoginPage />
+        </Route>
+        {/* Search Page */}
+        <Route exact path="/SearchPage">
+          <SearchPage />
         </Route>
         {/* root */}
         <Route exact path="/">
