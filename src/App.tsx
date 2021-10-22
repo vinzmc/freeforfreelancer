@@ -34,6 +34,7 @@ import Tabs from './pages/Tabs';
 
 //dummy
 import Dummy from './pages/Dummy';
+import CategoryPage from './pages/CategoryPage';
 
 
 const App: React.FC = () => (
@@ -47,12 +48,16 @@ const App: React.FC = () => (
           <Dummy />
         </Route>
         {/* ProfilePage */}
-        <Route exact path="/ProfilePage">
+        <Route exact path="/ProfilePage/:id">
           <ProfilePage />
         </Route>
         {/* HomePage */}
         <Route exact path="/HomePage">
           <HomePage />
+        </Route>
+        {/* CategoryPage */}
+        <Route exact path="/CategoryPage">
+          <CategoryPage />
         </Route>
         {/* register page */}
         <Route exact path="/RegisterPage">

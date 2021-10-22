@@ -8,13 +8,15 @@ import ProfilePage from "./ProfilePage";
 
 
 const Tabs: React.FC = () => {
-    return(
+    return (
         <IonTabs>
             <IonRouterOutlet>
                 <Redirect exact path="/Tabs" to="/Tabs/Homepage" />
-                <Route exact path="/Tabs/Homepage" component={HomePage}/>
-                <Route exact path="/Tabs/Searchpage" component={SearchPage}/>
-                <Route exact path="/Tabs/Profilepage" component={ProfilePage}/>
+                <Route exact path="/Tabs/Homepage" component={HomePage} />
+                <Route exact path="/Tabs/Searchpage" component={SearchPage} />
+                <Route exact path="/Tabs/Profilepage/:id">
+                    <ProfilePage />
+                </Route>
             </IonRouterOutlet>
 
             <IonTabBar slot="bottom">
@@ -26,7 +28,7 @@ const Tabs: React.FC = () => {
                     <IonIcon icon={search}></IonIcon>
                     <IonLabel>Search</IonLabel>
                 </IonTabButton>
-                <IonTabButton tab="Profilepage" href="/Tabs/Profilepage">
+                <IonTabButton tab="Profilepage" href="/Tabs/Profilepage/1">
                     <IonIcon icon={personCircle}></IonIcon>
                     <IonLabel>Profile</IonLabel>
                 </IonTabButton>
