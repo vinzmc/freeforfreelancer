@@ -33,7 +33,7 @@ const CategoryPage: React.FC = (props) => {
         <IonPage>
             <IonContent>
                 <IonToolbar className="ion-margin-top" style={{ marginBottom: '1rem' }}>
-                    <IonTitle className="titleMiddle">Search</IonTitle>
+                    <IonTitle className="titleMiddle">{uriData.id}</IonTitle>
                 </IonToolbar>
                 <IonLabel className="label">{renderedData.length} Freelancers Found</IonLabel>
                 <IonList>
