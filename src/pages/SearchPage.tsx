@@ -34,6 +34,10 @@ const SearchPage: React.FC = () => {
         setRenderedData(newData);
     }
 
+    function cardOnClick(id: string) {
+        window.location.href = "/Tabs/Freelancer/".concat(id);
+    }
+
     return (
         <IonPage>
             <IonContent>
@@ -44,7 +48,7 @@ const SearchPage: React.FC = () => {
                 <IonLabel className="label">{renderedData.length} Freelancers Found</IonLabel>
                 <IonList>
                     {renderedData.map((doc: any) =>
-                        <div key={doc.id}>
+                        <div key={doc.id} onClick={() => cardOnClick(doc.id)}>
                             <Freelancer key={doc.id} name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} />
                         </div>
                     )
