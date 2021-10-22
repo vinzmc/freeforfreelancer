@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonCol, IonContent, IonGrid, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonSegment, IonSegmentButton, IonText } from '@ionic/react';
+import { IonAvatar, IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSegment, IonSegmentButton, IonText } from '@ionic/react';
 import firebase from '../firebase';
 import { useEffect, useState } from 'react';
 

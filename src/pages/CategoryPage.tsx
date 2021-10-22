@@ -1,10 +1,9 @@
-import { IonContent, IonLabel, IonList, IonPage, IonSearchbar, IonTitle, IonToolbar } from "@ionic/react";
+import { IonContent, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from "@ionic/react";
 import React, { useEffect, useState } from "react";
 import firebase from '../firebase';
 import Freelancer from "../components/Freelancer";
 import './SearchPage.css'
-import { dice } from "ionicons/icons";
-import { useLocation, useParams } from "react-router";
+import { useParams } from "react-router";
 
 const CategoryPage: React.FC = (props) => {
     const [searchText, setSearchText] = useState('');

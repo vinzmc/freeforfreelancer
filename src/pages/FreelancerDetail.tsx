@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonCol, IonContent, IonGrid, IonIcon, IonInput, IonItem, IonLabel, IonList, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTextarea } from '@ionic/react';
+import { IonAvatar, IonButton, IonCol, IonContent, IonGrid, IonIcon, IonInput, IonLabel, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTextarea } from '@ionic/react';
 import firebase from '../firebase';
 import { useEffect, useState } from 'react';
 
@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import './ProfilePage.css';
 import { star, starOutline, location } from 'ionicons/icons';
 import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
 
 const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
     return (
