@@ -1,0 +1,25 @@
+.profile-header-background {
+    width: 100%;
+    height: 100px;
+    background-color: blue;
+}
+
+.profile-header-content {
+    width: 100%;
+    height: 100px;
+    background-color: grey;
+}
+
+.profile-avatar {
+    border: solid white 2px;
+    position: absolute;
+    top: -20px;
+}
+
+.profile-reputasi{
+    white-space: nowrap;
+}
+
+.bintang-review{
+    margin-bottom: 5px;
+}
