@@ -17,7 +17,7 @@ const LoginPage: React.FC = () => {
                         <p className="form-name">Password</p>
                         <IonInput placeholder="Password..." className="form-input" type="password"></IonInput>
 
-                        <p className="formbtn-link">Don't have an account? <Link to="/RegisterPage  " className="formbtn-link-orange">Sign Up</Link></p>
+                        <p className="formbtn-link">Don't have an account? <Link to="/RegisterPage" className="formbtn-link-orange">Sign Up</Link></p>
                     </div>
                 </div>
 

@@ -32,8 +32,7 @@ const RegisterPage: React.FC = () => {
                         <p className="formbtn-link">Already have an account <Link to="/LoginPage" className="formbtn-link-orange">Sign In</Link></p>
                     </div>
                 </div>
-
-                <IonButton className="ion-padding ion-float-right form-button">Create Account</IonButton>
+                <IonButton className="ion-padding ion-float-right form-button">Create</IonButton>
             </IonContent>
         </IonPage>
     )
