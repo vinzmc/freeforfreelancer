@@ -26,7 +26,7 @@ const HomePage: React.FC = () => {
   }, [])
 
   function cardOnClick(id: string) {
-    window.location.href = "/Profilepage/".concat(id);
+    window.location.href = "/Tabs/Freelancer/".concat(id);
   }
 
   return (
