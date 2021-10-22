@@ -68,10 +68,16 @@ const HomePage: React.FC = () => {
         <div className="categories">
           <h2>Select Categories</h2>
           <div className="categories-flex">
-            {arrCategory.map((doc, i) =>
-              <a onClick={() => categoryOnClick(doc)} className="category" key={i}>
+            {[...Array(3)].map((_, i) =>
+              <a onClick={() => categoryOnClick(arrCategory[i])} className="category" key={i}>
                 <IonIcon icon={arrIcon[i]} className="category-icon" />
-                <p>{doc}</p>
+                <p>{arrCategory[i]}</p>
+              </a>
+            )}
+            {[...Array(3)].map((_, i) =>
+              <a onClick={() => categoryOnClick(arrCategory[i+3])} className="category" key={i}>
+                <IonIcon icon={arrIcon[i+3]} className="category-icon" />
+                <p>{arrCategory[i+3]}</p>
               </a>
             )}
           </div>
