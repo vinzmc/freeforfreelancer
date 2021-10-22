@@ -5,13 +5,10 @@ import { cameraOutline, codeSlashOutline, colorPaletteOutline, megaphoneOutline,
 
 import './HomePage.css'
 import { useEffect, useState } from 'react';
-import { State } from 'ionicons/dist/types/stencil-public-runtime';
 import { Link } from 'react-router-dom';
-import { Redirect, useHistory } from 'react-router';
 
 const HomePage: React.FC = () => {
   const [data, setData] = useState<any>([]);
-  let history = useHistory();
 
   useEffect(() => {
     firebase
@@ -31,7 +28,27 @@ const HomePage: React.FC = () => {
     window.location.href = "/Profilepage/".concat(id);
   }
 
-  const design = "design";
+  function categoryOnClick(id: string) {
+    window.location.href = "/CategoryPage/".concat(id);
+  }
+
+  const arrCategory = [
+    'Design',
+    'Programming',
+    'Marketing',
+    'Videography',
+    'Photography',
+    'T-shit Design'
+  ]
+
+  const arrIcon = [
+    colorPaletteOutline,
+    codeSlashOutline,
+    megaphoneOutline,
+    videocamOffOutline,
+    cameraOutline,
+    shirtOutline
+  ]
 
   return (
     <IonPage>
@@ -45,42 +62,12 @@ const HomePage: React.FC = () => {
         <div className="categories">
           <h2>Select Categories</h2>
           <div className="categories-flex">
-            <Link className="category" to={{ 
-              pathname: "/CategoryPage"}}>
-              <IonIcon icon={colorPaletteOutline} className="category-icon" />
-              <p>Design</p>
-            </Link>
-            <Link className="category" to={{ 
-              pathname: "/CategoryPage"}}>
-              <IonIcon icon={codeSlashOutline} className="category-icon" />
-              <p>Programming</p>
-            </Link>
-            <Link className="category" to={{ 
-              pathname: "/CategoryPage",
-              state: 'marketing'}}>
-              <IonIcon icon={megaphoneOutline} className="category-icon" />
-              <p>Marketing</p>
-            </Link>
-          </div>
-          <div className="categories-flex">
-            <Link className="category" to={{ 
-              pathname: "/CategoryPage",
-              state: 'editing'}}>
-              <IonIcon icon={videocamOffOutline} className="category-icon" />
-              <p>Video Edit</p>
-            </Link>
-            <Link className="category" to={{ 
-              pathname: "/CategoryPage",
-              state: 'photo'}}>
-              <IonIcon icon={cameraOutline} className="category-icon" />
-              <p>Photography</p>
-            </Link>
-            <Link className="category" to={{ 
-              pathname: "/CategoryPage",
-              state: 'tshirt'}}>
-              <IonIcon icon={shirtOutline} className="category-icon" />
-              <p>T-shirt Design</p>
-            </Link>
+            {arrCategory.map((doc, i) =>
+              <a onClick={() => categoryOnClick(doc)} className="category" key={i}>
+                <IonIcon icon={arrIcon[i]} className="category-icon" />
+                <p>{doc}</p>
+              </a>
+            )}
           </div>
         </div>
 

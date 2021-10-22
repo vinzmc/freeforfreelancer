@@ -4,12 +4,13 @@ import firebase from '../firebase';
 import Freelancer from "../components/Freelancer";
 import './SearchPage.css'
 import { dice } from "ionicons/icons";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 
 const CategoryPage: React.FC = (props) => {
     const [searchText, setSearchText] = useState('');
     const [data, setData] = useState<any>([]);
     const [renderedData, setRenderedData] = useState<any>([]);
+    const uriData = useParams<any>();
     const emp = useLocation();
     console.log(emp);
 
