@@ -11,14 +11,12 @@ const CategoryPage: React.FC = (props) => {
     const [data, setData] = useState<any>([]);
     const [renderedData, setRenderedData] = useState<any>([]);
     const uriData = useParams<any>();
-    const emp = useLocation();
-    console.log(emp);
 
     useEffect(() => {
         firebase
             .firestore()
             .collection('freelancer')
-            .where('kategori', '==', '')
+            .where('kategori', '==', uriData.id)
             .onSnapshot((snapshot) => {
                 const newData = snapshot.docs.map((doc) => ({
                     id: doc.id,

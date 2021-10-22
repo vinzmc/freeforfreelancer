@@ -35,16 +35,22 @@ const HomePage: React.FC = () => {
   const arrCategory = [
     'Design',
     'Programming',
-    'Marketing',
+    'Marketing'
+  ]
+
+  const arrCategory2 = [
     'Videography',
     'Photography',
-    'T-shit Design'
+    'T-shirt Design'
   ]
 
   const arrIcon = [
     colorPaletteOutline,
     codeSlashOutline,
-    megaphoneOutline,
+    megaphoneOutline
+  ]
+
+  const arrIcon2 = [
     videocamOffOutline,
     cameraOutline,
     shirtOutline
@@ -65,6 +71,14 @@ const HomePage: React.FC = () => {
             {arrCategory.map((doc, i) =>
               <a onClick={() => categoryOnClick(doc)} className="category" key={i}>
                 <IonIcon icon={arrIcon[i]} className="category-icon" />
+                <p>{doc}</p>
+              </a>
+            )}
+          </div>
+          <div className="categories-flex">
+            {arrCategory2.map((doc, i) =>
+              <a onClick={() => categoryOnClick(doc)} className="category" key={i}>
+                <IonIcon icon={arrIcon2[i]} className="category-icon" />
                 <p>{doc}</p>
               </a>
             )}
