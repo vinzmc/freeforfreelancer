@@ -35,7 +35,7 @@ const SearchPage: React.FC = () => {
                 <IonList>
                     {data.map((doc: any) =>
                         <div key={doc.id} >
-                            <Freelancer name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} />
+                            <Freelancer key={doc.id} name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} />
                         </div>
                         )
                     }
