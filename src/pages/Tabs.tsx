@@ -4,6 +4,8 @@ import { Redirect, Route } from "react-router";
 
 import HomePage from "./HomePage";
 import SearchPage from "./SearchPage";
+import ProfilePage from "./ProfilePage";
+
 
 const Tabs: React.FC = () => {
     return(
@@ -12,6 +14,7 @@ const Tabs: React.FC = () => {
                 <Redirect exact path="/Tabs" to="/Tabs/Homepage" />
                 <Route exact path="/Tabs/Homepage" component={HomePage}/>
                 <Route exact path="/Tabs/Searchpage" component={SearchPage}/>
+                <Route exact path="/Tabs/Profilepage" component={ProfilePage}/>
             </IonRouterOutlet>
 
             <IonTabBar slot="bottom">
