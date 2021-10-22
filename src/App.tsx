@@ -30,6 +30,7 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
 import SearchPage from './pages/SearchPage';
+import Tabs from './pages/Tabs';
 
 //dummy
 import Dummy from './pages/Dummy';
@@ -39,6 +40,7 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
+        <Tabs/>
 
         {/*dummy untuk database  */}
         <Route exact path="/DummyPage">

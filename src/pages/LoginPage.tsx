@@ -21,7 +21,7 @@ const LoginPage: React.FC = () => {
                     </div>
                 </div>
 
-                <IonButton routerLink="/tabs" className="ion-padding ion-float-right form-button">Sign In</IonButton>
+                <IonButton routerLink="/Tabs" className="ion-padding ion-float-right form-button">Sign In</IonButton>
             </IonContent>
         </IonPage>
     )
