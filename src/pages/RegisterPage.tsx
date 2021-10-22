@@ -3,12 +3,16 @@ import { Link } from "react-router-dom"
 
 
 const RegisterPage: React.FC = () => {
-    return(
+    function buttonOnClick() {
+        window.location.href = "/LoginPage";
+    }
+    
+    return (
         <IonPage>
             <IonContent>
                 <h2 className="title">Sign Up</h2>
 
-                <IonRadioGroup className="radio-group">
+                <IonRadioGroup className="radio-group" value="client">
                     <IonItem lines="none" className="radio-item">
                         <p className="radio-label">I'm a client</p>
                         <IonRadio slot="start" value="client" className="radio-button" />
@@ -32,7 +36,7 @@ const RegisterPage: React.FC = () => {
                         <p className="formbtn-link">Already have an account <Link to="/LoginPage" className="formbtn-link-orange">Sign In</Link></p>
                     </div>
                 </div>
-                <IonButton className="ion-padding ion-float-right form-button">Create</IonButton>
+                <IonButton className="ion-padding ion-float-right form-button" onClick={() => buttonOnClick()}>Create</IonButton>
             </IonContent>
         </IonPage>
     )
