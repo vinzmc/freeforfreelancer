@@ -86,7 +86,7 @@ const HomePage: React.FC = () => {
 
         <div className="featured-freelancer">
           <h2 className="featured-freelancer-title">Featured Freelancers</h2>
-          {data.map((doc: any) =>
+          {data.slice(0,4).map((doc: any) =>
             <div onClick={() => cardOnClick(doc.id)} key={doc.id}>
               <Freelancer name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} />
             </div>
