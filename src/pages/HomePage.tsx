@@ -5,7 +5,6 @@ import { cameraOutline, codeSlashOutline, colorPaletteOutline, megaphoneOutline,
 
 import './HomePage.css'
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 const HomePage: React.FC = () => {
   const [data, setData] = useState<any>([]);
@@ -91,8 +90,7 @@ const HomePage: React.FC = () => {
             <div onClick={() => cardOnClick(doc.id)} key={doc.id}>
               <Freelancer name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} />
             </div>
-          )
-          }
+          )}
         </div>
       </IonContent>
     </IonPage>

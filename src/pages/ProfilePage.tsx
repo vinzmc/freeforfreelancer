@@ -187,12 +187,12 @@ const Profile: React.FC = () => {
                                     <p className="ion-no-margin profile-desc">{data.job}</p>
                                     <div className="profile-reputasi">
                                         {data.length !== 0 &&
-                                            [...Array(data.star)].map((x, i) =>
+                                            [...Array(data.star)].map((_, i) =>
                                                 <IonIcon icon={star} key={i} />
                                             )
                                         }
                                         {data.length !== 0 &&
-                                            [...Array(5 - data.star)].map((x, i) =>
+                                            [...Array(5 - data.star)].map((_, i) =>
                                                 <IonIcon icon={starOutline} key={5 - i} />
                                             )
                                         }
