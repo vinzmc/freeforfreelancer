@@ -1,15 +1,30 @@
 import { IonContent, IonIcon, IonPage } from '@ionic/react';
-
+import firebase from '../firebase';
 import Freelancer from '../components/Freelancer';
 import { cameraOutline, codeSlashOutline, colorPaletteOutline, megaphoneOutline, notificationsOutline, shirtOutline, videocamOffOutline } from 'ionicons/icons';
 
 import './HomePage.css'
+import { useEffect, useState } from 'react';
 
 const HomePage: React.FC = () => {
+  const [data, setData] = useState<any>([]);
+
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection('freelancer')
+      .onSnapshot((snapshot) => {
+        const newData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+
+        setData(newData);
+      })
+  }, [])
+
   return (
     <IonPage>
-
-
       <IonContent className="ion-padding">
 
         <div className="navbar">
@@ -51,18 +66,11 @@ const HomePage: React.FC = () => {
 
         <div className="featured-freelancer">
           <h2 className="featured-freelancer-title">Featured Freelancers</h2>
-
-          <Freelancer name={'Sergio Nathaniel'} job={'UX Designer'} star={4} review={12} price={'1.2M'} pic={'https://i.ibb.co/kKvtcqR/pexels-stefan-stefancik-91227.jpg'} />
-
-          <Freelancer name={'Andy Bernard'} job={'Android Developer'} star={5} review={8} price={'1.5M'} pic={'https://i.ibb.co/5xjmLTz/pexels-italo-melo-2379005.jpg'} />
-
-          <Freelancer name={'Kaleb Juliu'} job={'User Interface Designer'} star={4} review={9} price={'1.0M'} pic={'https://i.ibb.co/Dzh7Wrf/KJ.png'} />
-
-          <Freelancer name={'John Thor'} job={'Wordpress Developer'} star={4} review={18} price={'900K'} pic={'https://i.ibb.co/ZXyp28S/pexels-simon-robben-614810.jpg'} />
-
+          {data.map((doc: any) =>
+            <Freelancer name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} key={doc.id}/>
+          )
+          }
         </div>
-
-
       </IonContent>
     </IonPage>
   );
