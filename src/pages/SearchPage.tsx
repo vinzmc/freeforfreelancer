@@ -24,10 +24,7 @@ const SearchPage: React.FC = () => {
     return (
         <IonPage>
             <IonToolbar className="ion-margin-top">
-                <IonTitle className="titleMiddle">Search</IonTitle>
-                <IonButtons slot="start">
-                    <IonBackButton defaultHref="/HomePage" />
-                </IonButtons>
+                <IonTitle className="titleMiddle">Search</IonTitle>      
             </IonToolbar>
             <IonContent>
                 <IonSearchbar style={{marginBottom: '2rem'}} placeholder="Designer"></IonSearchbar>
