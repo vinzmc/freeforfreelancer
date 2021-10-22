@@ -1,0 +1,11 @@
+.cardSearch{
+    width: max-content;
+    max-height: max-content;
+}
+
+.label{
+    font-size: 12px;
+    color: var(--theme-gray);
+    font-weight: 500;
+    margin-left: 15px;
+}
