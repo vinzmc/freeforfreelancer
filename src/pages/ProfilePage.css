@@ -98,6 +98,10 @@
     color: var(--theme-orange);
     margin: 0;
     line-height: 15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 110px;
 }
 .order-progress{
     font-size: 12px;
