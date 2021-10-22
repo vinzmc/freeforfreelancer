@@ -5,11 +5,30 @@ import { useEffect, useState } from 'react';
 
 const Dummy: React.FC = () => {
     const [data, setData] = useState<any>([]);
-
+    /*
+    untuk collection -> document
     useEffect(() => {
         firebase
             .firestore()
             .collection('catalog')
+            .onSnapshot((snapshot) => {
+                const newData = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data()
+                }))
+ 
+                setData(newData);
+            })
+    }, [])
+    */
+
+    //untuk collection -> document -> collection
+    useEffect(() => {
+        firebase
+            .firestore()
+            .collection('freelancer')
+            .doc('1')
+            .collection('order')
             .onSnapshot((snapshot) => {
                 const newData = snapshot.docs.map((doc) => ({
                     id: doc.id,
