@@ -34,9 +34,9 @@ const SearchPage: React.FC = () => {
                 <IonLabel className="label">6 Freelancers Found</IonLabel>
                 <IonList>
                     {data.map((doc: any) =>
-                        <IonItem key={doc.id} href='/ProfilePage'>
+                        <div key={doc.id} >
                             <Freelancer name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} />
-                        </IonItem>
+                        </div>
                         )
                     }
                 </IonList>
