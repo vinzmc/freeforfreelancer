@@ -107,6 +107,11 @@ const FreelancerDetail: React.FC = () => {
     const uriData = useParams<any>();
     const [showModal, setShowModal] = useState(false);
 
+    const payment = (id:string) =>{
+        window.location.href = "/Payment/Freelancer/".concat(id);
+        setShowModal(false);
+    }
+
     useEffect(() => {
         firebase
             .firestore()
@@ -151,7 +156,7 @@ const FreelancerDetail: React.FC = () => {
                             <IonTextarea placeholder="Project description" className="form-input" rows={6} style={{ color: "gray" }}></IonTextarea>
                         </div>
                         <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
-                            <IonButton onClick={() => setShowModal(false)} className="modal-btn" style={{ marginRight: "1rem" }}>Proceed</IonButton>
+                            <IonButton onClick={() => payment( uriData.id )} className="modal-btn" style={{ marginRight: "1rem" }}>Proceed</IonButton>
                             <IonButton onClick={() => setShowModal(false)} className="modal-btn">Cancel</IonButton>
                         </div>
 
