@@ -33,7 +33,6 @@ import SearchPage from './pages/SearchPage';
 
 //dummy
 import Dummy from './pages/Dummy';
-import SearchPage from './pages/SearchPage';
 
 
 const App: React.FC = () => (
@@ -44,10 +43,6 @@ const App: React.FC = () => (
         {/*dummy untuk database  */}
         <Route exact path="/DummyPage">
           <Dummy />
-        </Route>
-        {/* SearchPage */}
-        <Route exact path="/SearchPage">
-          <SearchPage />
         </Route>
         {/* ProfilePage */}
         <Route exact path="/ProfilePage">
