@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonCol, IonContent, IonGrid, IonIcon, IonInput, IonItem, IonLabel, IonList, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonText } from '@ionic/react';
+import { IonAvatar, IonButton, IonCol, IonContent, IonGrid, IonIcon, IonInput, IonItem, IonLabel, IonList, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTextarea } from '@ionic/react';
 import firebase from '../firebase';
 import { useEffect, useState } from 'react';
 
@@ -141,20 +141,23 @@ const FreelancerDetail: React.FC = () => {
     return (
         <IonPage>
             <IonContent fullscreen>
-                <IonModal isOpen={showModal} cssClass='my-custom-class'>
+                <IonModal isOpen={showModal} cssClass='modal-class'>
                     <div className="form-inputs">
                         <div className="ion-padding">
-
                             <p className="form-name">Subject</p>
-                            <IonInput placeholder="Lorem Ipsum DKK" className="form-input"></IonInput>
+                            <IonInput placeholder="Project subject" className="form-input" style={{ color: "gray" }}></IonInput>
 
                             <p className="form-name">Description</p>
-                            <IonInput placeholder="Lorem Ipsum dan kawan kawan" className="form-input"></IonInput>
+                            <IonTextarea placeholder="Project description" className="form-input" rows={6} style={{ color: "gray" }}></IonTextarea>
                         </div>
+                        <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
+                            <IonButton onClick={() => setShowModal(false)} className="modal-btn" style={{ marginRight: "1rem" }}>Proceed</IonButton>
+                            <IonButton onClick={() => setShowModal(false)} className="modal-btn">Cancel</IonButton>
+                        </div>
+
                     </div>
-                    
-                    <IonButton onClick={() => setShowModal(false)}>Proceed</IonButton>
-                    <IonButton onClick={() => setShowModal(false)}>Cancel</IonButton>
+
+
                 </IonModal>
                 <div className="profile-header-background">
                     {/* <img></img> */}
@@ -168,11 +171,21 @@ const FreelancerDetail: React.FC = () => {
                                     <img src={data.pic} />
                                 </IonAvatar>
                             </IonCol>
-                            <IonCol style={{ marginLeft: "1.8rem" }}>
+                            <IonCol style={{ marginLeft: "1.5rem" }}>
                                 <div>
-                                    <IonButton slot="end" size="small" color="primary" onClick={() => setShowModal(true)}>Hire</IonButton>
-                                    <h1 className="ion-no-margin profile-name">{data.name}</h1>
-                                    <p className="ion-no-margin profile-desc">{data.job}</p>
+                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                        <div>
+                                            <h1 className="ion-no-margin profile-name">{data.name}</h1>
+                                            <p className="ion-no-margin profile-desc">{data.job}</p>
+                                        </div>
+                                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column" }}>
+                                            <p className="ion-no-margin profile-desc">Rp. {data.price}M</p>
+                                            <IonButton slot="end" size="small" onClick={() => setShowModal(true)} className="hire-btn">Hire</IonButton>
+                                        </div>
+
+                                    </div>
+
+
                                     <div className="profile-reputasi">
                                         {data.length !== 0 &&
                                             [...Array(data.star)].map((x, i) =>
@@ -187,7 +200,7 @@ const FreelancerDetail: React.FC = () => {
                                         <IonText className="profile-rating"> {data.star}.0</IonText>
                                         <IonText className="profile-rating"> ({data.review} Review)</IonText>
                                     </div>
-                                    <p className="ion-no-margin profile-desc">Rp. {data.price}M</p>
+
                                 </div>
                             </IonCol>
                         </IonRow>
