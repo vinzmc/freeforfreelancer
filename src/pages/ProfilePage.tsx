@@ -154,7 +154,7 @@ const Profile: React.FC = () => {
                 </div>
 
                 {/* Segment Tab */}
-                <IonSegment onIonChange={e => setPage(e.detail.value!)}>
+                <IonSegment onIonChange={e => setPage(e.detail.value!)} value={page}>
                     <IonSegmentButton value="review">
                         <IonLabel>Review</IonLabel>
                     </IonSegmentButton>
