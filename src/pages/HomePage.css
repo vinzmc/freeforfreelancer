@@ -1,0 +1,62 @@
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.username{
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--theme-orange);
+}
+.username span{
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--theme-gray);
+}
+.notification{
+    font-size: 18px;
+    color: var(--theme-gray);
+}
+ion-tab-button{
+    --color-selected: var(--theme-orange)
+}
+
+
+.categories{
+    margin-top: 2.5rem;
+}
+.categories h2{
+    font-size: 12px;
+    color: var(--theme-gray);
+    font-weight: 500;
+}
+.categories-flex{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1.3rem;
+}
+.category{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.category p{
+    font-size: 10px;
+    color: var(--theme-gray);
+}
+.category-icon{
+    font-size: 26px;
+    color: var(--theme-orange);
+}
+
+
+.featured-freelancer{
+    margin-top: 2rem;
+}
+.featured-freelancer-title{
+    font-size: 12px;
+    color: var(--theme-gray);
+    font-weight: 500;
+}
+
+

@@ -1,6 +1,8 @@
 import { IonAvatar, IonIcon } from "@ionic/react"
 import { star } from "ionicons/icons"
 
+import './Freelancer.css'
+
 const Freelancer: React.FC<{ name: string, job: string, star: number, review: number, price: string, pic: string }> = props => {
     return (
         <div className="freelancer">
