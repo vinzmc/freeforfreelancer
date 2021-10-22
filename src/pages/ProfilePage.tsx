@@ -7,89 +7,101 @@ import './ProfilePage.css';
 import { star, starOutline, location } from 'ionicons/icons';
 import { useParams } from 'react-router';
 
-const ReviewSegment: React.FC = () => {
+const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
     return (
         // di loop
-        <div className="ion-padding">
-            <div>
-                {/* bintang */}
-                <div className="bintang-review">
-                    {[...Array(4)].map((x, i) =>
-                        <IonIcon icon={star} key={i} />
-                    )}
-                    {[...Array(1)].map((x, i) =>
-                        <IonIcon icon={starOutline} key={5 - i} />
-                    )}
-                    <IonText className="profile-rating"> 4.0</IonText>
-                </div>
-
-                {/* Review */}
-                <h3 className="ion-no-margin review-konteks">Review (Konteks)</h3>
-
-                {/* Reviewer */}
-                <h4 className="ion-no-margin review-name">Reviwer (nama)</h4>
-                {/* Review Desc */}
-                <p className="justify review-content" >Lorem ipsum kolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </div>
-        </div>
-    )
-}
-
-const OrderSegment: React.FC = () => {
-    return (
-        // di loop
-        <div className="ion-padding">
-            <div className="order-freelancer">
-
-                <div className="freelancer-pic">
-                    <IonAvatar className="freelancer-avatar"><img src="https://i.ibb.co/5xjmLTz/pexels-italo-melo-2379005.jpg" alt="" /></IonAvatar>
-                </div>
-
-                <div className="order-detail" style={{ margin: "4px 18px" }}>
-
-                    <div className="order-flex">
-                        <h2 className="order-number">Order #1AF578</h2>
-                        <h2 className="order-progress">In-Progress</h2>
+        <div>
+            {props.data.map((doc: any) =>
+                <div className="ion-padding">
+                    {/* bintang */}
+                    <div className="bintang-review">
+                        {[...Array(doc.star)].map((x, i) =>
+                            <IonIcon icon={star} key={i} />
+                        )}
+                        {[...Array(5 - doc.star)].map((x, i) =>
+                            <IonIcon icon={starOutline} key={5 - i} />
+                        )}
+                        <IonText className="profile-rating"> {doc.star}.0</IonText>
                     </div>
-                    <h2 className="order-freelancer-name">Maurice Marvin</h2>
-                    <h2 className="order-date">18 October 2021 - 10.00 WIB</h2>
-                </div>
 
-            </div>
+                    {/* Review */}
+                    <h3 className="ion-no-margin review-konteks">{doc.review}</h3>
+
+                    {/* Reviewer */}
+                    <h4 className="ion-no-margin review-name">{doc.nama}</h4>
+                    {/* Review Desc */}
+                    <p className="justify review-content" >{doc.reviewContent}</p>
+                </div>
+            )}
         </div>
     )
 }
 
-const ProjectSegment: React.FC = () => {
+const OrderSegment: React.FC<{ data: any[] }> = (props) => {
     return (
         // di loop
-        <div className="ion-padding">
-            <div>
-                {/* gambar project */}
-                <IonGrid>
-                    <IonRow>
-                        <IonCol>
-                            <img src="https://i.ibb.co/p1NgGbp/Screenshot-2021-10-22-171209.png" style={{ borderRadius: "5px" }} />
-                        </IonCol>
-                    </IonRow>
-                </IonGrid>
-                {/* Project Name */}
-                <h3 className="ion-no-margin project-context">Review (Konteks)</h3>
+        <div>
+            {props.data.map((doc: any) =>
+                <div className="ion-padding">
+                    <div className="order-freelancer">
 
-                {/* Tanggal */}
-                <h4 className="ion-no-margin project-date">21 Agustus 2021</h4>
+                        <div className="freelancer-pic">
+                            <IonAvatar className="freelancer-avatar"><img src={doc.profile} alt={doc.nama} /></IonAvatar>
+                        </div>
 
-                {/* bintang */}
-                <div style={{ marginTop: "10px" }}>
-                    {[...Array(4)].map((x, i) =>
-                        <IonIcon icon={star} key={i} />
-                    )}
-                    {[...Array(1)].map((x, i) =>
-                        <IonIcon icon={starOutline} key={5 - i} />
-                    )}
-                    <IonText style={{ fontSize: "13px" }}> 4.0</IonText>
+                        <div className="order-detail" style={{ margin: "4px 18px" }}>
+
+                            <div className="order-flex">
+                                <h2 className="order-number">#{doc.id}</h2>
+                                <h2 className="order-progress">{doc.status}</h2>
+                            </div>
+                            <h2 className="order-freelancer-name">{doc.nama}</h2>
+                            <h2 className="order-date">{doc.tanggalOrder.toDate().toLocaleDateString()}</h2>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
+            )}
+        </div>
+
+    )
+}
+
+const ProjectSegment: React.FC<{ data: any[] }> = (props) => {
+    return (
+        // di loop
+        <div>
+            {props.data.map((doc: any) =>
+                <div className="ion-padding">
+                    <div>
+                        {/* gambar project */}
+                        <IonGrid>
+                            <IonRow>
+                                <IonCol>
+                                    <img src={doc.project} style={{ borderRadius: "5px" }} />
+                                </IonCol>
+                            </IonRow>
+                        </IonGrid>
+                        {/* Project Name */}
+                        <h3 className="ion-no-margin project-context">{doc.review}</h3>
+
+                        {/* Tanggal */}
+                        <h4 className="ion-no-margin project-date">{doc.tanggalReview.toDate().toLocaleDateString()}</h4>
+
+                        {/* bintang */}
+
+                        <div style={{ marginTop: "10px" }}>
+                            {[...Array(doc.star)].map((x, i) =>
+                                <IonIcon icon={star} key={i} />
+                            )}
+                            {[...Array(5 - doc.star)].map((x, i) =>
+                                <IonIcon icon={starOutline} key={5 - i} />
+                            )}
+                            <IonText style={{ fontSize: "13px" }}> 4.0</IonText>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
@@ -119,6 +131,7 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any }> = (pr
 
 const Profile: React.FC = () => {
     const [data, setData] = useState<any>([]);
+    const [dataReviewer, setDataReviewer] = useState<any>([]);
     const [page, setPage] = useState("review");
     const uriData = useParams<any>();
 
@@ -136,6 +149,22 @@ const Profile: React.FC = () => {
                 setData(newData);
                 console.log(newData);
             })
+    }, [])
+
+    useEffect(() => {
+        firebase
+            .firestore()
+            .collection('freelancer')
+            .doc(uriData.id)
+            .collection('order')
+            .onSnapshot((snapshot) => {
+                const newReviewerData = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data()
+                }))
+
+                setDataReviewer(newReviewerData);
+            });
     }, [])
 
     return (
@@ -158,12 +187,12 @@ const Profile: React.FC = () => {
                                     <h1 className="ion-no-margin profile-name">{data.name}</h1>
                                     <p className="ion-no-margin profile-desc">{data.job}</p>
                                     <div className="profile-reputasi">
-                                        {data.length !== 0 && data.star !== 0 &&
+                                        {data.length !== 0 &&
                                             [...Array(data.star)].map((x, i) =>
                                                 <IonIcon icon={star} key={i} />
                                             )
                                         }
-                                        {data.length !== 0 && data.star !== 5 &&
+                                        {data.length !== 0 &&
                                             [...Array(5 - data.star)].map((x, i) =>
                                                 <IonIcon icon={starOutline} key={5 - i} />
                                             )
@@ -196,10 +225,11 @@ const Profile: React.FC = () => {
                 {/* Segment Page (pakai switch) */}
                 {
                     {
-                        'review': <ReviewSegment />,
-                        'project': <ProjectSegment />,
-                        'about': <AboutSegment bio={data.bio} location={data.location} portofolio={data.portofolio} />,
-                        'order': <OrderSegment />
+                        'review': <ReviewSegment data={dataReviewer} />,
+                        'order': <OrderSegment data={dataReviewer} />,
+                        'project': <ProjectSegment data={dataReviewer} />,
+                        'about': <AboutSegment bio={data.bio} location={data.location} portofolio={data.portofolio} />
+
 
                     }[page]
                 }
