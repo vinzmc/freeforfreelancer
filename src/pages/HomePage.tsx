@@ -61,7 +61,7 @@ const HomePage: React.FC = () => {
       <IonContent className="ion-padding">
 
         <div className="navbar">
-          <h2 className="username"><span>Hello,</span><br />Ricky Tandiono</h2>
+          <h2 className="username"><span>Hello,</span><br />Sergio Nathaniel</h2>
           <IonIcon icon={notificationsOutline} className="notification" />
         </div>
 
