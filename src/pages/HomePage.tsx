@@ -23,6 +23,10 @@ const HomePage: React.FC = () => {
       })
   }, [])
 
+  function cardOnClick(id: string) {
+    console.log(id);
+  }
+
   return (
     <IonPage>
       <IonContent className="ion-padding">
@@ -67,7 +71,9 @@ const HomePage: React.FC = () => {
         <div className="featured-freelancer">
           <h2 className="featured-freelancer-title">Featured Freelancers</h2>
           {data.map((doc: any) =>
-            <Freelancer name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} key={doc.id}/>
+            <div onClick={() => cardOnClick(doc.id)} key={doc.id}>
+              <Freelancer name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} />
+            </div>
           )
           }
         </div>
