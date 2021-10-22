@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "hackathon-3f",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

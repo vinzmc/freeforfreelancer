@@ -1,0 +1,7 @@
+{
+  "name": "hackathon-3f",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
