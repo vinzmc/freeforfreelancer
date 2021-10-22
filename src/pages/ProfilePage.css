@@ -108,3 +108,18 @@
 .profile-segment ion-segment-button{
     --color-checked: var(--theme-orange);
 }
+
+.modal-class{
+    --max-width: 90%;
+    --max-height: 55%;
+}
+.modal-btn{
+    --background: var(--theme-orange);
+    --padding-top: 1.1rem;
+    --padding-bottom: 1.1rem;
+    font-size: 12px;
+}
+.hire-btn{
+    --background: var(--theme-orange);
+    font-size: 12px;
+}
