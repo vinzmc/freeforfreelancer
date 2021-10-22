@@ -5,12 +5,9 @@ import { cameraOutline, codeSlashOutline, colorPaletteOutline, megaphoneOutline,
 
 import './HomePage.css'
 import { useEffect, useState } from 'react';
-<<<<<<< HEAD
 import { State } from 'ionicons/dist/types/stencil-public-runtime';
 import { Link } from 'react-router-dom';
-=======
 import { Redirect, useHistory } from 'react-router';
->>>>>>> ce151ef326c59414b316459a6c7343e54db49612
 
 const HomePage: React.FC = () => {
   const [data, setData] = useState<any>([]);
