@@ -12,7 +12,7 @@ const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
         // di loop
         <div>
             {props.data.map((doc: any) =>
-                <div className="ion-padding">
+                <div className="ion-padding" key={doc.id}>
                     {/* bintang */}
                     <div className="bintang-review">
                         {[...Array(doc.star)].map((x, i) =>
@@ -42,7 +42,7 @@ const OrderSegment: React.FC<{ data: any[] }> = (props) => {
         // di loop
         <div>
             {props.data.map((doc: any) =>
-                <div className="ion-padding">
+                <div className="ion-padding" key={doc.id}>
                     <div className="order-freelancer">
 
                         <div className="freelancer-pic">
@@ -72,7 +72,7 @@ const ProjectSegment: React.FC<{ data: any[] }> = (props) => {
         // di loop
         <div>
             {props.data.map((doc: any) =>
-                <div className="ion-padding">
+                <div className="ion-padding" key={doc.id}>
                     <div>
                         {/* gambar project */}
                         <IonGrid>
@@ -147,7 +147,6 @@ const Profile: React.FC = () => {
                 }
 
                 setData(newData);
-                console.log(newData);
             })
     }, [])
 
