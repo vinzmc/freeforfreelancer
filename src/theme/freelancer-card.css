@@ -1,0 +1,42 @@
+.freelancer{
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--theme-gray-border);
+    border-radius: 5px;
+    padding: 1rem 1rem;
+    margin: 0.5rem 0.8rem;
+}
+.freelancer-pic-price{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 2rem;
+}
+.freelancer-pic-price p{
+    font-size: 11px;
+    margin: 5px 0;
+}
+.freelancer-avatar{
+    width: 40px;
+    height: 40px;
+}
+.freelancer-job{
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--theme-black);
+    margin: 5px 0;
+    line-height: 15px;
+}
+.freelancer-job span{
+    font-size: 10px;
+    color: var(--theme-light-gray);
+}
+.review-flex{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+.review-qty{
+    font-size: 10px;
+    margin: 0;
+}
