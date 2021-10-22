@@ -5,6 +5,7 @@ import { Redirect, Route } from "react-router";
 import HomePage from "./HomePage";
 import SearchPage from "./SearchPage";
 import ProfilePage from "./ProfilePage";
+import FreelancerDetail from "./FreelancerDetail";
 
 
 const Tabs: React.FC = () => {
@@ -16,6 +17,9 @@ const Tabs: React.FC = () => {
                 <Route exact path="/Tabs/Searchpage" component={SearchPage} />
                 <Route exact path="/Tabs/Profilepage/:id">
                     <ProfilePage />
+                </Route>
+                <Route exact path="/Tabs/Freelancer/:id">
+                    <FreelancerDetail/>
                 </Route>
             </IonRouterOutlet>
 
