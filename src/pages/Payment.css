@@ -1,0 +1,27 @@
+.summary-box{
+    border: 1px solid var(--theme-gray-border);
+    padding: 0.3rem 1rem;
+}
+.summary-box-title{
+    text-align: center;
+    font-size: 14px;
+    color: var(--theme-black);
+}
+.summary-detail{
+    font-size: 13px;
+    color: var(--theme-black);
+    font-weight: 300;
+    margin: 0;
+}
+.summary-price{
+    font-size: 14px;
+    color: var(--theme-black);
+    font-weight: 500;
+    margin: 5px;
+}
+.summary-button{
+    --background: var(--theme-orange);
+    --padding-top: 1.1rem;
+    --padding-bottom: 1.1rem;
+    font-size: 12px;
+}
