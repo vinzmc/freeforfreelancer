@@ -46,7 +46,7 @@ const SearchPage: React.FC = () => {
                 </IonToolbar>
                 <IonSearchbar style={{ marginBottom: '1rem' }} placeholder="Designer, Programmer..." onIonChange={e => search(e.detail.value!)} value={searchText} showCancelButton="focus"></IonSearchbar>
                 <IonLabel className="label">{renderedData.length} Freelancers Found</IonLabel>
-                <IonList>
+                <IonList className="ion-padding">
                     {renderedData.map((doc: any) =>
                         <div key={doc.id} onClick={() => cardOnClick(doc.id)}>
                             <Freelancer key={doc.id} name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} />
