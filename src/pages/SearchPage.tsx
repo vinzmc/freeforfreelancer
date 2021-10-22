@@ -21,6 +21,7 @@ const SearchPage: React.FC = () => {
 
                 setData(newData);
                 setRenderedData(newData);
+                setSearchText('');
             })
     }, [])
 
