@@ -5,6 +5,8 @@ import { cameraOutline, codeSlashOutline, colorPaletteOutline, megaphoneOutline,
 
 import './HomePage.css'
 import { useEffect, useState } from 'react';
+import { State } from 'ionicons/dist/types/stencil-public-runtime';
+import { Link } from 'react-router-dom';
 import { Redirect, useHistory } from 'react-router';
 
 const HomePage: React.FC = () => {
@@ -29,6 +31,8 @@ const HomePage: React.FC = () => {
     window.location.href = "/Tabs/Freelancer/".concat(id);
   }
 
+  const design = "design";
+
   return (
     <IonPage>
       <IonContent className="ion-padding">
@@ -41,32 +45,42 @@ const HomePage: React.FC = () => {
         <div className="categories">
           <h2>Select Categories</h2>
           <div className="categories-flex">
-            <div className="category">
+            <Link className="category" to={{ 
+              pathname: "/CategoryPage"}}>
               <IonIcon icon={colorPaletteOutline} className="category-icon" />
               <p>Design</p>
-            </div>
-            <div className="category">
+            </Link>
+            <Link className="category" to={{ 
+              pathname: "/CategoryPage"}}>
               <IonIcon icon={codeSlashOutline} className="category-icon" />
               <p>Programming</p>
-            </div>
-            <div className="category">
+            </Link>
+            <Link className="category" to={{ 
+              pathname: "/CategoryPage",
+              state: 'marketing'}}>
               <IonIcon icon={megaphoneOutline} className="category-icon" />
               <p>Marketing</p>
-            </div>
+            </Link>
           </div>
           <div className="categories-flex">
-            <div className="category">
+            <Link className="category" to={{ 
+              pathname: "/CategoryPage",
+              state: 'editing'}}>
               <IonIcon icon={videocamOffOutline} className="category-icon" />
               <p>Video Edit</p>
-            </div>
-            <div className="category">
+            </Link>
+            <Link className="category" to={{ 
+              pathname: "/CategoryPage",
+              state: 'photo'}}>
               <IonIcon icon={cameraOutline} className="category-icon" />
               <p>Photography</p>
-            </div>
-            <div className="category">
+            </Link>
+            <Link className="category" to={{ 
+              pathname: "/CategoryPage",
+              state: 'tshirt'}}>
               <IonIcon icon={shirtOutline} className="category-icon" />
               <p>T-shirt Design</p>
-            </div>
+            </Link>
           </div>
         </div>
 

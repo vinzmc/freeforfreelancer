@@ -3,16 +3,21 @@ import React, { useEffect, useState } from "react";
 import firebase from '../firebase';
 import Freelancer from "../components/Freelancer";
 import './SearchPage.css'
+import { dice } from "ionicons/icons";
+import { useLocation } from "react-router";
 
-const SearchPage: React.FC = () => {
+const CategoryPage: React.FC = (props) => {
     const [searchText, setSearchText] = useState('');
     const [data, setData] = useState<any>([]);
     const [renderedData, setRenderedData] = useState<any>([]);
+    const emp = useLocation();
+    console.log(emp);
 
     useEffect(() => {
         firebase
             .firestore()
             .collection('freelancer')
+            .where('kategori', '==', '')
             .onSnapshot((snapshot) => {
                 const newData = snapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -25,22 +30,12 @@ const SearchPage: React.FC = () => {
             })
     }, [])
 
-    function search(searchText: string) {
-        setSearchText(searchText);
-        const newData = data.filter((value: any) => {
-            return value.name.toLowerCase().includes(searchText.toLowerCase()) ||
-                value.job.toLowerCase().includes(searchText.toLowerCase());
-        })
-        setRenderedData(newData);
-    }
-
     return (
         <IonPage>
             <IonContent>
-                <IonToolbar className="ion-margin-top">
+                <IonToolbar className="ion-margin-top" style={{ marginBottom: '1rem' }}>
                     <IonTitle className="titleMiddle">Search</IonTitle>
                 </IonToolbar>
-                <IonSearchbar style={{ marginBottom: '1rem' }} placeholder="Designer, Programmer..." onIonChange={e => search(e.detail.value!)} value={searchText} showCancelButton="focus"></IonSearchbar>
                 <IonLabel className="label">{renderedData.length} Freelancers Found</IonLabel>
                 <IonList>
                     {renderedData.map((doc: any) =>
@@ -55,4 +50,4 @@ const SearchPage: React.FC = () => {
     );
 }
 
-export default SearchPage;
+export default CategoryPage;
