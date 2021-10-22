@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 //theme
 import './ProfilePage.css';
 import { star, starOutline, location } from 'ionicons/icons';
+import { useParams } from 'react-router';
 
 const ReviewSegment: React.FC = () => {
     return (
@@ -52,7 +53,6 @@ const OrderSegment: React.FC = () => {
                     </div>
                     <h2 className="order-freelancer-name">Maurice Marvin</h2>
                     <h2 className="order-date">18 October 2021 - 10.00 WIB</h2>
-
                 </div>
 
             </div>
@@ -94,24 +94,24 @@ const ProjectSegment: React.FC = () => {
     )
 }
 
-const AboutSegment: React.FC = () => {
+const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any }> = (props) => {
     return (
         <div className="ion-padding">
             {/* Bio */}
             <div className="about-section bordered">
                 <h2>Bio</h2>
-                <p className="justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p className="justify">{props.bio}</p>
             </div>
             {/* Portofolio */}
             <div className="ion-margin-top about-section bordered">
                 <h2>Portofolio</h2>
                 {/* loop */}
-                <p>Link1</p>
+                <p>{props.portofolio}</p>
             </div>
             {/* Lokasi */}
             <div className="ion-margin-top about-section bordered">
-                <h2>Lokasi</h2>
-                <p><IonIcon icon={location} style={{ marginRight: "1rem" }} />Jakarta, Indonesia</p>
+                <h2>location</h2>
+                <p><IonIcon icon={location} style={{ marginRight: "1rem" }} />{props.location}</p>
             </div>
         </div>
     )
@@ -120,18 +120,21 @@ const AboutSegment: React.FC = () => {
 const Profile: React.FC = () => {
     const [data, setData] = useState<any>([]);
     const [page, setPage] = useState("review");
+    const uriData = useParams<any>();
 
     useEffect(() => {
         firebase
             .firestore()
-            .collection('catalog')
+            .collection('freelancer')
+            .doc(uriData.id)
             .onSnapshot((snapshot) => {
-                const newData = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data()
-                }))
+                const newData = {
+                    id: snapshot.id,
+                    ...snapshot.data()
+                }
 
                 setData(newData);
+                console.log(newData);
             })
     }, [])
 
@@ -147,22 +150,26 @@ const Profile: React.FC = () => {
                         <IonRow>
                             <IonCol size="2.2" className=" ion-padding">
                                 <IonAvatar className="profile-avatar">
-                                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+                                    <img src={data.pic} />
                                 </IonAvatar>
                             </IonCol>
                             <IonCol style={{ marginLeft: "1.8rem" }}>
                                 <div>
-                                    <h1 className="ion-no-margin profile-name">Nama</h1>
-                                    <p className="ion-no-margin profile-desc">Deskripsi user</p>
+                                    <h1 className="ion-no-margin profile-name">{data.name}</h1>
+                                    <p className="ion-no-margin profile-desc">{data.job}</p>
                                     <div className="profile-reputasi">
-                                        {[...Array(4)].map((x, i) =>
-                                            <IonIcon icon={star} key={i} />
-                                        )}
-                                        {[...Array(1)].map((x, i) =>
-                                            <IonIcon icon={starOutline} key={5 - i} />
-                                        )}
-                                        <IonText className="profile-rating"> 4.0</IonText>
-                                        <IonText className="profile-rating"> (12 Review)</IonText>
+                                        {data.length !== 0 && data.star !== 0 &&
+                                            [...Array(data.star)].map((x, i) =>
+                                                <IonIcon icon={star} key={i} />
+                                            )
+                                        }
+                                        {data.length !== 0 && data.star !== 5 &&
+                                            [...Array(5 - data.star)].map((x, i) =>
+                                                <IonIcon icon={starOutline} key={5 - i} />
+                                            )
+                                        }
+                                        <IonText className="profile-rating"> {data.star}.0</IonText>
+                                        <IonText className="profile-rating"> ({data.review} Review)</IonText>
                                     </div>
                                 </div>
                             </IonCol>
@@ -191,7 +198,7 @@ const Profile: React.FC = () => {
                     {
                         'review': <ReviewSegment />,
                         'project': <ProjectSegment />,
-                        'about': <AboutSegment />,
+                        'about': <AboutSegment bio={data.bio} location={data.location} portofolio={data.portofolio} />,
                         'order': <OrderSegment />
 
                     }[page]

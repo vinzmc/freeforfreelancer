@@ -5,9 +5,11 @@ import { cameraOutline, codeSlashOutline, colorPaletteOutline, megaphoneOutline,
 
 import './HomePage.css'
 import { useEffect, useState } from 'react';
+import { Redirect, useHistory } from 'react-router';
 
 const HomePage: React.FC = () => {
   const [data, setData] = useState<any>([]);
+  let history = useHistory();
 
   useEffect(() => {
     firebase
@@ -24,7 +26,7 @@ const HomePage: React.FC = () => {
   }, [])
 
   function cardOnClick(id: string) {
-    console.log(id);
+    window.location.href = "/Profilepage/".concat(id);
   }
 
   return (

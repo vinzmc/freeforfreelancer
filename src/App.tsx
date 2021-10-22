@@ -47,7 +47,7 @@ const App: React.FC = () => (
           <Dummy />
         </Route>
         {/* ProfilePage */}
-        <Route exact path="/ProfilePage">
+        <Route exact path="/ProfilePage/:id">
           <ProfilePage />
         </Route>
         {/* HomePage */}
