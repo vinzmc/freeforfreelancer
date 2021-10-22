@@ -9,6 +9,13 @@
     color: var(--theme-orange);
 }
 
+.titleMiddle{
+    padding: 1rem;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--theme-orange);
+}
 
 
 .radio-group{

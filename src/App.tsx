@@ -21,7 +21,8 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import './theme/form-styling.css';
-import './theme/freelancer-card.css'
+
+
 
 /* import page */
 import RegisterPage from './pages/RegisterPage';
@@ -32,6 +33,7 @@ import SearchPage from './pages/SearchPage';
 
 //dummy
 import Dummy from './pages/Dummy';
+import SearchPage from './pages/SearchPage';
 
 
 const App: React.FC = () => (
@@ -62,6 +64,10 @@ const App: React.FC = () => (
         {/* Login page */}
         <Route exact path="/LoginPage">
           <LoginPage />
+        </Route>
+        {/* Search Page */}
+        <Route exact path="/SearchPage">
+          <SearchPage />
         </Route>
         {/* root */}
         <Route exact path="/">
