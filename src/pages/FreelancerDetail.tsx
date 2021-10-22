@@ -141,7 +141,7 @@ const FreelancerDetail: React.FC = () => {
     return (
         <IonPage>
             <IonContent fullscreen>
-                <IonModal isOpen={showModal} cssClass='modal-class'>
+                <IonModal isOpen={showModal} cssClass='modal-class' backdropDismiss={false}>
                     <div className="form-inputs">
                         <div className="ion-padding">
                             <p className="form-name">Subject</p>
@@ -154,9 +154,7 @@ const FreelancerDetail: React.FC = () => {
                             <IonButton onClick={() => setShowModal(false)} className="modal-btn" style={{ marginRight: "1rem" }}>Proceed</IonButton>
                             <IonButton onClick={() => setShowModal(false)} className="modal-btn">Cancel</IonButton>
                         </div>
-
                     </div>
-
 
                 </IonModal>
                 <div className="profile-header-background">

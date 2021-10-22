@@ -31,6 +31,7 @@ import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
 import SearchPage from './pages/SearchPage';
 import Tabs from './pages/Tabs';
+import FreelancerDetail from "./pages/FreelancerDetail";
 
 //dummy
 import Dummy from './pages/Dummy';
@@ -50,6 +51,10 @@ const App: React.FC = () => (
         {/* ProfilePage */}
         <Route exact path="/ProfilePage/:id">
           <ProfilePage />
+        </Route>
+        {/* Freelancer Profile */}
+        <Route exact path="/Freelancer/:id">
+          <FreelancerDetail />
         </Route>
         {/* HomePage */}
         <Route exact path="/HomePage">

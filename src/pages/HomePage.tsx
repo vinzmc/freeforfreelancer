@@ -13,6 +13,7 @@ const HomePage: React.FC = () => {
     firebase
       .firestore()
       .collection('freelancer')
+      .where('name', '!=', 'Sergio Nathaniel')//temporary solution untuk auth
       .onSnapshot((snapshot) => {
         const newData = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -24,7 +25,7 @@ const HomePage: React.FC = () => {
   }, [])
 
   function cardOnClick(id: string) {
-    window.location.href = "/Tabs/Freelancer/".concat(id);
+    window.location.href = "/Freelancer/".concat(id);
   }
 
   function categoryOnClick(id: string) {

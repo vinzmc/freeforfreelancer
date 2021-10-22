@@ -18,16 +18,27 @@ const CategoryPage: React.FC = (props) => {
             .collection('freelancer')
             .where('kategori', '==', uriData.id)
             .onSnapshot((snapshot) => {
-                const newData = snapshot.docs.map((doc) => ({
+                var newData = snapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data()
                 }))
+
+                //temporary solution untuk auth
+                newData = newData.filter((value: any) => {
+                    if (value.name !== 'Sergio Nathaniel') {
+                        return value;
+                    }
+                })
 
                 setData(newData);
                 setRenderedData(newData);
                 setSearchText('');
             })
     }, [])
+
+    function cardOnClick(id: string) {
+        window.location.href = "/Freelancer/".concat(id);
+    }
 
     return (
         <IonPage>
@@ -38,7 +49,7 @@ const CategoryPage: React.FC = (props) => {
                 <IonLabel className="label">{renderedData.length} Freelancers Found</IonLabel>
                 <IonList>
                     {renderedData.map((doc: any) =>
-                        <div key={doc.id}>
+                        <div key={doc.id} onClick={() => cardOnClick(doc.id)}>
                             <Freelancer key={doc.id} name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} />
                         </div>
                     )

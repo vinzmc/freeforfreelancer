@@ -13,6 +13,7 @@ const SearchPage: React.FC = () => {
         firebase
             .firestore()
             .collection('freelancer')
+            .where('name', '!=', 'Sergio Nathaniel') //temporary solution untuk auth
             .onSnapshot((snapshot) => {
                 const newData = snapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -35,7 +36,7 @@ const SearchPage: React.FC = () => {
     }
 
     function cardOnClick(id: string) {
-        window.location.href = "/Tabs/Freelancer/".concat(id);
+        window.location.href = "/Freelancer/".concat(id);
     }
 
     return (
@@ -44,9 +45,10 @@ const SearchPage: React.FC = () => {
                 <IonToolbar className="ion-margin-top">
                     <IonTitle className="titleMiddle">Search</IonTitle>
                 </IonToolbar>
-                <IonSearchbar style={{ marginBottom: '1rem' }} placeholder="Designer, Programmer..." onIonChange={e => search(e.detail.value!)} value={searchText} showCancelButton="focus"></IonSearchbar>
-                <IonLabel className="label">{renderedData.length} Freelancers Found</IonLabel>
+                <IonSearchbar placeholder="Designer, Programmer..." onIonChange={e => search(e.detail.value!)} value={searchText} showCancelButton="focus"></IonSearchbar>
+
                 <IonList className="ion-padding">
+                    <IonLabel className="label">{renderedData.length} Freelancers Found</IonLabel>
                     {renderedData.map((doc: any) =>
                         <div key={doc.id} onClick={() => cardOnClick(doc.id)}>
                             <Freelancer key={doc.id} name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} />
