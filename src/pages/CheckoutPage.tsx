@@ -1,4 +1,4 @@
-import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonIcon, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { arrowBack, backspace, star, starOutline, timeOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router";
@@ -59,14 +59,16 @@ const CheckoutPage: React.FC = () => {
 
     return (
         <IonPage>
-            <IonToolbar className="ion-margin-top">
-                <IonTitle className="titleMiddle" style={{ fontWeight: "500", fontSize: "16px" }}>Payment</IonTitle>
-                <IonButtons slot="start" >
-                    <IonButton onClick={() => handleGoBack()}>
-                        <IonIcon icon={arrowBack} />
-                    </IonButton>
-                </IonButtons>
-            </IonToolbar>
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle className="titleMiddle" style={{ fontWeight: "500", fontSize: "16px" }}>Payment</IonTitle>
+                    <IonButtons slot="start" >
+                        <IonButton onClick={() => handleGoBack()}>
+                            <IonIcon icon={arrowBack} />
+                        </IonButton>
+                    </IonButtons>
+                </IonToolbar>
+            </IonHeader>
             <IonContent fullscreen>
                 {/* Profile Header Content */}
                 <div className="profile-header-content">
