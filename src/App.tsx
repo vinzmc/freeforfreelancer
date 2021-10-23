@@ -38,6 +38,7 @@ import Dummy from './pages/Dummy';
 import CategoryPage from './pages/CategoryPage';
 import Payment from './pages/Payment';
 import CheckoutPage from './pages/CheckoutPage';
+import OrderDetail from './pages/OrderDetail';
 
 
 const App: React.FC = () => (
@@ -81,6 +82,10 @@ const App: React.FC = () => (
         {/* Checkout Page */}
         <Route exact path="/CheckoutPage/Freelancer/:id">
           <CheckoutPage />
+        </Route>
+        {/* Order Detail Page */}
+        <Route exact path="/OrderDetail/Freelancer/:id">
+          <OrderDetail />
         </Route>
         <Route exact path="/Payment/Freelancer/:id">
             <Payment/>
