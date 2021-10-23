@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonCol, IonContent, IonGrid, IonIcon, IonInput, IonLabel, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTextarea } from '@ionic/react';
+import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonLabel, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import firebase from '../firebase';
 import { useEffect, useState } from 'react';
 
@@ -151,6 +151,14 @@ const FreelancerDetail: React.FC = () => {
 
     return (
         <IonPage>
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle className="titleMiddle" style={{ fontWeight: "500", fontSize: "16px" }}>{data.name}</IonTitle>
+                    <IonButtons slot="start">
+                        <IonBackButton defaultHref={`/Tabs/Homepage/`} />
+                    </IonButtons>
+                </IonToolbar>
+            </IonHeader>
             <IonContent fullscreen>
                 <IonModal isOpen={showModal} cssClass='modal-class' backdropDismiss={false}>
                     <div className="form-inputs">

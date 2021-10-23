@@ -1,4 +1,4 @@
-import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonIcon, IonInput, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar } from "@ionic/react";
+import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar } from "@ionic/react";
 import { star, starOutline, document } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router";
@@ -52,12 +52,14 @@ const OrderDetail: React.FC = () => {
 
     return (
         <IonPage>
-            <IonToolbar className="ion-margin-top">
-                <IonTitle className="titleMiddle" style={{ fontWeight: "500", fontSize: "16px" }}>Payment</IonTitle>
-                <IonButtons slot="start">
-                    <IonBackButton defaultHref={`/Tabs/Freelancer/${uriData.id}`} />
-                </IonButtons>
-            </IonToolbar>
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle className="titleMiddle" style={{ fontWeight: "500", fontSize: "16px" }}>Payment</IonTitle>
+                    <IonButtons slot="start">
+                        <IonBackButton defaultHref={`/Tabs/Freelancer/${uriData.id}`} />
+                    </IonButtons>
+                </IonToolbar>
+            </IonHeader>
             <IonContent fullscreen>
                 {/* Profile Header Content */}
                 <div className="profile-header-content">
