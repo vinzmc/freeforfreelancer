@@ -122,13 +122,13 @@ const OrderDetail: React.FC = () => {
                 </div>
                 <div className="summary-box ion-margin">
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px', marginTop: '5px' }}>
-                        <h3 className="summary-detail">Subject</h3>
+                        <h3 style={{fontWeight: 'bold'}} className="summary-detail">Subject</h3>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px' }}>
                         <h3 className="summary-detail">{state.state && state.state[0]}</h3>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px' }}>
-                        <h3 className="summary-detail">Description</h3>
+                        <h3 style={{fontWeight: 'bold'}} className="summary-detail">Description</h3>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px' }}>
                         <h3 className="summary-detail">{state.state && state.state[1]}</h3>
