@@ -186,7 +186,8 @@ const OrderDetail: React.FC = () => {
                                         }
                                     </div>
                                     <div>
-                                        <IonInput style={{border: '1px solid grey'}} placeholder="Write your experience with this freelancer"></IonInput>
+                                        <IonInput style={{border: '1px solid grey', height: '200px'}} placeholder="Write your experience with this freelancer"></IonInput>
+                                        <IonButton slot="end" className="ion-padding summary-button" >Review</IonButton>
                                     </div>
                                 </div>
                             </IonCol>
