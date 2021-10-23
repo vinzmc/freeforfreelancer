@@ -109,6 +109,7 @@ const CheckoutPage: React.FC = () => {
                         <h3 className="summary-detail">Total</h3>
                         <h3 className="summary-price">Rp. xxxx</h3>
                     </div>
+                    <hr style={{height:"2px", borderWidth:"0", color:"gray", backgroundColor:"gray"}} />
                     {/* generate  */}
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <h3 className="summary-detail">Time to complete</h3>
