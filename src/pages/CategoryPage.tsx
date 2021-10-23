@@ -1,4 +1,4 @@
-import { IonContent, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButtons, IonContent, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from "@ionic/react";
 import React, { useEffect, useState } from "react";
 import firebase from '../firebase';
 import Freelancer from "../components/Freelancer";
@@ -44,6 +44,9 @@ const CategoryPage: React.FC = (props) => {
             <IonContent>
                 <IonToolbar className="ion-margin-top" style={{ marginBottom: '1rem' }}>
                     <IonTitle className="titleMiddle">{uriData.id}</IonTitle>
+                    <IonButtons slot="start">
+                        <IonBackButton defaultHref="/Tabs/Homepage" />
+                    </IonButtons>
                 </IonToolbar>
                 <IonLabel className="label">{renderedData.length} Freelancers Found</IonLabel>
                 <IonList>
