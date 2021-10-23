@@ -1,10 +1,11 @@
 import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonIcon, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar } from "@ionic/react";
-import { arrowBack, backspace, star, starOutline, timeOutline } from "ionicons/icons";
+import { star, starOutline, document } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router";
+import { Link } from "react-router-dom";
 import firebase from '../firebase';
 
-const CheckoutPage: React.FC = () => {
+const OrderDetail: React.FC = () => {
     const [data, setData] = useState<any>([]);
     const [dataReviewer, setDataReviewer] = useState<any>([]);
     const [payMethod, setPayMethod] = useState<string>("");
@@ -12,9 +13,11 @@ const CheckoutPage: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
     const state = useLocation<any>();
     const history = useHistory();
-    var time = new Date(Date.now());
-    var month = ['Januari', 'Febuari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'December']
-    var currTime = time.getDate() + ' ' + month[time.getMonth()] + ' ' + time.getFullYear() + ' ' + time.getHours() + '.00';
+
+    const payment = (id: string) => {
+        window.location.href = "/Payment/Freelancer/".concat(id);
+        setShowModal(false);
+    }
 
     useEffect(() => {
         firebase
@@ -47,24 +50,12 @@ const CheckoutPage: React.FC = () => {
             });
     }, [])
 
-    function handleGoBack() {
-        window.history.go(-1);
-    }
-    const orderDetail = (id: string) => {
-        var url = '/OrderDetail/Freelancer/'.concat(id);
-        history.push(url, state.state);
-
-        window.location.href = url;
-    }
-
     return (
         <IonPage>
             <IonToolbar className="ion-margin-top">
                 <IonTitle className="titleMiddle" style={{ fontWeight: "500", fontSize: "16px" }}>Payment</IonTitle>
-                <IonButtons slot="start" >
-                    <IonButton onClick={() => handleGoBack()}>
-                        <IonIcon icon={arrowBack} />
-                    </IonButton>
+                <IonButtons slot="start">
+                    <IonBackButton defaultHref={`/Tabs/Freelancer/${uriData.id}`} />
                 </IonButtons>
             </IonToolbar>
             <IonContent fullscreen>
@@ -112,22 +103,19 @@ const CheckoutPage: React.FC = () => {
                     </IonGrid>
                 </div>
                 <div className="summary-box ion-margin">
-                    <h3 className="summary-box-title">BCA Virtual Account</h3>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <h3 className="summary-detail">No. Virtual Account</h3>
-                        <h3 className="summary-price">54564894512364</h3>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: '5px' }}>
+                        <h3 className="summary-detail">Status</h3>
+                        <h3 className="summary-price" style={{ color: 'blue' }}>On-Progress</h3>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <h3 className="summary-detail">Total</h3>
                         <h3 className="summary-price">Rp. xxxx</h3>
                     </div>
-                    <hr style={{ height: "2px", borderWidth: "0", color: "gray", backgroundColor: "gray" }} />
                     {/* generate  */}
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <h3 className="summary-detail">{currTime.toLocaleString()}</h3>
+                        <h3 className="summary-detail">Order Date</h3>
                         <h3 className="summary-price">{dataReviewer.tanggalOrder}</h3>
                     </div>
-                    <h3 className="summary-detail">payment</h3>
                 </div>
                 <div className="summary-box ion-margin">
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px', marginTop: '5px' }}>
@@ -143,12 +131,49 @@ const CheckoutPage: React.FC = () => {
                         <h3 className="summary-detail">{state.state && state.state[1]}</h3>
                     </div>
                 </div>
+                <div className="summary-box ion-margin">
+                    <h3 className="summary-detail" style={{ marginTop: '5px' }}>Delivery Files</h3>
+                    <div style={{ display: "flex", marginBottom: '10px', marginTop: '5px' }}>
+                        <IonIcon icon={document} />
+                        <a className="summary-detail" href=""> .pdf</a>
+                    </div>
+                    <div style={{ display: "flex", marginBottom: '10px', marginTop: '5px' }}>
+                        <IonIcon icon={document} />
+                        <a className="summary-detail" href=""> .psd</a>
+                    </div>
+                </div>
+                <div className="summary-box ion-margin">
+                    <h3 className="summary-detail" style={{ marginTop: '5px' }}>Chat</h3>
+                    <div style={{ display: "flex", marginBottom: '10px', marginTop: '5px' }}>
+                        <IonAvatar style={{ height: '50px', width: '50px' }}>
+                            <img src={data.pic} />
+                        </IonAvatar>
 
-                <IonButton onClick={() => { orderDetail(uriData.id) }} className="ion-padding summary-button" expand="full" >Go to Order Details</IonButton>
+                    </div>
+                    <div style={{ display: "flex", marginBottom: '10px', marginTop: '5px' }}>
+                        <IonAvatar style={{ height: '50px', width: '50px', display: "flex", justifyContent: "flex-end" }}>
+                            <img src={dataReviewer.profile} />
+                        </IonAvatar>
 
+                    </div>
+                </div>
+                <div className="summary-box ion-margin">
+                    <h3 className="summary-detail" style={{ marginTop: '5px' }}>Review</h3>
+                    <div style={{ display: "flex", marginBottom: '10px', marginTop: '5px' }}>
+                        <IonAvatar style={{ height: '50px', width: '50px', display: "flex", justifyContent: "flex-end" }}>
+                            <img src={dataReviewer.profile} />
+                        </IonAvatar>
+                    </div>
+                    <div style={{ display: "flex", marginBottom: '10px', marginTop: '5px' }}>
+                        <IonIcon icon={document} />
+                        <a className="summary-detail" href=""> .psd</a>
+                    </div>
+                </div>
+                <IonButton className="ion-padding summary-button" >Finish Order</IonButton>
+                <IonButton className="ion-padding summary-button" >Cancel Order</IonButton>
             </IonContent>
         </IonPage>
     );
 }
 
-export default CheckoutPage;
+export default OrderDetail;
