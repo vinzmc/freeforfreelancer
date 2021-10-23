@@ -1,4 +1,4 @@
-import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonIcon, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonIcon, IonInput, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { star, starOutline, document } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router";
@@ -159,15 +159,39 @@ const OrderDetail: React.FC = () => {
                 </div>
                 <div className="summary-box ion-margin">
                     <h3 className="summary-detail" style={{ marginTop: '5px' }}>Review</h3>
-                    <div style={{ display: "flex", marginBottom: '10px', marginTop: '5px' }}>
-                        <IonAvatar style={{ height: '50px', width: '50px', display: "flex", justifyContent: "flex-end" }}>
-                            <img src={dataReviewer.profile} />
-                        </IonAvatar>
-                    </div>
-                    <div style={{ display: "flex", marginBottom: '10px', marginTop: '5px' }}>
-                        <IonIcon icon={document} />
-                        <a className="summary-detail" href=""> .psd</a>
-                    </div>
+                    <IonGrid>
+                        <IonRow>
+                            <IonCol size="1" className=" ion-padding">
+                                <IonAvatar className="profile-avatar" style={{ height: '50px', width: '50px', top: '5px', left: '-10px' }}>
+                                    <img src={dataReviewer.profile} />
+                                </IonAvatar>
+                            </IonCol>
+                            <IonCol style={{ marginLeft: "1.5rem" }}>
+                                <div>
+                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                        <div>
+                                            <h1 className="ion-no-margin profile-name" style={{ fontSize: "14px" }}>{data.name}</h1>
+                                        </div>
+                                    </div>
+                                    <div className="profile-reputasi">
+                                        {data.length !== 0 &&
+                                            [...Array(data.star)].map((x, i) =>
+                                                <IonIcon icon={star} key={i} />
+                                            )
+                                        }
+                                        {data.length !== 0 &&
+                                            [...Array(5 - data.star)].map((x, i) =>
+                                                <IonIcon icon={starOutline} key={5 - i} />
+                                            )
+                                        }
+                                    </div>
+                                    <div>
+                                        <IonInput style={{border: '1px solid grey'}} placeholder="Write your experience with this freelancer"></IonInput>
+                                    </div>
+                                </div>
+                            </IonCol>
+                        </IonRow>
+                    </IonGrid>
                 </div>
                 <IonButton className="ion-padding summary-button" >Finish Order</IonButton>
                 <IonButton className="ion-padding summary-button" >Cancel Order</IonButton>
