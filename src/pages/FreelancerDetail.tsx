@@ -155,14 +155,14 @@ const FreelancerDetail: React.FC = () => {
                 <IonModal isOpen={showModal} cssClass='modal-class' backdropDismiss={false}>
                     <div className="form-inputs">
                         <div className="ion-padding">
-                            <p className="form-name">Subject</p>
+                            <p className="form-name">Subject <span style={{ color: 'red' }}>*</span></p>
                             <IonInput placeholder="Project subject" className="form-input" style={{ color: "gray" }} value={postData} onIonChange={(e: any) => setPostData(e.target.value)}></IonInput>
 
-                            <p className="form-name">Description</p>
+                            <p className="form-name">Description <span style={{ color: 'red' }}>*</span></p>
                             <IonTextarea placeholder="Project description" className="form-input" rows={6} style={{ color: "gray" }} value={postData2} onIonChange={(e: any) => setPostData2(e.target.value)}></IonTextarea>
                         </div>
                         <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
-                            <IonButton onClick={() => payment(uriData.id)} className="modal-btn" style={{ marginRight: "1rem" }}>Proceed</IonButton>
+                            <IonButton onClick={() => payment(uriData.id)} className="modal-btn" style={{ marginRight: "1rem" }} disabled={(postData === '' || postData2 === '') ? true : false}>Proceed</IonButton>
                             <IonButton onClick={() => setShowModal(false)} className="modal-btn">Cancel</IonButton>
                         </div>
                     </div>

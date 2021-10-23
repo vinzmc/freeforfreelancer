@@ -1,5 +1,5 @@
 import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonIcon, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar } from "@ionic/react";
-import { star, starOutline } from "ionicons/icons";
+import { arrowBack, backspace, star, starOutline, timeOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router";
 import firebase from '../firebase';
@@ -12,11 +12,9 @@ const CheckoutPage: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
     const state = useLocation<any>();
     const history = useHistory();
-
-    const payment = (id: string) => {
-        window.location.href = "/Payment/Freelancer/".concat(id);
-        setShowModal(false);
-    }
+    var time = new Date(Date.now());
+    var month = ['Januari', 'Febuari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'December']
+    var currTime = time.getDate() + ' ' + month[time.getMonth()] + ' ' + time.getFullYear() + ' ' + time.getHours() + '.00';
 
     useEffect(() => {
         firebase
@@ -49,6 +47,9 @@ const CheckoutPage: React.FC = () => {
             });
     }, [])
 
+    function handleGoBack() {
+        window.history.go(-1);
+    }
     const orderDetail = (id: string) => {
         var url = '/OrderDetail/Freelancer/'.concat(id);
         history.push(url, state.state);
@@ -60,8 +61,10 @@ const CheckoutPage: React.FC = () => {
         <IonPage>
             <IonToolbar className="ion-margin-top">
                 <IonTitle className="titleMiddle" style={{ fontWeight: "500", fontSize: "16px" }}>Payment</IonTitle>
-                <IonButtons slot="start">
-                    <IonBackButton defaultHref={`/Tabs/Freelancer/${uriData.id}`} />
+                <IonButtons slot="start" >
+                    <IonButton onClick={() => handleGoBack()}>
+                        <IonIcon icon={arrowBack} />
+                    </IonButton>
                 </IonButtons>
             </IonToolbar>
             <IonContent fullscreen>
@@ -121,7 +124,7 @@ const CheckoutPage: React.FC = () => {
                     <hr style={{ height: "2px", borderWidth: "0", color: "gray", backgroundColor: "gray" }} />
                     {/* generate  */}
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <h3 className="summary-detail">Time to complete</h3>
+                        <h3 className="summary-detail">{currTime.toLocaleString()}</h3>
                         <h3 className="summary-price">{dataReviewer.tanggalOrder}</h3>
                     </div>
                     <h3 className="summary-detail">payment</h3>
