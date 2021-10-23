@@ -1,5 +1,5 @@
 import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar } from "@ionic/react";
-import { star, starOutline, document } from "ionicons/icons";
+import { star, starOutline, document, time } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
@@ -13,6 +13,9 @@ const OrderDetail: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
     const state = useLocation<any>();
     const history = useHistory();
+    var time = new Date(Date.now());
+    var month = ['Januari', 'Febuari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'December']
+    var currTime = time.getDate() + ' ' + month[time.getMonth()] + ' ' + time.getFullYear();
 
     const payment = (id: string) => {
         window.location.href = "/Payment/Freelancer/".concat(id);
@@ -54,7 +57,7 @@ const OrderDetail: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle className="titleMiddle" style={{ fontWeight: "500", fontSize: "16px" }}>Payment</IonTitle>
+                    <IonTitle className="titleMiddle" style={{ fontWeight: "500", fontSize: "16px" }}>Order Detail</IonTitle>
                     <IonButtons slot="start">
                         <IonBackButton defaultHref={`/Tabs/Freelancer/${uriData.id}`} />
                     </IonButtons>
@@ -116,7 +119,7 @@ const OrderDetail: React.FC = () => {
                     {/* generate  */}
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <h3 className="summary-detail">Order Date</h3>
-                        <h3 className="summary-price">{dataReviewer.tanggalOrder}</h3>
+                        <h3 className="summary-price">{currTime.toLocaleString()}</h3>
                     </div>
                 </div>
                 <div className="summary-box ion-margin">
@@ -190,7 +193,7 @@ const OrderDetail: React.FC = () => {
                                         }
                                     </div>
                                     <div>
-                                        <IonTextarea placeholder="Project description" className="form-input" rows={6} style={{ color: "gray" }}></IonTextarea>
+                                        <IonTextarea placeholder="Write your experience with this freelancer....." className="form-input" rows={6} style={{ color: "gray" }}></IonTextarea>
                                     </div>
                                     <IonButton slot="end" className="summary-button" >Review</IonButton>
                                 </div>
