@@ -1,6 +1,6 @@
 .summary-box{
     border: 1px solid var(--theme-gray-border);
-    padding: 0.3rem 1rem;
+    padding: 0.6rem 1rem;
 }
 .summary-box-title{
     text-align: center;

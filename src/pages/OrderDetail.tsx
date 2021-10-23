@@ -1,4 +1,4 @@
-import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonIcon, IonInput, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonIcon, IonInput, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar } from "@ionic/react";
 import { star, starOutline, document } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router";
@@ -105,7 +105,7 @@ const OrderDetail: React.FC = () => {
                 <div className="summary-box ion-margin">
                     <div style={{ display: "flex", justifyContent: "space-between", marginTop: '5px' }}>
                         <h3 className="summary-detail">Status</h3>
-                        <h3 className="summary-price" style={{ color: 'blue' }}>On-Progress</h3>
+                        <h3 className="summary-price" >On-Progress</h3>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <h3 className="summary-detail">Total</h3>
@@ -135,42 +135,44 @@ const OrderDetail: React.FC = () => {
                     <h3 className="summary-detail" style={{ marginTop: '5px' }}>Delivery Files</h3>
                     <div style={{ display: "flex", marginBottom: '10px', marginTop: '5px' }}>
                         <IonIcon icon={document} />
-                        <a className="summary-detail" href=""> .pdf</a>
+                        <a className="summary-detail" href="" style={{ marginLeft: "5px" }} >example_page.pdf</a>
                     </div>
                     <div style={{ display: "flex", marginBottom: '10px', marginTop: '5px' }}>
                         <IonIcon icon={document} />
-                        <a className="summary-detail" href=""> .psd</a>
+                        <a className="summary-detail" href="" style={{ marginLeft: "5px" }}>example_page_2.psd</a>
                     </div>
                 </div>
                 <div className="summary-box ion-margin">
                     <h3 className="summary-detail" style={{ marginTop: '5px' }}>Chat</h3>
-                    <div style={{ display: "flex", marginBottom: '10px', marginTop: '5px' }}>
-                        <IonAvatar style={{ height: '50px', width: '50px' }}>
+                    <div style={{ display: "flex", marginBottom: '10px', marginTop: '5px', alignItems: "center" }}>
+                        <IonAvatar style={{ height: '30px', width: '30px' }}>
                             <img src={data.pic} />
                         </IonAvatar>
-
+                        <div style={{ marginLeft: "10px" }}>
+                            <h3 style={{ fontSize: "12px", margin: "5px 0px" }}>{data.name}</h3>
+                            <p style={{ fontSize: "10px", margin: "0px" }}>Hey, i have attached the revised files. Can you check it out?</p>
+                        </div>
                     </div>
-                    <div style={{ display: "flex", marginBottom: '10px', marginTop: '5px' }}>
-                        <IonAvatar style={{ height: '50px', width: '50px', display: "flex", justifyContent: "flex-end" }}>
-                            <img src={dataReviewer.profile} />
-                        </IonAvatar>
-
+                    <div style={{ display: "flex", marginBottom: '10px', marginTop: '15px', alignItems: "center", justifyContent: "end" }}>
+                        <div style={{ marginRight: "10px" }}>
+                            <h3 style={{ fontSize: "12px", margin: "5px 0px", textAlign: "right" }}>Me</h3>
+                            <p style={{ fontSize: "10px", margin: "0px", textAlign: "right" }}>Okay, i’m looking at it right now</p>
+                        </div>
+                        <div style={{ backgroundColor: "#FC7752", width: "30px", height: "30px", borderRadius: "50%" }}></div>
                     </div>
                 </div>
                 <div className="summary-box ion-margin">
                     <h3 className="summary-detail" style={{ marginTop: '5px' }}>Review</h3>
                     <IonGrid>
                         <IonRow>
-                            <IonCol size="1" className=" ion-padding">
-                                <IonAvatar className="profile-avatar" style={{ height: '50px', width: '50px', top: '5px', left: '-10px' }}>
-                                    <img src={dataReviewer.profile} />
-                                </IonAvatar>
+                            <IonCol size="1">
+                                <div style={{ backgroundColor: "#FC7752", width: "40px", height: "40px", borderRadius: "50%" }}></div>
                             </IonCol>
                             <IonCol style={{ marginLeft: "1.5rem" }}>
                                 <div>
                                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                                         <div>
-                                            <h1 className="ion-no-margin profile-name" style={{ fontSize: "14px" }}>{data.name}</h1>
+                                            <h1 className="ion-no-margin profile-name" style={{ fontSize: "12px" }}>Me</h1>
                                         </div>
                                     </div>
                                     <div className="profile-reputasi">
@@ -186,16 +188,19 @@ const OrderDetail: React.FC = () => {
                                         }
                                     </div>
                                     <div>
-                                        <IonInput style={{border: '1px solid grey', height: '200px'}} placeholder="Write your experience with this freelancer"></IonInput>
-                                        <IonButton slot="end" className="ion-padding summary-button" >Review</IonButton>
+                                        <IonTextarea placeholder="Project description" className="form-input" rows={6} style={{ color: "gray" }}></IonTextarea>
                                     </div>
+                                    <IonButton slot="end" className="summary-button" >Review</IonButton>
                                 </div>
                             </IonCol>
                         </IonRow>
                     </IonGrid>
                 </div>
-                <IonButton className="ion-padding summary-button" >Finish Order</IonButton>
-                <IonButton className="ion-padding summary-button" >Cancel Order</IonButton>
+                <div className="ion-margin ion-padding" style={{ display: "flex", justifyContent: "space-around" }}>
+                    <IonButton className="ion-padding summary-button" >Finish Order</IonButton>
+                    <IonButton className="ion-padding summary-button" >Cancel Order</IonButton>
+                </div>
+
             </IonContent>
         </IonPage>
     );
