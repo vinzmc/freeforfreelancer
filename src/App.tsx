@@ -79,7 +79,7 @@ const App: React.FC = () => (
           <SearchPage />
         </Route>
         {/* Checkout Page */}
-        <Route exact path="/CheckoutPage">
+        <Route exact path="/CheckoutPage/Freelancer/:id">
           <CheckoutPage />
         </Route>
         <Route exact path="/Payment/Freelancer/:id">
