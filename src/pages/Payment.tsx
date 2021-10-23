@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 const Payment: React.FC = () => {
     const [data, setData] = useState<any>([]);
     const [dataReviewer, setDataReviewer] = useState<any>([]);
-    const [payMethod, setPayMethod] = useState<string>("Select Payment Method");
+    const [payMethod, setPayMethod] = useState<string>("");
     const uriData = useParams<any>();
     const [showModal, setShowModal] = useState(false);
 
@@ -136,7 +136,7 @@ const Payment: React.FC = () => {
                     </IonItem>
                 </div>
 
-                <IonButton className="ion-padding summary-button" expand="full" >Confirm and Checkout</IonButton>
+                <IonButton disabled={payMethod !== '' ? false : true} className="ion-padding summary-button" expand="full" >Confirm and Checkout</IonButton>
 
             </IonContent>
         </IonPage>
