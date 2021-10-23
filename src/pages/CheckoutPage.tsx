@@ -14,7 +14,7 @@ const CheckoutPage: React.FC = () => {
     const history = useHistory();
     var time = new Date(Date.now());
     var month = ['Januari', 'Febuari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'December']
-    var currTime = time.getDate() + ' ' + month[time.getMonth()] + ' ' + time.getFullYear() + ' ' + time.getHours() + '.00';
+    var currTime = time.getDate() + ' ' + month[time.getMonth()] + ' ' + time.getFullYear();
 
     useEffect(() => {
         firebase
@@ -124,10 +124,14 @@ const CheckoutPage: React.FC = () => {
                     <hr style={{ height: "2px", borderWidth: "0", color: "gray", backgroundColor: "gray" }} />
                     {/* generate  */}
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <h3 className="summary-detail">{currTime.toLocaleString()}</h3>
-                        <h3 className="summary-price">{dataReviewer.tanggalOrder}</h3>
+                        <h3 className="summary-detail"></h3>
+                        <h3 className="summary-price">{currTime.toLocaleString()}</h3>
                     </div>
-                    <h3 className="summary-detail">payment</h3>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <h4></h4>
+                        <h4 className="summary-detail">Please finish payment in 24 hours</h4>
+                        <h4></h4>
+                    </div>
                 </div>
                 <div className="summary-box ion-margin">
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px', marginTop: '5px' }}>
