@@ -133,7 +133,7 @@ const CheckoutPage: React.FC = () => {
                     </div>
                 </div>
 
-                <IonButton  disabled={payMethod !== '' ? false : true} className="ion-padding summary-button" expand="full" >Go to Order Details</IonButton>
+                <IonButton className="ion-padding summary-button" expand="full" >Go to Order Details</IonButton>
 
             </IonContent>
         </IonPage>
