@@ -1,13 +1,12 @@
-import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonIcon, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import firebase from '../firebase';
 import { useEffect, useState } from 'react';
 
 //theme
 import './ProfilePage.css';
 import './Payment.css'
-import { star, starOutline, location } from 'ionicons/icons';
-import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
+import { star, starOutline } from 'ionicons/icons';
+import { useHistory, useLocation, useParams } from 'react-router';
 
 
 const Payment: React.FC = () => {
@@ -16,11 +15,8 @@ const Payment: React.FC = () => {
     const [payMethod, setPayMethod] = useState<string>("");
     const uriData = useParams<any>();
     const [showModal, setShowModal] = useState(false);
-
-    const payment = (id: string) => {
-        window.location.href = "/Payment/Freelancer/".concat(id);
-        setShowModal(false);
-    }
+    const state = useLocation();
+    const history = useHistory();
 
     useEffect(() => {
         firebase
@@ -52,6 +48,13 @@ const Payment: React.FC = () => {
                 setDataReviewer(newReviewerData);
             });
     }, [])
+
+    const checkout = (id: string) => {
+        var url = '/CheckoutPage/Freelancer/'.concat(id);
+        history.push(url, state.state);
+
+        window.location.href = url;
+    }
 
     return (
         <IonPage>
@@ -136,7 +139,7 @@ const Payment: React.FC = () => {
                     </IonItem>
                 </div>
 
-                <IonButton href={`/CheckoutPage/Freelancer/${uriData.id}`} disabled={payMethod !== '' ? false : true} className="ion-padding summary-button" expand="full" >Confirm and Checkout</IonButton>
+                <IonButton onClick={() => { checkout(uriData.id) }} disabled={payMethod !== '' ? false : true} className="ion-padding summary-button" expand="full" >Confirm and Checkout</IonButton>
 
             </IonContent>
         </IonPage>

@@ -1,7 +1,7 @@
 import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonIcon, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { star, starOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router";
 import firebase from '../firebase';
 
 const CheckoutPage: React.FC = () => {
@@ -10,6 +10,8 @@ const CheckoutPage: React.FC = () => {
     const [payMethod, setPayMethod] = useState<string>("");
     const uriData = useParams<any>();
     const [showModal, setShowModal] = useState(false);
+    const state = useLocation<any>();
+    const history = useHistory();
 
     const payment = (id: string) => {
         window.location.href = "/Payment/Freelancer/".concat(id);
@@ -109,7 +111,7 @@ const CheckoutPage: React.FC = () => {
                         <h3 className="summary-detail">Total</h3>
                         <h3 className="summary-price">Rp. xxxx</h3>
                     </div>
-                    <hr style={{height:"2px", borderWidth:"0", color:"gray", backgroundColor:"gray"}} />
+                    <hr style={{ height: "2px", borderWidth: "0", color: "gray", backgroundColor: "gray" }} />
                     {/* generate  */}
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <h3 className="summary-detail">Time to complete</h3>
@@ -117,20 +119,19 @@ const CheckoutPage: React.FC = () => {
                     </div>
                     <h3 className="summary-detail">payment</h3>
                 </div>
-
                 <div className="summary-box ion-margin">
                     <h3 className="summary-box-title">Payment Method</h3>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px' }}>
                         <h3 className="summary-detail">Subject</h3>
                     </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px'  }}>
-                        <h3 className="summary-detail">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac leo ex.</h3>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px' }}>
+                        <h3 className="summary-detail">{state.state && state.state[0]}</h3>
                     </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px'  }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px' }}>
                         <h3 className="summary-detail">Description</h3>
                     </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px'  }}>
-                        <h3 className="summary-detail">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac leo ex. Donec interdum lacinia libero, vel molestie dui fringilla ut. Phasellus eu neque ultricies, pulvinar nibh id, tincidunt ex. Praesent tincidunt aliquam libero ac porttitor. Nam mattis nunc et tempor congue. Pellentesque laoreet malesuada lorem nec volutpat.</h3>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px' }}>
+                        <h3 className="summary-detail">{state.state && state.state[1]}</h3>
                     </div>
                 </div>
 

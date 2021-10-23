@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 //theme
 import './ProfilePage.css';
 import { star, starOutline, location } from 'ionicons/icons';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 
 const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
     return (
@@ -102,12 +102,19 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any }> = (pr
 const FreelancerDetail: React.FC = () => {
     const [data, setData] = useState<any>([]);
     const [dataReviewer, setDataReviewer] = useState<any>([]);
+    const [postData, setPostData] = useState<any>('');
+    const [postData2, setPostData2] = useState<any>('');
     const [page, setPage] = useState("review");
     const uriData = useParams<any>();
     const [showModal, setShowModal] = useState(false);
+    const history = useHistory();
 
-    const payment = (id:string) =>{
-        window.location.href = "/Payment/Freelancer/".concat(id);
+    const payment = (id: string) => {
+        var url = '/Payment/Freelancer/'.concat(id)
+        var arr = [postData, postData2]
+        history.push(url, arr);
+
+        window.location.href = url;
         setShowModal(false);
     }
 
@@ -149,13 +156,13 @@ const FreelancerDetail: React.FC = () => {
                     <div className="form-inputs">
                         <div className="ion-padding">
                             <p className="form-name">Subject</p>
-                            <IonInput placeholder="Project subject" className="form-input" style={{ color: "gray" }}></IonInput>
+                            <IonInput placeholder="Project subject" className="form-input" style={{ color: "gray" }} value={postData} onIonChange={(e: any) => setPostData(e.target.value)}></IonInput>
 
                             <p className="form-name">Description</p>
-                            <IonTextarea placeholder="Project description" className="form-input" rows={6} style={{ color: "gray" }}></IonTextarea>
+                            <IonTextarea placeholder="Project description" className="form-input" rows={6} style={{ color: "gray" }} value={postData2} onIonChange={(e: any) => setPostData2(e.target.value)}></IonTextarea>
                         </div>
                         <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
-                            <IonButton onClick={() => payment( uriData.id )} className="modal-btn" style={{ marginRight: "1rem" }}>Proceed</IonButton>
+                            <IonButton onClick={() => payment(uriData.id)} className="modal-btn" style={{ marginRight: "1rem" }}>Proceed</IonButton>
                             <IonButton onClick={() => setShowModal(false)} className="modal-btn">Cancel</IonButton>
                         </div>
                     </div>
