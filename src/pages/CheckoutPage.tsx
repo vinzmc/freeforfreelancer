@@ -61,7 +61,7 @@ const CheckoutPage: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle className="titleMiddle" style={{ fontWeight: "500", fontSize: "16px" }}>Payment</IonTitle>
+                    <IonTitle className="titleMiddle" style={{ fontWeight: "500", fontSize: "16px" }}>Checkout</IonTitle>
                     <IonButtons slot="start" >
                         <IonButton onClick={() => handleGoBack()}>
                             <IonIcon icon={arrowBack} />
@@ -137,13 +137,13 @@ const CheckoutPage: React.FC = () => {
                 </div>
                 <div className="summary-box ion-margin">
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px', marginTop: '5px' }}>
-                        <h3 className="summary-detail">Subject</h3>
+                        <h3 className="summary-detail" style={{fontWeight:'bold'}}>Subject</h3>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px' }}>
                         <h3 className="summary-detail">{state.state && state.state[0]}</h3>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px' }}>
-                        <h3 className="summary-detail">Description</h3>
+                        <h3 className="summary-detail" style={{fontWeight:'bold'}}>Description</h3>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px' }}>
                         <h3 className="summary-detail">{state.state && state.state[1]}</h3>
