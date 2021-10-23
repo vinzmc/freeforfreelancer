@@ -191,7 +191,7 @@ const OrderDetail: React.FC = () => {
                                         }
                                     </div>
                                     <div>
-                                        <IonTextarea placeholder="Project description" className="form-input" rows={6} style={{ color: "gray" }}></IonTextarea>
+                                        <IonTextarea placeholder="Write your experience with this freelancer....." className="form-input" rows={6} style={{ color: "gray" }}></IonTextarea>
                                     </div>
                                     <IonButton slot="end" className="summary-button" >Review</IonButton>
                                 </div>
