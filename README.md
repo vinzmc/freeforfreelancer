@@ -1,5 +1,4 @@
-# hackathon-3f
-
+# Freeforfreelancer
 untuk inisiasi
 --
 npm i
