@@ -17,9 +17,8 @@ const OrderDetail: React.FC = () => {
     var month = ['Januari', 'Febuari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'December']
     var currTime = time.getDate() + ' ' + month[time.getMonth()] + ' ' + time.getFullYear();
 
-    const payment = (id: string) => {
-        window.location.href = "/Payment/Freelancer/".concat(id);
-        setShowModal(false);
+    const finishOrder = (id: string) => {
+        window.location.href = "/Payment/Freelancer/".concat(id).concat("/review");
     }
 
     useEffect(() => {
@@ -149,7 +148,7 @@ const OrderDetail: React.FC = () => {
                 </div>
                 
                 <div className="ion-margin ion-padding" style={{ display: "flex", justifyContent: "space-around" }}>
-                    <IonButton className="ion-padding summary-button" >Finish Order</IonButton>
+                    <IonButton onClick={() => finishOrder(uriData.id)}  className="ion-padding summary-button" >Finish Order</IonButton>
                     <IonButton className="ion-padding summary-button" >Cancel Order</IonButton>
                 </div>
 

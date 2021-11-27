@@ -39,6 +39,7 @@ import CategoryPage from './pages/CategoryPage';
 import Payment from './pages/Payment';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderDetail from './pages/OrderDetail';
+import ReviewPage from './pages/ReviewPage';
 
 
 const App: React.FC = () => (
@@ -89,6 +90,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/Payment/Freelancer/:id">
             <Payment/>
+        </Route>
+        <Route exact path="/Payment/Freelancer/:id/review">
+            <ReviewPage/>
         </Route>
         {/* root */}
         <Route exact path="/">
