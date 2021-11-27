@@ -147,60 +147,7 @@ const OrderDetail: React.FC = () => {
                         <a className="summary-detail" href="" style={{ marginLeft: "5px" }}>example_page_2.psd</a>
                     </div>
                 </div>
-                <div className="summary-box ion-margin">
-                    <h3 className="summary-detail" style={{ marginTop: '5px' }}>Chat</h3>
-                    <div style={{ display: "flex", marginBottom: '10px', marginTop: '5px', alignItems: "center" }}>
-                        <IonAvatar style={{ height: '30px', width: '30px' }}>
-                            <img src={data.pic} />
-                        </IonAvatar>
-                        <div style={{ marginLeft: "10px" }}>
-                            <h3 style={{ fontSize: "12px", margin: "5px 0px" }}>{data.name}</h3>
-                            <p style={{ fontSize: "10px", margin: "0px" }}>Hey, i have attached the revised files. Can you check it out?</p>
-                        </div>
-                    </div>
-                    <div style={{ display: "flex", marginBottom: '10px', marginTop: '15px', alignItems: "center", justifyContent: "end" }}>
-                        <div style={{ marginRight: "10px" }}>
-                            <h3 style={{ fontSize: "12px", margin: "5px 0px", textAlign: "right" }}>Me</h3>
-                            <p style={{ fontSize: "10px", margin: "0px", textAlign: "right" }}>Okay, i’m looking at it right now</p>
-                        </div>
-                        <div style={{ backgroundColor: "#FC7752", width: "30px", height: "30px", borderRadius: "50%" }}></div>
-                    </div>
-                </div>
-                <div className="summary-box ion-margin">
-                    <h3 className="summary-detail" style={{ marginTop: '5px' }}>Review</h3>
-                    <IonGrid>
-                        <IonRow>
-                            <IonCol size="1">
-                                <div style={{ backgroundColor: "#FC7752", width: "40px", height: "40px", borderRadius: "50%" }}></div>
-                            </IonCol>
-                            <IonCol style={{ marginLeft: "1.5rem" }}>
-                                <div>
-                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                        <div>
-                                            <h1 className="ion-no-margin profile-name" style={{ fontSize: "12px" }}>Me</h1>
-                                        </div>
-                                    </div>
-                                    <div className="profile-reputasi">
-                                        {data.length !== 0 &&
-                                            [...Array(data.star)].map((x, i) =>
-                                                <IonIcon icon={star} key={i} />
-                                            )
-                                        }
-                                        {data.length !== 0 &&
-                                            [...Array(5 - data.star)].map((x, i) =>
-                                                <IonIcon icon={starOutline} key={5 - i} />
-                                            )
-                                        }
-                                    </div>
-                                    <div>
-                                        <IonTextarea placeholder="Write your experience with this freelancer....." className="form-input" rows={6} style={{ color: "gray" }}></IonTextarea>
-                                    </div>
-                                    <IonButton slot="end" className="summary-button" >Review</IonButton>
-                                </div>
-                            </IonCol>
-                        </IonRow>
-                    </IonGrid>
-                </div>
+                
                 <div className="ion-margin ion-padding" style={{ display: "flex", justifyContent: "space-around" }}>
                     <IonButton className="ion-padding summary-button" >Finish Order</IonButton>
                     <IonButton className="ion-padding summary-button" >Cancel Order</IonButton>
