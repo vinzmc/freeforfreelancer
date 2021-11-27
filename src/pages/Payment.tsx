@@ -51,7 +51,17 @@ const Payment: React.FC = () => {
 
     const checkout = (id: string) => {
         var url = '/CheckoutPage/Freelancer/'.concat(id);
-        history.push(url, state.state);
+        var curState:any = state.state
+
+        var min = 10000000000000;
+        var max = 99999999999999;
+        var rand=  Math.floor(min + (Math.random() * (max-min)));
+
+
+        var nextState = [...curState, payMethod, rand]
+
+
+        history.push(url, nextState);
 
         window.location.href = url;
     }
@@ -129,12 +139,12 @@ const Payment: React.FC = () => {
                     <IonItem lines="none">
                         <IonLabel style={{ fontSize: "13px" }}>Payment Method</IonLabel>
                         <IonSelect value={payMethod} okText="Okay" cancelText="Dismiss" onIonChange={e => setPayMethod(e.detail.value)}>
-                            <IonSelectOption value="bca">BCA virtual account</IonSelectOption>
-                            <IonSelectOption value="mandiri">Mandiri virtual account</IonSelectOption>
-                            <IonSelectOption value="bni">BNI virtual account</IonSelectOption>
-                            <IonSelectOption value="btn">BTN virtual account</IonSelectOption>
-                            <IonSelectOption value="danamon">Danamon virtual account</IonSelectOption>
-                            <IonSelectOption value="cimb">CIMB virtual account</IonSelectOption>
+                            <IonSelectOption value="BCA">BCA virtual account</IonSelectOption>
+                            <IonSelectOption value="Mandiri">Mandiri virtual account</IonSelectOption>
+                            <IonSelectOption value="BNI">BNI virtual account</IonSelectOption>
+                            <IonSelectOption value="BTN">BTN virtual account</IonSelectOption>
+                            <IonSelectOption value="Danamon">Danamon virtual account</IonSelectOption>
+                            <IonSelectOption value="CIMB">CIMB virtual account</IonSelectOption>
                         </IonSelect>
                     </IonItem>
                 </div>

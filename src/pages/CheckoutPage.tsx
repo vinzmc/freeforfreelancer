@@ -45,6 +45,7 @@ const CheckoutPage: React.FC = () => {
 
                 setDataReviewer(newReviewerData);
             });
+            console.log(state.state)
     }, [])
 
     function handleGoBack() {
@@ -114,10 +115,10 @@ const CheckoutPage: React.FC = () => {
                     </IonGrid>
                 </div>
                 <div className="summary-box ion-margin">
-                    <h3 className="summary-box-title">BCA Virtual Account</h3>
+                    <h3 className="summary-box-title">{state.state && state.state[2]} Virtual Account</h3>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <h3 className="summary-detail">No. Virtual Account</h3>
-                        <h3 className="summary-price">54564894512364</h3>
+                        <h3 className="summary-price">{state.state && state.state[3]}</h3>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <h3 className="summary-detail">Total</h3>
