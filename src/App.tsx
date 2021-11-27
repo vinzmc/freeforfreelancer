@@ -22,8 +22,6 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import './theme/form-styling.css';
 
-
-
 /* import page */
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';

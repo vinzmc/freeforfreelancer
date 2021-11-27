@@ -1,9 +1,7 @@
-import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonIcon, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import firebase from '../firebase';
-import { useEffect, useState } from 'react';
+import { IonButton, IonContent, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { useState } from 'react';
 
 //theme
-import { star, starOutline } from 'ionicons/icons';
 import { FaStar } from 'react-icons/fa'
 import './ReviewPage.css'
 

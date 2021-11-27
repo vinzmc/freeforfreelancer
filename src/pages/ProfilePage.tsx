@@ -1,11 +1,14 @@
 import { IonAvatar, IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSegment, IonSegmentButton, IonText } from '@ionic/react';
 import firebase from '../firebase';
 import { useEffect, useState } from 'react';
+import { star, starOutline, location } from 'ionicons/icons';
+import { useHistory, useParams } from 'react-router';
+
+//assets
+import profilePlaceHolder from '../assets/profilePlaceHolder.png'
 
 //theme
 import './ProfilePage.css';
-import { star, starOutline, location } from 'ionicons/icons';
-import { useParams } from 'react-router';
 
 const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
     return (
@@ -33,6 +36,11 @@ const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
                     <p className="justify review-content" >{doc.reviewContent}</p>
                 </div>
             )}
+            {props.data.length === 0 &&
+                <div>
+                    Belum ada Review
+                </div>
+            }
         </div>
     )
 }
@@ -62,6 +70,11 @@ const OrderSegment: React.FC<{ data: any[] }> = (props) => {
                     </div>
                 </div>
             )}
+            {props.data.length === 0 &&
+                <div>
+                    Belum ada Order
+                </div>
+            }
         </div>
 
     )
@@ -102,6 +115,11 @@ const ProjectSegment: React.FC<{ data: any[] }> = (props) => {
                     </div>
                 </div>
             )}
+            {props.data.length === 0 &&
+                <div>
+                    Belum ada Project
+                </div>
+            }
         </div>
     )
 }
@@ -111,19 +129,19 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any }> = (pr
         <div className="ion-padding">
             {/* Bio */}
             <div className="about-section bordered">
-                <h2>Bio</h2>
-                <p className="justify">{props.bio}</p>
+                <h2>Biodata</h2>
+                <p className="justify">{props.bio === undefined ? 'Tambahkan biodata dirimu' : props.bio}</p>
             </div>
             {/* Portofolio */}
             <div className="ion-margin-top about-section bordered">
                 <h2>Portofolio</h2>
                 {/* loop */}
-                <p>{props.portofolio}</p>
+                <p>{props.portofolio === undefined ? 'Tambahkan protofoliomu' : props.portofolio}</p>
             </div>
             {/* Lokasi */}
             <div className="ion-margin-top about-section bordered">
                 <h2>location</h2>
-                <p><IonIcon icon={location} style={{ marginRight: "1rem" }} />{props.location}</p>
+                <p><IonIcon icon={location} style={{ marginRight: "1rem" }} />{props.location === undefined ? 'Tambahkan lokasi' : props.location}</p>
             </div>
         </div>
     )
@@ -131,39 +149,80 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any }> = (pr
 
 const Profile: React.FC = () => {
     const [data, setData] = useState<any>([]);
+    const [userData, setUserData] = useState<any>([]);
     const [dataReviewer, setDataReviewer] = useState<any>([]);
-    const [page, setPage] = useState("review");
+    const [page, setPage] = useState("about");
     const uriData = useParams<any>();
+    const history = useHistory();
+
+    //user data
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                const db = firebase.firestore();
+                var docRef = db.collection("users").doc(user.uid);
+
+                docRef.get()
+                    .then((doc) => {
+                        if (doc.exists) {
+                            // console.log("Document data:", doc.data());
+                            setUserData(doc.data());
+                        } else {
+                            // doc.data() will be undefined in this case
+                            console.log("User data missing!");
+                        }
+                    }).catch((error) => {
+                        console.log("Error getting document:", error);
+                    });
+            } else {
+                // User is signed out
+                // redirect to login page
+                var url = '/LoginPage';
+                history.push(url);
+                window.location.href = url;
+            }
+        });
+    }, []);
+
 
     useEffect(() => {
-        firebase
-            .firestore()
-            .collection('freelancer')
-            .doc(uriData.id)
-            .onSnapshot((snapshot) => {
-                const newData = {
-                    id: snapshot.id,
-                    ...snapshot.data()
-                }
+        //data freelancer
+        if (userData.type !== 'user') {
+            firebase
+                .firestore()
+                .collection('freelancer')
+                .doc(uriData.id)
+                .onSnapshot((snapshot) => {
+                    const newData = {
+                        id: snapshot.id,
+                        ...snapshot.data()
+                    }
 
-                setData(newData);
-            })
+                    setData(newData);
+                })
+        }
     }, [])
 
-    useEffect(() => {
-        firebase
-            .firestore()
-            .collection('freelancer')
-            .doc(uriData.id)
-            .collection('order')
-            .onSnapshot((snapshot) => {
-                const newReviewerData = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data()
-                }))
 
-                setDataReviewer(newReviewerData);
-            });
+    useEffect(() => {
+        //data reviewer
+        if (userData.type !== 'user') {
+            firebase
+                .firestore()
+                .collection('freelancer')
+                .doc(uriData.id)
+                .collection('order')
+                .onSnapshot((snapshot) => {
+                    const newReviewerData = snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }))
+
+                    setDataReviewer(newReviewerData);
+                });
+        }
     }, [])
 
     return (
@@ -178,27 +237,32 @@ const Profile: React.FC = () => {
                         <IonRow>
                             <IonCol size="2.2" className=" ion-padding">
                                 <IonAvatar className="profile-avatar">
-                                    <img src={data.pic} />
+                                    <img src={userData.photo = null ? profilePlaceHolder : userData.photo} />
                                 </IonAvatar>
                             </IonCol>
+
                             <IonCol style={{ marginLeft: "1.8rem" }}>
                                 <div>
-                                    <h1 className="ion-no-margin profile-name">{data.name}</h1>
-                                    <p className="ion-no-margin profile-desc">{data.job}</p>
-                                    <div className="profile-reputasi">
-                                        {data.length !== 0 &&
-                                            [...Array(data.star)].map((_, i) =>
-                                                <IonIcon icon={star} key={i} />
-                                            )
-                                        }
-                                        {data.length !== 0 &&
-                                            [...Array(5 - data.star)].map((_, i) =>
-                                                <IonIcon icon={starOutline} key={5 - i} />
-                                            )
-                                        }
-                                        <IonText className="profile-rating"> {data.star}.0</IonText>
-                                        <IonText className="profile-rating"> ({data.review} Review)</IonText>
-                                    </div>
+                                    <h1 className="ion-no-margin profile-name">{userData.name}</h1>
+                                    {userData.type !== 'user' &&
+                                        <div>
+                                            <p className="ion-no-margin profile-desc">{data.job}</p>
+                                            <div className="profile-reputasi">
+                                                {data.length !== 0 && data.length !== undefined &&
+                                                    [...Array(data.star)].map((_, i) =>
+                                                        <IonIcon icon={star} key={i} />
+                                                    )
+                                                }
+                                                {data.length !== 0 && data.length !== undefined &&
+                                                    [...Array(5 - data.star)].map((_, i) =>
+                                                        <IonIcon icon={starOutline} key={5 - i} />
+                                                    )
+                                                }
+                                                <IonText className="profile-rating"> {data.star}.0</IonText>
+                                                <IonText className="profile-rating"> ({data.review} Review)</IonText>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
                             </IonCol>
                         </IonRow>
@@ -206,6 +270,7 @@ const Profile: React.FC = () => {
                 </div>
 
                 {/* Segment Tab */}
+
                 <IonSegment onIonChange={e => setPage(e.detail.value!)} value={page} className='profile-segment'>
                     <IonSegmentButton value="review" >
                         <IonLabel>Review</IonLabel>
@@ -213,26 +278,27 @@ const Profile: React.FC = () => {
                     <IonSegmentButton value="order">
                         <IonLabel>Orders</IonLabel>
                     </IonSegmentButton>
-                    <IonSegmentButton value="project">
-                        <IonLabel>Projects</IonLabel>
-                    </IonSegmentButton>
+                    {userData.type !== 'user' &&
+                        <IonSegmentButton value="project">
+                            <IonLabel>Projects</IonLabel>
+                        </IonSegmentButton>
+                    }
                     <IonSegmentButton value="about">
                         <IonLabel>About</IonLabel>
                     </IonSegmentButton>
                 </IonSegment>
-
                 {/* Segment Page (pakai switch) */}
                 {
                     {
                         'review': <ReviewSegment data={dataReviewer} />,
                         'order': <OrderSegment data={dataReviewer} />,
                         'project': <ProjectSegment data={dataReviewer} />,
-                        'about': <AboutSegment bio={data.bio} location={data.location} portofolio={data.portofolio} />
-
-
+                        'about': <AboutSegment bio={userData.bio} location={userData.location} portofolio={userData.portofolio} />
                     }[page]
                 }
             </IonContent>
+
+
         </IonPage>
     );
 };

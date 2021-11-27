@@ -1,14 +1,52 @@
 import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from "@ionic/react";
 import { home, search, personCircle } from "ionicons/icons";
-import { Redirect, Route } from "react-router";
+import { Redirect, Route, useHistory } from "react-router";
+import { useEffect, useState } from "react";
+import firebase from '../firebase';
 
+// Component
 import HomePage from "./HomePage";
 import SearchPage from "./SearchPage";
 import ProfilePage from "./ProfilePage";
 import FreelancerDetail from "./FreelancerDetail";
 
-
 const Tabs: React.FC = () => {
+    const [userData, setUserData] = useState<any>([]);
+    const [id, setId] = useState<any>();
+    const history = useHistory();
+    //user data
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                const db = firebase.firestore();
+                var docRef = db.collection("users").doc(user.uid);
+                setId(user.uid);
+
+                docRef.get()
+                    .then((doc) => {
+                        if (doc.exists) {
+                            // console.log("Document data:", doc.data());
+                            setUserData(doc.data());
+                            
+                        } else {
+                            // doc.data() will be undefined in this case
+                            console.log("User data missing!");
+                        }
+                    }).catch((error) => {
+                        console.log("Error getting document:", error);
+                    });
+            } else {
+                // User is signed out
+                // redirect to login page
+                var url = '/LoginPage';
+                history.push(url);
+                window.location.href = url;
+            }
+        });
+    }, []);
+
     return (
         <IonTabs>
             <IonRouterOutlet>
@@ -19,7 +57,7 @@ const Tabs: React.FC = () => {
                     <ProfilePage />
                 </Route>
                 <Route exact path="/Tabs/Freelancer/:id">
-                    <FreelancerDetail/>
+                    <FreelancerDetail />
                 </Route>
             </IonRouterOutlet>
 
@@ -32,7 +70,7 @@ const Tabs: React.FC = () => {
                     <IonIcon icon={search}></IonIcon>
                     <IonLabel>Search</IonLabel>
                 </IonTabButton>
-                <IonTabButton tab="Profilepage" href="/Tabs/Profilepage/1">
+                <IonTabButton tab="Profilepage" href={"/Tabs/Profilepage/"+ (id)}>
                     <IonIcon icon={personCircle}></IonIcon>
                     <IonLabel>Profile</IonLabel>
                 </IonTabButton>

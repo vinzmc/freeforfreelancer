@@ -51,6 +51,7 @@ const CheckoutPage: React.FC = () => {
     function handleGoBack() {
         window.history.go(-1);
     }
+    
     const orderDetail = (id: string) => {
         var url = '/OrderDetail/Freelancer/'.concat(id);
         history.push(url, state.state);

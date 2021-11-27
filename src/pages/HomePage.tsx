@@ -2,13 +2,49 @@ import { IonContent, IonIcon, IonPage } from '@ionic/react';
 import firebase from '../firebase';
 import Freelancer from '../components/Freelancer';
 import { cameraOutline, codeSlashOutline, colorPaletteOutline, megaphoneOutline, notificationsOutline, shirtOutline, videocamOffOutline } from 'ionicons/icons';
-
-import './HomePage.css'
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
+
+//theme
+import './HomePage.css'
 
 const HomePage: React.FC = () => {
   const [data, setData] = useState<any>([]);
+  const [userData, setUserData] = useState<any>([]);
+  const history = useHistory();
 
+  //user data
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const db = firebase.firestore();
+        var docRef = db.collection("users").doc(user.uid);
+
+        docRef.get()
+          .then((doc) => {
+            if (doc.exists) {
+              // console.log("Document data:", doc.data());
+              setUserData(doc.data());
+            } else {
+              // doc.data() will be undefined in this case
+              console.log("User data missing!");
+            }
+          }).catch((error) => {
+            console.log("Error getting document:", error);
+          });
+      } else {
+        // User is signed out
+        // redirect to login page
+        var url = '/LoginPage';
+        history.push(url);
+        window.location.href = url;
+      }
+    });
+  }, []);
+
+  //freelancer data
   useEffect(() => {
     firebase
       .firestore()
@@ -24,12 +60,8 @@ const HomePage: React.FC = () => {
       })
   }, [])
 
-  function cardOnClick(id: string) {
-    window.location.href = "/Freelancer/".concat(id);
-  }
-
-  function categoryOnClick(id: string) {
-    window.location.href = "/CategoryPage/".concat(id);
+  function redirectWithId(page: string, id: string) {
+    window.location.href = '/'.concat(page, '/', id);
   }
 
   const arrCategory = [
@@ -59,9 +91,8 @@ const HomePage: React.FC = () => {
   return (
     <IonPage>
       <IonContent className="ion-padding">
-
         <div className="navbar">
-          <h2 className="username"><span>Hello,</span><br />Sergio Nathaniel</h2>
+          <h2 className="username"><span>Hello,</span><br />{userData.name}</h2>
           <IonIcon icon={notificationsOutline} className="notification" />
         </div>
 
@@ -69,7 +100,7 @@ const HomePage: React.FC = () => {
           <h2>Select Categories</h2>
           <div className="categories-flex">
             {arrCategory.map((doc, i) =>
-              <a onClick={() => categoryOnClick(doc)} className="category" key={i}>
+              <a onClick={() => redirectWithId('CategoryPage', doc)} className="category" key={i}>
                 <IonIcon icon={arrIcon[i]} className="category-icon" />
                 <p>{doc}</p>
               </a>
@@ -77,7 +108,7 @@ const HomePage: React.FC = () => {
           </div>
           <div className="categories-flex">
             {arrCategory2.map((doc, i) =>
-              <a onClick={() => categoryOnClick(doc)} className="category" key={i}>
+              <a onClick={() => redirectWithId('CategoryPage', doc)} className="category" key={i}>
                 <IonIcon icon={arrIcon2[i]} className="category-icon" />
                 <p>{doc}</p>
               </a>
@@ -87,8 +118,8 @@ const HomePage: React.FC = () => {
 
         <div className="featured-freelancer">
           <h2 className="featured-freelancer-title">Featured Freelancers</h2>
-          {data.slice(0,4).map((doc: any) =>
-            <div onClick={() => cardOnClick(doc.id)} key={doc.id}>
+          {data.slice(0, 4).map((doc: any) =>
+            <div onClick={() => redirectWithId('Freelancer', doc.id)} key={doc.id}>
               <Freelancer name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} />
             </div>
           )}

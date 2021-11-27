@@ -1,13 +1,11 @@
 import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonIcon, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import firebase from '../firebase';
 import { useEffect, useState } from 'react';
-
-//theme
-import './ProfilePage.css';
-import './Payment.css'
 import { star, starOutline } from 'ionicons/icons';
 import { useHistory, useLocation, useParams } from 'react-router';
 
+//theme
+import './Payment.css'
 
 const Payment: React.FC = () => {
     const [data, setData] = useState<any>([]);
