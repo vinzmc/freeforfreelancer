@@ -1,4 +1,4 @@
-import { IonAvatar, IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSegment, IonSegmentButton, IonText } from '@ionic/react';
+import { IonAvatar, IonButton, IonCol, IonContent, IonGrid, IonIcon, IonInput, IonLabel, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonTextarea } from '@ionic/react';
 import firebase from '../firebase';
 import { useEffect, useState } from 'react';
 import { star, starOutline, location } from 'ionicons/icons';
@@ -124,7 +124,40 @@ const ProjectSegment: React.FC<{ data: any[] }> = (props) => {
     )
 }
 
-const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any }> = (props) => {
+const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef: any, userDataName: any, userDataEmail: any, userDataPhoto: any }> = (props) => {
+
+    const [postData, setPostData] = useState<any>('');
+    const [postData2, setPostData2] = useState<any>('');
+    const [showModal, setShowModal] = useState(false);
+
+    const [category, setCat] = useState<string>();
+
+    const updateType = () => {
+        console.log(props.docRef)
+        console.log(postData)
+        console.log(props.userDataName)
+
+        const db = firebase.firestore();
+        db.collection('users').doc(props.docRef).set({
+            email: props.userDataEmail,
+            fee: 0.1,
+            star: 0,
+            category: category,
+            name: props.userDataName,
+            photo: props.userDataPhoto,
+            type: "freelancer",
+            job: postData,
+            price: postData2
+        }).then(() => {
+            console.log('success')
+
+        }).catch(() => {
+            console.log("error")
+        })
+
+        setShowModal(false)
+
+    }
     return (
         <div className="ion-padding">
             {/* Bio */}
@@ -140,8 +173,38 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any }> = (pr
             </div>
             {/* Lokasi */}
             <div className="ion-margin-top about-section bordered">
-                <h2>location</h2>
+                <h2>Location</h2>
                 <p><IonIcon icon={location} style={{ marginRight: "1rem" }} />{props.location === undefined ? 'Tambahkan lokasi' : props.location}</p>
+            </div>
+            <div className="ion-margin-top about-section bordered">
+                <h2>Setting</h2>
+                <IonModal isOpen={showModal} cssClass='modal-class' backdropDismiss={false}>
+                    <div className="form-inputs">
+                        <div className="ion-padding">
+                            <p className="form-name">Job<span style={{ color: 'red' }}>*</span></p>
+                            <IonInput placeholder="Job name" className="form-input" style={{ color: "gray" }} value={postData} onIonChange={(e: any) => setPostData(e.target.value)}></IonInput>
+
+                            <p className="form-name">Price<span style={{ color: 'red' }}>*</span></p>
+                            <IonInput placeholder="Your price" className="form-input" style={{ color: "gray" }} value={postData2} onIonChange={(e: any) => setPostData2(e.target.value)} type="number"></IonInput>
+
+                            <p className="form-name">Category<span style={{ color: 'red' }}>*</span></p>
+                            <IonSelect value={category} placeholder="Select category" onIonChange={e => setCat(e.detail.value)}>
+                                <IonSelectOption value="Design">Design</IonSelectOption>
+                                <IonSelectOption value="Programming">Programming</IonSelectOption>
+                                <IonSelectOption value="Marketing">Marketing</IonSelectOption>
+                                <IonSelectOption value="Videography">Videography</IonSelectOption>
+                                <IonSelectOption value="Photography">Photography</IonSelectOption>
+                                <IonSelectOption value="T-shirt Design">T-shirt Design</IonSelectOption>
+                            </IonSelect>
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
+                            <IonButton className="modal-btn" onClick={() => updateType()} style={{ marginRight: "1rem" }} disabled={(postData === '' || postData2 === '') ? true : false}>Proceed</IonButton>
+                            <IonButton onClick={() => setShowModal(false)} className="modal-btn">Cancel</IonButton>
+                        </div>
+                    </div>
+
+                </IonModal>
+                <IonButton className="summary-button ion-margin-bottom" onClick={() => setShowModal(true)}>Start Freelance</IonButton>
             </div>
         </div>
     )
@@ -152,8 +215,11 @@ const Profile: React.FC = () => {
     const [userData, setUserData] = useState<any>([]);
     const [dataReviewer, setDataReviewer] = useState<any>([]);
     const [page, setPage] = useState("about");
+    const [userDocRef, setUserDocRef] = useState("")
     const uriData = useParams<any>();
     const history = useHistory();
+
+    const name = ""
 
     //user data
     useEffect(() => {
@@ -163,6 +229,8 @@ const Profile: React.FC = () => {
                 // https://firebase.google.com/docs/reference/js/firebase.User
                 const db = firebase.firestore();
                 var docRef = db.collection("users").doc(user.uid);
+
+                setUserDocRef(user.uid)
 
                 docRef.get()
                     .then((doc) => {
@@ -293,7 +361,7 @@ const Profile: React.FC = () => {
                         'review': <ReviewSegment data={dataReviewer} />,
                         'order': <OrderSegment data={dataReviewer} />,
                         'project': <ProjectSegment data={dataReviewer} />,
-                        'about': <AboutSegment bio={userData.bio} location={userData.location} portofolio={userData.portofolio} />
+                        'about': <AboutSegment bio={userData.bio} location={userData.location} portofolio={userData.portofolio} docRef={userDocRef} userDataName={userData.name} userDataEmail={userData.email} userDataPhoto={userData.photo} />
                     }[page]
                 }
             </IonContent>
