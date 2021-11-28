@@ -295,7 +295,6 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
 }
 
 const Profile: React.FC = () => {
-    const [data, setData] = useState<any>([]);
     const [userData, setUserData] = useState<any>([]);
     const [dataReviewer, setDataReviewer] = useState<any>([]);
     const [page, setPage] = useState("about");
@@ -337,24 +336,6 @@ const Profile: React.FC = () => {
             }
         });
     }, []);
-
-    //data freelancer
-    useEffect(() => {
-        if (userData.type !== 'user') {
-            firebase
-                .firestore()
-                .collection('freelancer')
-                .doc(uriData.id)
-                .onSnapshot((snapshot) => {
-                    const newData = {
-                        id: snapshot.id,
-                        ...snapshot.data()
-                    }
-
-                    setData(newData);
-                })
-        }
-    }, [])
 
     //data reviewer
     useEffect(() => {
