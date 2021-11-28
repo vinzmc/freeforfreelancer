@@ -272,11 +272,7 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
                     </div>
                 </IonModal>
                 <IonButton className="summary-button ion-margin-bottom" onClick={() => setEditModal(true)}>Edit Profile</IonButton>
-            </div>
-            {/* Lokasi */}
-            <div className="ion-margin-top about-section bordered">
-                <h2>Sign Out</h2>
-                <IonButton className="summary-button ion-margin-bottom" onClick={signout}>Sign Out</IonButton>
+                <IonButton className="summary-button ion-margin-bottom" onClick={signout} color="danger" style={{float: 'right'}}>Sign Out</IonButton>
             </div>
         </div>
     )
