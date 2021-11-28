@@ -1,9 +1,9 @@
-import { IonBackButton, IonButton, IonButtons, IonContent, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonPage, IonTextarea, IonTitle, IonToolbar, IonIcon } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import firebase from '../firebase';
 import { FaStar } from 'react-icons/fa'
 import { useHistory, useParams } from 'react-router';
-
+import { chevronBackOutline } from 'ionicons/icons';
 //theme
 import './ReviewPage.css'
 
@@ -117,9 +117,9 @@ const ReviewPage: React.FC = () => {
         star += rating;
         totalReview++;
         star /= totalReview;
-        if(star%1 > 0.5){
+        if (star % 1 > 0.5) {
             star = Math.ceil(star);
-        }else{
+        } else {
             star = Math.floor(star);
         }
 
@@ -151,12 +151,21 @@ const ReviewPage: React.FC = () => {
             })
     }
 
+    const handleBackButton = (id: string) => {
+        var url = '/OrderDetail/Freelancer/'.concat(id);
+        history.push(url);
+        window.location.href = url;
+    }
+
     return (
         <IonPage>
             <IonToolbar className="ion-margin-top">
                 <IonTitle className="titleMiddle" style={{ fontWeight: "500", fontSize: "16px" }}>Review</IonTitle>
                 <IonButtons slot="start">
-                    <IonBackButton defaultHref={`/OrderDetail/Freelancer/${uriData.id}`} />
+                    <IonButton onClick={() => { handleBackButton(uriData.id) }}>
+                        <IonIcon icon={chevronBackOutline} color='blue'></IonIcon>
+                        Back
+                    </IonButton>
                 </IonButtons>
             </IonToolbar>
             <IonContent fullscreen>
