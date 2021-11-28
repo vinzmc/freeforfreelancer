@@ -28,7 +28,7 @@ const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
                             })}
                         </div>
                         {/* Reviewer */}
-                        <h4 className="ion-no-margin review-name">{doc.clientName}</h4>
+                        <h4 className="ion-no-margin review-name" style={{fontWeight:'bold'}}>{doc.clientName}</h4>
                         {/* Review Desc */}
                         <p className="justify review-content" >{doc.feedback}</p>
                     </div>
