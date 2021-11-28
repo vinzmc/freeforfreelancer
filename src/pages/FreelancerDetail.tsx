@@ -1,4 +1,4 @@
-import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonLabel, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonLabel, IonList, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import firebase from '../firebase';
 import { useEffect, useState } from 'react';
 
@@ -13,24 +13,27 @@ const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
         // di loop
         <div>
             {props.data && props.data.map((doc: any) =>
-                <div className="ion-padding" key={doc.id}>
-                    {/* bintang */}
-                    <div className="bintang-review">
-                        {[...Array(5)].map((star, i) => {
-                            const ratingValue = i + 1;
+                <IonList className="ion-padding" key={doc.id}>
+                    <div className="about-section bordered">
+                        {/* bintang */}
+                        <div className="bintang-review">
+                            {[...Array(5)].map((star, i) => {
+                                const ratingValue = i + 1;
 
-                            return (
-                                <label key={i}>
-                                    <FaStar className="star" color={ratingValue <= doc.rating ? "ffc107" : "7f7f7f"} size={20} />
-                                </label>
-                            );
-                        })}
+                                return (
+                                    <label key={i}>
+                                        <FaStar className="star" color={ratingValue <= doc.rating ? "ffc107" : "7f7f7f"} size={20} />
+                                    </label>
+                                );
+                            })}
+                        </div>
+                        {/* Reviewer */}
+                        <h4 className="ion-no-margin review-name">{doc.clientName}</h4>
+                        {/* Review Desc */}
+                        <p className="justify review-content" >{doc.feedback}</p>
                     </div>
-                    {/* Reviewer */}
-                    <h4 className="ion-no-margin review-name">{doc.clientName}</h4>
-                    {/* Review Desc */}
-                    <p className="justify review-content" >{doc.feedback}</p>
-                </div>
+                </IonList>
+
             )}
             {props.data.length == 0 && (
                 <div className="container">
