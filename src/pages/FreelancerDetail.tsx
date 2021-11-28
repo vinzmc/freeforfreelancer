@@ -34,7 +34,11 @@ const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
                 </div>
             )}
             {props.data.length == 0 && (
-                <p className="justify">anda belum memiliki review</p>
+                <div className="container">
+                <div className="center">
+                    Freelancer Belum Memiliki Review
+                </div>
+            </div>
             )}
             
         </div>
@@ -77,7 +81,11 @@ const ProjectSegment: React.FC<{ data: any[] }> = (props) => {
                 </div>
             )}
             {props.data.length == 0 && (
-                <p className="justify">anda belum memiliki project</p>
+                <div className="container">
+                <div className="center">
+                    Freelancer Belum Memiliki Project
+                </div>
+            </div>
             )}
         </div>
     )
