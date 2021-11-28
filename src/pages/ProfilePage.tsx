@@ -10,43 +10,6 @@ import profilePlaceHolder from '../assets/profilePlaceHolder.png'
 //theme
 import './ProfilePage.css';
 
-const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
-    return (
-        // di loop
-        <div>
-            {props.data.map((doc: any) =>
-                <div className="ion-padding" key={doc.id}>
-                    {/* bintang */}
-                    <div className="bintang-review">
-                        {[...Array(doc.star)].map((x, i) =>
-                            <IonIcon icon={star} key={i} />
-                        )}
-                        {[...Array(5 - doc.star)].map((x, i) =>
-                            <IonIcon icon={starOutline} key={5 - i} />
-                        )}
-                        <IonText className="profile-rating"> {doc.star}.0</IonText>
-                    </div>
-
-                    {/* Review */}
-                    <h3 className="ion-no-margin review-konteks">{doc.review}</h3>
-
-                    {/* Reviewer */}
-                    <h4 className="ion-no-margin review-name">{doc.nama}</h4>
-                    {/* Review Desc */}
-                    <p className="justify review-content" >{doc.reviewContent}</p>
-                </div>
-            )}
-            {props.data.length === 0 &&
-                <div className="container">
-                    <div className="center">
-                        Belum ada Review
-                    </div>
-                </div>
-            }
-        </div>
-    )
-}
-
 const OrderSegment: React.FC<{ data: any[] }> = (props) => {
     return (
         // di loop
@@ -414,9 +377,6 @@ const Profile: React.FC = () => {
                 {/* Segment Tab */}
 
                 <IonSegment onIonChange={e => setPage(e.detail.value!)} value={page} className='profile-segment'>
-                    <IonSegmentButton value="review" >
-                        <IonLabel>Review</IonLabel>
-                    </IonSegmentButton>
                     <IonSegmentButton value="order">
                         <IonLabel>Orders</IonLabel>
                     </IonSegmentButton>
@@ -432,7 +392,6 @@ const Profile: React.FC = () => {
                 {/* Segment Page (pakai switch) */}
                 {
                     {
-                        'review': <ReviewSegment data={dataReviewer} />,
                         'order': <OrderSegment data={dataReviewer} />,
                         // 'project': <ProjectSegment data={dataReviewer} />,
                         'about': <AboutSegment bio={userData.bio} location={userData.location} portofolio={userData.portofolio} docRef={userDocRef} userDataName={userData.name} userDataPhoto={userData.photo} userDataType={userData.type} userDataJob={userData.job} userDataCategory={userData.category} />
