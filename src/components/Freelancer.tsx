@@ -3,7 +3,7 @@ import { star, starOutline } from "ionicons/icons"
 
 import './Freelancer.css'
 
-const Freelancer: React.FC<{ name: string, job: string, star: number, review: number, price: string, pic: string }> = props => {
+const Freelancer: React.FC<{ name: string, job: string, star: number, totalReview: number, price: string, pic: string }> = props => {
     return (
         <div className="freelancer">
             <div className="freelancer-pic-price">
@@ -21,7 +21,7 @@ const Freelancer: React.FC<{ name: string, job: string, star: number, review: nu
                             )}
                             {[...Array(5 - props.star)].map((_, i) =>
                                 <IonIcon icon={starOutline} key={5 - i} />
-                            )} ({props.review} reviews)
+                            )} ({props.totalReview} reviews)
                         </h2>
                     }
                     {props.star === 0 &&

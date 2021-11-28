@@ -120,7 +120,7 @@ const HomePage: React.FC = () => {
           <h2 className="featured-freelancer-title">Featured Freelancers</h2>
           {data.slice(0, 4).map((doc: any) =>
             <div onClick={() => redirectWithId('Freelancer', doc.id)} key={doc.id}>
-              <Freelancer name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.photo} />
+              <Freelancer name={doc.name} job={doc.job} star={doc.star} totalReview={doc.totalReview} price={doc.price + 'M'} pic={doc.photo} />
             </div>
           )}
         </div>
