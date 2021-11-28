@@ -140,7 +140,7 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
         db.collection('users').doc(props.docRef).set({
             fee: 0.1,
             star: 0,
-            totalReview:0,
+            totalReview: 0,
             category: category,
             type: "freelancer",
             job: postData,
@@ -169,12 +169,12 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
     const updateProfile = () => {
         const db = firebase.firestore();
         db.collection('users').doc(props.docRef).set({
-            name: profileData1 === null ? props.userDataName : profileData1,
-            bio: profileData2 === null ? '' : profileData2,
-            portofolio: profileData3 === null ? '' : profileData3,
-            location: profileData4 === null ? '' : profileData4,
-            job: profileData5 === null ? props.userDataJob : profileData5,
-            category: profileData6 === null ? props.userDataCategory : profileData6
+            name: profileData1 === '' ? props.userDataName : profileData1,
+            bio: profileData2 === '' ? '' : profileData2,
+            portofolio: profileData3 === '' ? '' : profileData3,
+            location: profileData4 === '' ? '' : profileData4,
+            job: profileData5 === '' ? props.userDataJob : profileData5,
+            category: profileData6 === '' ? props.userDataCategory : profileData6
         }, { merge: true }).then(() => {
             console.log('success')
 
@@ -191,18 +191,18 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
             {/* Bio */}
             <div className="about-section bordered">
                 <h2>Biodata</h2>
-                <p className="justify">{props.bio === undefined ? 'Tambahkan biodata dirimu' : props.bio}</p>
+                <p className="justify">{props.bio === undefined || props.bio === '' ? 'Tambahkan biodata dirimu' : props.bio}</p>
             </div>
             {/* Portofolio */}
             <div className="ion-margin-top about-section bordered">
                 <h2>Portofolio</h2>
                 {/* loop */}
-                <p>{props.portofolio === undefined ? 'Tambahkan protofoliomu' : props.portofolio}</p>
+                <p>{props.portofolio === undefined || props.portofolio === '' ? 'Tambahkan protofoliomu' : props.portofolio}</p>
             </div>
             {/* Lokasi */}
             <div className="ion-margin-top about-section bordered">
                 <h2>Location</h2>
-                <p><IonIcon icon={location} style={{ marginRight: "1rem" }} />{props.location === undefined ? 'Tambahkan lokasi' : props.location}</p>
+                <p><IonIcon icon={location} style={{ marginRight: "1rem" }} />{props.location === undefined || props.location === '' ? 'Tambahkan lokasi' : props.location}</p>
             </div>
             {/* Settings  */}
             <div className="ion-margin-top about-section bordered">
