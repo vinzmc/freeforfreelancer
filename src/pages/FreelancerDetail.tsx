@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import './ProfilePage.css';
 import { star, starOutline, location } from 'ionicons/icons';
 import { useHistory, useParams } from 'react-router';
+import { FaStar } from 'react-icons/fa';
 
 const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
     return (
@@ -15,30 +16,28 @@ const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
                 <div className="ion-padding" key={doc.id}>
                     {/* bintang */}
                     <div className="bintang-review">
-                        {[...Array(doc.star)].map((x, i) =>
-                            <IonIcon icon={star} key={i} />
-                        )}
-                        {[...Array(5 - doc.star)].map((x, i) =>
-                            <IonIcon icon={starOutline} key={5 - i} />
-                        )}
-                        <IonText className="profile-rating"> {doc.star}.0</IonText>
+                        {[...Array(5)].map((star, i) => {
+                            const ratingValue = i + 1;
+
+                            return (
+                                <label key={i}>
+                                    <FaStar className="star" color={ratingValue <= doc.rating ? "ffc107" : "7f7f7f"} size={20} />
+                                </label>
+                            );
+                        })}
                     </div>
-
-                    {/* Review */}
-                    <h3 className="ion-no-margin review-konteks">{doc.review}</h3>
-
                     {/* Reviewer */}
-                    <h4 className="ion-no-margin review-name">{doc.nama}</h4>
+                    <h4 className="ion-no-margin review-name">{doc.clientName}</h4>
                     {/* Review Desc */}
-                    <p className="justify review-content" >{doc.reviewContent}</p>
+                    <p className="justify review-content" >{doc.feedback}</p>
                 </div>
             )}
             {props.data.length == 0 && (
                 <div className="container">
-                <div className="center">
-                    Freelancer Belum Memiliki Review
+                    <div className="center">
+                        Freelancer Belum Memiliki Review
+                    </div>
                 </div>
-            </div>
             )}
 
         </div>
@@ -82,10 +81,10 @@ const ProjectSegment: React.FC<{ data: any[] }> = (props) => {
             )}
             {props.data.length == 0 && (
                 <div className="container">
-                <div className="center">
-                    Freelancer Belum Memiliki Project
+                    <div className="center">
+                        Freelancer Belum Memiliki Project
+                    </div>
                 </div>
-            </div>
             )}
         </div>
     )
@@ -130,15 +129,19 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any }> = (pr
 }
 
 const FreelancerDetail: React.FC = () => {
-    const [data, setData] = useState<any>([]);
-    const [dataReviewer, setDataReviewer] = useState<any>([]);
-    const [postData, setPostData] = useState<any>('');
-    const [postData2, setPostData2] = useState<any>('');
-    const [page, setPage] = useState("review");
     const uriData = useParams<any>();
-    const [showModal, setShowModal] = useState(false);
     const history = useHistory();
 
+    const [data, setData] = useState<any>([]);
+    const [dataReviewer, setDataReviewer] = useState<any>([]);
+
+    const [postData, setPostData] = useState<any>('');
+    const [postData2, setPostData2] = useState<any>('');
+
+    const [page, setPage] = useState("review");
+    const [showModal, setShowModal] = useState(false);
+
+    //handle payment button
     const payment = (id: string) => {
         var url = '/Payment/Freelancer/'.concat(id)
         var arr = [postData, postData2]
@@ -148,6 +151,7 @@ const FreelancerDetail: React.FC = () => {
         setShowModal(false);
     }
 
+    //profile freelancer
     useEffect(() => {
         const db = firebase.firestore();
         const fetchData = async () => {
@@ -178,19 +182,19 @@ const FreelancerDetail: React.FC = () => {
         fetchData()
     }, []);
 
+    // reviews data
     useEffect(() => {
         const db = firebase.firestore();
-        db.collection('users')
-            .doc(uriData.id)
-            .collection('order')
-            .onSnapshot((snapshot) => {
-                const newReviewerData = snapshot.docs.map((doc) => ({
+        db.collection('reviews')
+            .where('freelancer', '==', uriData.id)
+            .get()
+            .then(querySnapshot => {
+                var newData = querySnapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data()
                 }))
-
-                setDataReviewer(newReviewerData);
-                // console.log(dataReviewer)
+                // console.log('data', newData);
+                setDataReviewer(newData);
             });
     }, []);
 

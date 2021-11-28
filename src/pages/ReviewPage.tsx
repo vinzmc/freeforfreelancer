@@ -13,23 +13,81 @@ const ReviewPage: React.FC = () => {
     const history = useHistory();
 
     const [data, setData] = useState<any>([]);
+    const [dataFreelancer, setDataFreelancer] = useState<any>([]);
+    const [userName, setUserName] = useState<string>('');
+
     const [feedback, setFeedback] = useState<any>('');
     const [rating, setRating] = useState<number>(5);
 
+    //user data
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                const db = firebase.firestore();
+                var docRef = db.collection("users").doc(user.uid);
+
+                docRef.get()
+                    .then((doc) => {
+                        if (doc.exists) {
+                            // console.log("Document data:", doc.data());
+                            setUserName(doc.data()!.name);
+                        } else {
+                            // doc.data() will be undefined in this case
+                            console.log("User data missing!");
+                        }
+                    }).catch((error) => {
+                        console.log("Error getting document:", error);
+                    });
+            } else {
+                // User is signed out
+                // redirect to login page
+                var url = '/LoginPage';
+                history.push(url);
+                window.location.href = url;
+            }
+        });
+    }, []);
+
     // orders data
     useEffect(() => {
-        const db = firebase.firestore();
-        db.collection('orders')
-            .doc(uriData.id)
-            .onSnapshot((snapshot) => {
-                const newData = {
-                    id: snapshot.id,
-                    ...snapshot.data()
-                }
+        const fetchData = () => {
+            const db = firebase.firestore();
+            db.collection('orders')
+                .doc(uriData.id)
+                .onSnapshot((snapshot) => {
+                    const newData = {
+                        id: snapshot.id,
+                        ...snapshot.data()
+                    }
 
-                setData(newData);
-            })
+                    setData(newData);
+                })
+        }
+        fetchData();
     }, []);
+
+    //profile freelancer
+    useEffect(() => {
+        const fetchData2 = (id: string) => {
+            const db = firebase.firestore();
+            db.collection('users')
+                .doc(id)
+                .onSnapshot((snapshot) => {
+                    const newData = {
+                        id: snapshot.id,
+                        ...snapshot.data()
+                    }
+
+                    setDataFreelancer(newData);
+                })
+        }
+
+        if (data.freelancer !== null) {
+            fetchData2(data.freelancer);
+        }
+    }, [data]);
 
     // submit review
     const handleSubmitReview = async () => {
@@ -42,6 +100,7 @@ const ReviewPage: React.FC = () => {
             .add({
                 orderId: data.id,
                 client: data.client,
+                clientName: userName,
                 freelancer: data.freelancer,
                 rating: rating,
                 feedback: feedback,
@@ -52,19 +111,44 @@ const ReviewPage: React.FC = () => {
             })
 
         const db2 = firebase.firestore();
-        db2.collection('orders')
-        .doc(uriData.id)
-        .set({
-            status:'Reviewed'
-        }, { merge: true })
-        .then(() => {
-            console.log('success')
-        }).catch(() => {
-            console.log("error")
-        }).finally(() => {
-            history.push(url);
-            window.location.href = url;
-        })
+        let star = dataFreelancer.star;
+        let totalReview = dataFreelancer.totalReview;
+        star = star * totalReview;
+        star += rating;
+        totalReview++;
+        star /= totalReview;
+        if(star%1 > 0.5){
+            star = Math.ceil(star);
+        }else{
+            star = Math.floor(star);
+        }
+
+        await db2.collection('users')
+            .doc(dataFreelancer.id)
+            .set({
+                star: star,
+                totalReview: totalReview
+            }, { merge: true })
+            .then(() => {
+                console.log('success')
+            }).catch(() => {
+                console.log("error")
+            })
+
+        const db3 = firebase.firestore();
+        await db3.collection('orders')
+            .doc(uriData.id)
+            .set({
+                status: 'Reviewed'
+            }, { merge: true })
+            .then(() => {
+                console.log('success')
+            }).catch(() => {
+                console.log("error")
+            }).finally(() => {
+                history.push(url);
+                window.location.href = url;
+            })
     }
 
     return (

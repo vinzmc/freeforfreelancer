@@ -134,6 +134,7 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
         db.collection('users').doc(props.docRef).set({
             fee: 0.1,
             star: 0,
+            totalReview:0,
             category: category,
             type: "freelancer",
             job: postData,
