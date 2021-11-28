@@ -185,8 +185,6 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
         })
     }
 
-
-
     return (
         <div className="ion-padding">
             {/* Bio */}
