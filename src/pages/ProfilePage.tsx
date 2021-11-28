@@ -149,7 +149,7 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
         firebase.auth().signOut().then(() => {
             window.location.replace('LoginPage.tsx');
         }).catch((error) => {
-            console.log('Cannot Sign Out')
+            console.log('Cannot Sign Out');
         });
     }
 
