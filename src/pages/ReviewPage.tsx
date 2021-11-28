@@ -50,10 +50,6 @@ const ReviewPage: React.FC = () => {
             .catch(function (error) {
                 console.error("Error adding document: ", error);
             })
-        // .finally(() => {
-        //     history.push(url);
-        //     window.location.href = url;
-        // });
 
         const db2 = firebase.firestore();
         db2.collection('orders')

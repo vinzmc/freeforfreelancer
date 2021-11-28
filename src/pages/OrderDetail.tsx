@@ -1,6 +1,7 @@
 import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { star, starOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
+import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router";
 import firebase from '../firebase';
 
@@ -9,6 +10,7 @@ const OrderDetail: React.FC = () => {
 
     const [data, setData] = useState<any>([]);
     const [dataFreelancer, setDataFreelancer] = useState<any>([]);
+    const [dataReview, setDataReview] = useState<any>(null);
     const [currTime, setCurrTime] = useState<string>();
 
     // orders data
@@ -24,6 +26,24 @@ const OrderDetail: React.FC = () => {
 
                 setData(newData);
             })
+    }, []);
+
+    // Review Data
+    useEffect(() => {
+        const db = firebase.firestore();
+        db.collection('reviews')
+            .where('orderId', '==', uriData.id)
+            .get()
+            .then(querySnapshot => {
+                var newData = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data()
+                }))
+                // console.log('data', newData);
+                if (newData.length !== 0) {
+                    setDataReview(newData[0]);
+                }
+            });
     }, []);
 
     // freelancer data
@@ -135,6 +155,22 @@ const OrderDetail: React.FC = () => {
                     <h3 className="summary-detail" style={{ marginTop: '5px', fontWeight: 'bold' }}>Delivery Files</h3>
                     <h3 className="summary-detail" style={{ marginTop: '5px' }}>dummy-files.mp4</h3>
                 </div>
+
+                {dataReview !== null &&
+                    <div className="summary-box ion-margin">
+                        <h3 className="summary-detail" style={{ marginTop: '5px', fontWeight: 'bold' }}>Feedback</h3>
+                        {[...Array(5)].map((star, i) => {
+                            const ratingValue = i + 1;
+
+                            return (
+                                <label key={i}>
+                                    <FaStar className="star" color={ratingValue <= dataReview.rating ? "ffc107" : "7f7f7f"} size={20} />
+                                </label>
+                            );
+                        })}
+                        <h3 className="summary-detail" style={{ marginTop: '5px' }}>{dataReview.feedback}</h3>
+                    </div>
+                }
 
                 <div className="ion-margin ion-padding" style={{ display: "flex", justifyContent: "space-around" }}>
                     {data.status !== 'Reviewed' &&
