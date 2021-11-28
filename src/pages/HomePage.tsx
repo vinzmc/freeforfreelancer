@@ -46,9 +46,9 @@ const HomePage: React.FC = () => {
 
   //freelancer data
   useEffect(() => {
-    firebase
-      .firestore()
-      .collection('users')
+
+    const db = firebase.firestore();
+    db.collection('users')
       .where('type', '==', 'freelancer')
       .onSnapshot((snapshot) => {
         const newData = snapshot.docs.map((doc) => ({
