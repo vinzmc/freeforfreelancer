@@ -1,7 +1,14 @@
-import { IonPage, IonContent, IonInput, IonButton } from "@ionic/react"
+import { IonPage, IonContent, IonInput, IonButton, IonApp, IonIcon } from "@ionic/react"
 import { Link, useHistory } from "react-router-dom";
+import { logoGoogle } from 'ionicons/icons';
 import firebase from "firebase/app";
 import "firebase/auth";
+
+//assets
+import logo3F from '../assets/logo.png'
+
+//theme
+import './LoginPage.css';
 
 const LoginPage: React.FC = () => {
     const history = useHistory();
@@ -63,26 +70,19 @@ const LoginPage: React.FC = () => {
 
 
     return (
-        <IonPage>
+        <IonApp>
             <IonContent>
-                <h2 className="title">Sign In</h2>
-
-                <div className="form-inputs">
-                    <div className="ion-padding">
-
-                        <p className="form-name">Email address</p>
-                        <IonInput placeholder="Email address..." className="form-input" type="email"></IonInput>
-
-                        <p className="form-name">Password</p>
-                        <IonInput placeholder="Password..." className="form-input" type="password"></IonInput>
-
-                    </div>
+                <div className="center">
+                    <img src={logo3F} />
+                    <h1>FreeForFreelancer</h1>
+                    <p>Free To Freelance, Free To Get User</p>
+                    <h2 className="title">Sign In</h2>
+                    <IonButton onClick={SignInWithFirebase} fill="outline">
+                        <IonIcon size="large" icon={logoGoogle}></IonIcon>
+                    </IonButton>
                 </div>
-
-                <IonButton routerLink="/Tabs" className="ion-padding ion-float-right form-button">Sign In</IonButton>
-                <IonButton className="ion-padding ion-float-right form-button" onClick={SignInWithFirebase}>Sign In with Google</IonButton>
             </IonContent>
-        </IonPage>
+        </IonApp>
     )
 }
 

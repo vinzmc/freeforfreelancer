@@ -145,6 +145,14 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
 
     const [category, setCat] = useState<string>();
 
+    const signout = () => {
+        firebase.auth().signOut().then(() => {
+            window.location.replace('LoginPage.tsx');
+        }).catch((error) => {
+            console.log('Cannot Sign Out')
+        });
+    }
+
     // Update user jadi freelancer
     const updateType = () => {
         console.log(props.docRef)
@@ -254,7 +262,7 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
                 }
                 {/* modal untuk edit aboutme */}
                 <IonModal isOpen={editModal} cssClass='modal-class' backdropDismiss={false}>
-                    <div className="form-inputs" style={{overflow:'scroll'}}>
+                    <div className="form-inputs" style={{ overflow: 'scroll' }}>
                         <IonList className="ion-padding">
                             <p className="form-name">Nama<span style={{ color: 'red' }}>*</span></p>
                             <IonInput placeholder="Full Name" className="form-input" style={{ color: "gray" }} value={profileData1} onIonChange={(e: any) => setProfileData1(e.target.value)}></IonInput>
@@ -270,7 +278,7 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
 
                             <p className="form-name">Jobs Desc<span style={{ color: 'red' }}>*</span></p>
                             <IonInput placeholder="Jobs" className="form-input" style={{ color: "gray" }} value={profileData5} onIonChange={(e: any) => setProfileData5(e.target.value)}></IonInput>
-                            
+
                             <p className="form-name">Jobs Category<span style={{ color: 'red' }}>*</span></p>
                             <IonSelect value={profileData6} placeholder="Select category" onIonChange={e => setProfileData6(e.detail.value)}>
                                 <IonSelectOption value="Design">Design</IonSelectOption>
@@ -282,13 +290,18 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
                             </IonSelect>
 
                         </IonList>
-                        <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem", marginBottom:"1rem" }}>
+                        <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem", marginBottom: "1rem" }}>
                             <IonButton className="modal-btn" onClick={() => updateProfile()} style={{ marginRight: "1rem" }} disabled={(profileData1 === props.userDataName && profileData2 === props.bio && profileData3 === props.portofolio && profileData4 === props.location && profileData5 === props.userDataJob && profileData6 === props.userDataCategory) ? true : false}>Save</IonButton>
                             <IonButton onClick={() => setEditModal(false)} className="modal-btn">Cancel</IonButton>
                         </div>
                     </div>
                 </IonModal>
                 <IonButton className="summary-button ion-margin-bottom" onClick={() => setEditModal(true)}>Edit Profile</IonButton>
+            </div>
+            {/* Lokasi */}
+            <div className="ion-margin-top about-section bordered">
+                <h2>Sign Out</h2>
+                <IonButton className="summary-button ion-margin-bottom" onClick={signout}>Sign Out</IonButton>
             </div>
         </div>
     )
