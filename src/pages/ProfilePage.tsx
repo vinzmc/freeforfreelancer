@@ -30,6 +30,57 @@ const OrderSegment: React.FC<{ data: any[] }> = (props) => {
                             <div className="order-flex">
                                 <a className="order-number" style={{ fontWeight: 'bold', fontSize: 'large' }} onClick={() => { viewOrderDetail(doc.id) }}>#{doc.id}</a>
                             </div>
+                            {/* <h2 className="order-freelancer-name">{doc.freelancerName}</h2> */}
+                            <h2 className="order-date">{doc.created.toDate().toLocaleDateString()}</h2>
+                            <hr />
+                            <div className="flex-container">
+                                <div className="flex-child">
+                                    Status
+                                    <h2 className="order-progress">{doc.status}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {props.data.length === 0 &&
+                <div className="container">
+                    <div className="center">
+                        <div>Belum Ada order baru yang masuk</div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    )
+}
+
+const TransactionSegment: React.FC<{ data: any[] }> = (props) => {
+    const history = useHistory();
+
+    const viewOrderDetail = (id: string) => {
+        var url = '/OrderDetail/Freelancer/'.concat(id);
+        history.push(url);
+        window.location.href = url;
+    }
+
+    const giveReviewButton = (id: string) => {
+        var url = '/Payment/Freelancer/'.concat(id, '/review');
+        history.push(url);
+        window.location.href = url;
+    }
+
+    return (
+        // di loop
+        <div>
+            {props.data.map((doc: any, i) =>
+                <div className="ion-padding" key={doc.id}>
+                    <div className="order-freelancer">
+
+                        <div className="order-detail" style={{ margin: "4px 18px" }}>
+                            <div className="order-flex">
+                                <a className="order-number" style={{ fontWeight: 'bold', fontSize: 'large' }} onClick={() => { viewOrderDetail(doc.id) }}>#{doc.id}</a>
+                            </div>
                             <h2 className="order-freelancer-name">{doc.freelancerName}</h2>
                             <h2 className="order-date">{doc.created.toDate().toLocaleDateString()}</h2>
                             <div className="flex-container">
@@ -39,7 +90,7 @@ const OrderSegment: React.FC<{ data: any[] }> = (props) => {
                                 </div>
                                 <div className="flex-child">
                                     {doc.status !== 'Reviewed' &&
-                                        <IonButton className="button-rel form-button">
+                                        <IonButton className="button-rel form-button" onClick={() => { giveReviewButton(doc.id) }}>
                                             Give a Review
                                         </IonButton>
                                     }
@@ -52,7 +103,7 @@ const OrderSegment: React.FC<{ data: any[] }> = (props) => {
             {props.data.length === 0 &&
                 <div className="container">
                     <div className="center">
-                        <div>Belum Ada Order</div>
+                        <div>Belum Ada Transaksi</div>
                         <div><IonButton routerLink="/Tabs/SearchPage" className="ion-padding form-button">Mulai Order</IonButton></div>
                     </div>
                 </div>
@@ -272,7 +323,7 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
                     </div>
                 </IonModal>
                 <IonButton className="summary-button ion-margin-bottom" onClick={() => setEditModal(true)}>Edit Profile</IonButton>
-                <IonButton className="summary-button ion-margin-bottom" onClick={signout} color="danger" style={{float: 'right'}}>Sign Out</IonButton>
+                <IonButton className="summary-button ion-margin-bottom" onClick={signout} color="danger" style={{ float: 'right' }}>Sign Out</IonButton>
             </div>
         </div>
     )
@@ -283,6 +334,7 @@ const Profile: React.FC = () => {
 
     const [userData, setUserData] = useState<any>([]);
     const [dataOrder, setDataOrder] = useState<any>([]);
+    const [dataTransaksi, setDataTransaksi] = useState<any>([]);
     const [page, setPage] = useState("about");
     const [userDocRef, setUserDocRef] = useState("");
 
@@ -325,6 +377,24 @@ const Profile: React.FC = () => {
             const db = firebase.firestore();
             db.collection('orders')
                 .where('client', '==', userDocRef)
+                .get()
+                .then(querySnapshot => {
+                    var newData = querySnapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }))
+                    // console.log('data', newData);
+                    setDataTransaksi(newData);
+                });
+        }
+    }, [userDocRef]);
+
+    // orders data
+    useEffect(() => {
+        if (userDocRef !== undefined) {
+            const db = firebase.firestore();
+            db.collection('orders')
+                .where('freelancer', '==', userDocRef)
                 .get()
                 .then(querySnapshot => {
                     var newData = querySnapshot.docs.map((doc) => ({
@@ -386,6 +456,9 @@ const Profile: React.FC = () => {
                     <IonSegmentButton value="order">
                         <IonLabel>Orders</IonLabel>
                     </IonSegmentButton>
+                    <IonSegmentButton value="transaction">
+                        <IonLabel>Transaction</IonLabel>
+                    </IonSegmentButton>
                     <IonSegmentButton value="about">
                         <IonLabel>About</IonLabel>
                     </IonSegmentButton>
@@ -394,6 +467,7 @@ const Profile: React.FC = () => {
                 {
                     {
                         'order': <OrderSegment data={dataOrder} />,
+                        'transaction': <TransactionSegment data={dataTransaksi} />,
                         'about': <AboutSegment bio={userData.bio} location={userData.location} portofolio={userData.portofolio} docRef={userDocRef} userDataName={userData.name} userDataPhoto={userData.photo} userDataType={userData.type} userDataJob={userData.job} userDataCategory={userData.category} />
                     }[page]
                 }
