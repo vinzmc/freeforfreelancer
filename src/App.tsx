@@ -66,10 +66,6 @@ const App: React.FC = () => (
         <Route exact path="/CategoryPage/:id">
           <CategoryPage />
         </Route>
-        {/* register page */}
-        <Route exact path="/RegisterPage">
-          <RegisterPage />
-        </Route>
         {/* Login page */}
         <Route exact path="/LoginPage">
           <LoginPage />
