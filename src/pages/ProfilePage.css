@@ -81,6 +81,7 @@
 .order-flex{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 10px;
 }
 .order-freelancer-name{
     font-size: 12px;
@@ -101,7 +102,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    width: 110px;
+    width: 100%;
 }
 .order-progress{
     font-size: 12px;

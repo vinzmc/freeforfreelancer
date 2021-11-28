@@ -61,6 +61,7 @@ const Payment: React.FC = () => {
             .add({
                 bank: payMethod,
                 va: va,
+                freelancerName:data.name,
                 freelancer: id,
                 client: userId,
                 created: firebase.firestore.Timestamp.fromDate(new Date()),

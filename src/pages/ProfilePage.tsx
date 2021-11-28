@@ -11,27 +11,35 @@ import profilePlaceHolder from '../assets/profilePlaceHolder.png'
 import './ProfilePage.css';
 
 const OrderSegment: React.FC<{ data: any[] }> = (props) => {
+    const history = useHistory();
+
+    const viewOrderDetail = (id:string) =>{
+        var url = '/OrderDetail/Freelancer/'.concat(id);
+        history.push(url);
+        window.location.href = url;
+    }
+
     return (
         // di loop
         <div>
-            {props.data.map((doc: any) =>
+            {props.data.map((doc: any, i) =>
                 <div className="ion-padding" key={doc.id}>
                     <div className="order-freelancer">
 
-                        <div className="freelancer-pic">
-                            <IonAvatar className="freelancer-avatar"><img src={doc.profile} alt={doc.nama} /></IonAvatar>
-                        </div>
-
                         <div className="order-detail" style={{ margin: "4px 18px" }}>
-
                             <div className="order-flex">
-                                <h2 className="order-number">#{doc.id}</h2>
-                                <h2 className="order-progress">{doc.status}</h2>
+                                <a className="order-number" style={{ fontWeight: 'bold' , fontSize:'large'}} onClick={()=>{viewOrderDetail(doc.id)}}>#{doc.id}</a>
                             </div>
-                            <h2 className="order-freelancer-name">{doc.nama}</h2>
-                            <h2 className="order-date">{doc.tanggalOrder.toDate().toLocaleDateString()}</h2>
+                            <h2 className="order-freelancer-name">{doc.freelancerName}</h2>
+                            <h2 className="order-date">{doc.created.toDate().toLocaleDateString()}</h2>
+                            Status
+                            <h2 className="order-progress">{doc.status}</h2>
+                            {doc.status !== 'Reviewed' &&
+                                <IonButton>
+                                    Give a Review
+                                </IonButton>
+                            }
                         </div>
-
                     </div>
                 </div>
             )}
@@ -270,12 +278,12 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
 }
 
 const Profile: React.FC = () => {
-    const [userData, setUserData] = useState<any>([]);
-    const [dataReviewer, setDataReviewer] = useState<any>([]);
-    const [page, setPage] = useState("about");
-    const [userDocRef, setUserDocRef] = useState("")
-    const uriData = useParams<any>();
     const history = useHistory();
+
+    const [userData, setUserData] = useState<any>([]);
+    const [dataOrder, setDataOrder] = useState<any>([]);
+    const [page, setPage] = useState("about");
+    const [userDocRef, setUserDocRef] = useState("");
 
     //user data
     useEffect(() => {
@@ -310,25 +318,23 @@ const Profile: React.FC = () => {
         });
     }, []);
 
-    //data reviewer
+    // orders data
     useEffect(() => {
-
-        if (userData.type !== 'user') {
-            firebase
-                .firestore()
-                .collection('freelancer')
-                .doc(uriData.id)
-                .collection('order')
-                .onSnapshot((snapshot) => {
-                    const newReviewerData = snapshot.docs.map((doc) => ({
+        if (userDocRef !== undefined) {
+            const db = firebase.firestore();
+            db.collection('orders')
+                .where('client', '==', userDocRef)
+                .get()
+                .then(querySnapshot => {
+                    var newData = querySnapshot.docs.map((doc) => ({
                         id: doc.id,
                         ...doc.data()
                     }))
-
-                    setDataReviewer(newReviewerData);
+                    // console.log('data', newData);
+                    setDataOrder(newData);
                 });
         }
-    }, [])
+    }, [userDocRef]);
 
     return (
         <IonPage>
@@ -375,16 +381,10 @@ const Profile: React.FC = () => {
                 </div>
 
                 {/* Segment Tab */}
-
                 <IonSegment onIonChange={e => setPage(e.detail.value!)} value={page} className='profile-segment'>
                     <IonSegmentButton value="order">
                         <IonLabel>Orders</IonLabel>
                     </IonSegmentButton>
-                    {/* {userData.type !== 'user' &&
-                        <IonSegmentButton value="project">
-                            <IonLabel>Projects</IonLabel>
-                        </IonSegmentButton>
-                    } */}
                     <IonSegmentButton value="about">
                         <IonLabel>About</IonLabel>
                     </IonSegmentButton>
@@ -392,8 +392,7 @@ const Profile: React.FC = () => {
                 {/* Segment Page (pakai switch) */}
                 {
                     {
-                        'order': <OrderSegment data={dataReviewer} />,
-                        // 'project': <ProjectSegment data={dataReviewer} />,
+                        'order': <OrderSegment data={dataOrder} />,
                         'about': <AboutSegment bio={userData.bio} location={userData.location} portofolio={userData.portofolio} docRef={userDocRef} userDataName={userData.name} userDataPhoto={userData.photo} userDataType={userData.type} userDataJob={userData.job} userDataCategory={userData.category} />
                     }[page]
                 }
