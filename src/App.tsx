@@ -23,7 +23,6 @@ import './theme/variables.css';
 import './theme/form-styling.css';
 
 /* import page */
-import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
@@ -65,10 +64,6 @@ const App: React.FC = () => (
         {/* CategoryPage */}
         <Route exact path="/CategoryPage/:id">
           <CategoryPage />
-        </Route>
-        {/* register page */}
-        <Route exact path="/RegisterPage">
-          <RegisterPage />
         </Route>
         {/* Login page */}
         <Route exact path="/LoginPage">
