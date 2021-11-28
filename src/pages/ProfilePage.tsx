@@ -13,7 +13,7 @@ import './ProfilePage.css';
 const OrderSegment: React.FC<{ data: any[] }> = (props) => {
     const history = useHistory();
 
-    const viewOrderDetail = (id:string) =>{
+    const viewOrderDetail = (id: string) => {
         var url = '/OrderDetail/Freelancer/'.concat(id);
         history.push(url);
         window.location.href = url;
@@ -28,17 +28,23 @@ const OrderSegment: React.FC<{ data: any[] }> = (props) => {
 
                         <div className="order-detail" style={{ margin: "4px 18px" }}>
                             <div className="order-flex">
-                                <a className="order-number" style={{ fontWeight: 'bold' , fontSize:'large'}} onClick={()=>{viewOrderDetail(doc.id)}}>#{doc.id}</a>
+                                <a className="order-number" style={{ fontWeight: 'bold', fontSize: 'large' }} onClick={() => { viewOrderDetail(doc.id) }}>#{doc.id}</a>
                             </div>
                             <h2 className="order-freelancer-name">{doc.freelancerName}</h2>
                             <h2 className="order-date">{doc.created.toDate().toLocaleDateString()}</h2>
-                            Status
-                            <h2 className="order-progress">{doc.status}</h2>
-                            {doc.status !== 'Reviewed' &&
-                                <IonButton>
-                                    Give a Review
-                                </IonButton>
-                            }
+                            <div className="flex-container">
+                                <div className="flex-child">
+                                    Status
+                                    <h2 className="order-progress">{doc.status}</h2>
+                                </div>
+                                <div className="flex-child">
+                                    {doc.status !== 'Reviewed' &&
+                                        <IonButton className="button-rel form-button">
+                                            Give a Review
+                                        </IonButton>
+                                    }
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

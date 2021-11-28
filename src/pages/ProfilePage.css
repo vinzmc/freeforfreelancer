@@ -133,7 +133,6 @@
     height: 200px;
     position: relative;
 }
-  
 .center {
     margin: 0;
     position: absolute;
@@ -142,3 +141,15 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+
+.button-rel {
+    float: right;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+}  
