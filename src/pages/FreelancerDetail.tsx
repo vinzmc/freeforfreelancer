@@ -40,7 +40,7 @@ const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
                 </div>
             </div>
             )}
-            
+
         </div>
     )
 }
@@ -149,24 +149,38 @@ const FreelancerDetail: React.FC = () => {
     }
 
     useEffect(() => {
-        firebase
-            .firestore()
-            .collection('users')
-            .doc(uriData.id)
-            .onSnapshot((snapshot) => {
-                const newData = {
-                    id: snapshot.id,
-                    ...snapshot.data()
-                }
+        const db = firebase.firestore();
+        const fetchData = async () => {
+            await db.collection('users')
+                .doc(uriData.id)
+                .onSnapshot(
+                    {
+                        next: snapshot => {
+                            if (snapshot.exists) {
+                                const newData = {
+                                    id: snapshot.id,
+                                    ...snapshot.data()
+                                }
 
-                setData(newData);
-            })
-    }, [])
+                                setData(newData);
+                            } else {
+                                var url = '/Tabs/Homepage';
+                                history.push(url);
+                                window.location.href = url;
+                            }
+                        },
+                        error: error => {
+                            console.log(error);
+                        }
+                    }
+                )
+        }
+        fetchData()
+    }, []);
 
     useEffect(() => {
-        firebase
-            .firestore()
-            .collection('users')
+        const db = firebase.firestore();
+        db.collection('users')
             .doc(uriData.id)
             .collection('order')
             .onSnapshot((snapshot) => {
@@ -176,9 +190,9 @@ const FreelancerDetail: React.FC = () => {
                 }))
 
                 setDataReviewer(newReviewerData);
-                console.log(dataReviewer)
+                // console.log(dataReviewer)
             });
-    }, [])
+    }, []);
 
     return (
         <IonPage>
@@ -235,12 +249,12 @@ const FreelancerDetail: React.FC = () => {
 
 
                                     <div className="profile-reputasi">
-                                        {data.length !== 0 &&
+                                        {data.length !== 0 && data.star !== undefined &&
                                             [...Array(data.star)].map((x, i) =>
                                                 <IonIcon icon={star} key={i} />
                                             )
                                         }
-                                        {data.length !== 0 &&
+                                        {data.length !== 0 && data.star !== undefined &&
                                             [...Array(5 - data.star)].map((x, i) =>
                                                 <IonIcon icon={starOutline} key={5 - i} />
                                             )

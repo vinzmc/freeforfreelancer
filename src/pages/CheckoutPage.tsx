@@ -5,21 +5,17 @@ import { useHistory, useLocation, useParams } from "react-router";
 import firebase from '../firebase';
 
 const CheckoutPage: React.FC = () => {
-    const [data, setData] = useState<any>([]);
-    const [dataReviewer, setDataReviewer] = useState<any>([]);
-    const [payMethod, setPayMethod] = useState<string>("");
     const uriData = useParams<any>();
-    const [showModal, setShowModal] = useState(false);
-    const state = useLocation<any>();
     const history = useHistory();
-    var time = new Date(Date.now());
-    var month = ['Januari', 'Febuari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'December']
-    var currTime = time.getDate() + ' ' + month[time.getMonth()] + ' ' + time.getFullYear();
 
+    const [data, setData] = useState<any>([]);
+    const [dataFreelancer, setDataFreelancer] = useState<any>([]);
+    const [currTime, setCurrTime] = useState<string>();
+
+    // freelancer data
     useEffect(() => {
-        firebase
-            .firestore()
-            .collection('users')
+        const db = firebase.firestore();
+        db.collection('orders')
             .doc(uriData.id)
             .onSnapshot((snapshot) => {
                 const newData = {
@@ -29,32 +25,33 @@ const CheckoutPage: React.FC = () => {
 
                 setData(newData);
             })
-    }, [])
+    }, []);
 
+    // freelancer data
     useEffect(() => {
-        firebase
-            .firestore()
-            .collection('users')
-            .doc(uriData.id)
-            .collection('order')
+        const db = firebase.firestore();
+        db.collection('users')
+            .doc(data.freelancer)
             .onSnapshot((snapshot) => {
-                const newReviewerData = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data()
-                }))
+                const newData = {
+                    id: snapshot.id,
+                    ...snapshot.data()
+                }
 
-                setDataReviewer(newReviewerData);
-            });
-            console.log(state.state)
-    }, [])
+                setDataFreelancer(newData);
+            })
 
-    function handleGoBack() {
-        window.history.go(-1);
-    }
-    
+        //tanggal order
+        if (data.created !== undefined) {
+            const time = data.created.toDate();
+            const month = ['Januari', 'Febuari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'December']
+            setCurrTime(time.getDate() + ' ' + month[time.getMonth()] + ' ' + time.getFullYear())
+        }
+    }, [data]);
+
     const orderDetail = (id: string) => {
         var url = '/OrderDetail/Freelancer/'.concat(id);
-        history.push(url, state.state);
+        history.push(url);
 
         window.location.href = url;
     }
@@ -64,10 +61,8 @@ const CheckoutPage: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonTitle className="titleMiddle" style={{ fontWeight: "500", fontSize: "16px" }}>Checkout</IonTitle>
-                    <IonButtons slot="start" >
-                        <IonButton onClick={() => handleGoBack()}>
-                            <IonIcon icon={arrowBack} />
-                        </IonButton>
+                    <IonButtons slot="start">
+                        <IonBackButton defaultHref={`/Tabs/Freelancer/${data.freelancer}`} />
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
@@ -78,36 +73,32 @@ const CheckoutPage: React.FC = () => {
                         <IonRow>
                             <IonCol size="2.2" className=" ion-padding">
                                 <IonAvatar className="profile-avatar" style={{ top: "5px" }}>
-                                    <img src={data.photo} />
+                                    <img src={dataFreelancer.photo} />
                                 </IonAvatar>
                             </IonCol>
                             <IonCol style={{ marginLeft: "1.5rem" }}>
                                 <div>
                                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                                         <div>
-                                            <h1 className="ion-no-margin profile-name" style={{ fontSize: "14px" }}>{data.name}</h1>
-                                            <p className="ion-no-margin profile-desc" style={{ marginTop: "4px", color: "gray" }}>{data.job}</p>
+                                            <h1 className="ion-no-margin profile-name" style={{ fontSize: "14px" }}>{dataFreelancer.name}</h1>
+                                            <p className="ion-no-margin profile-desc" style={{ marginTop: "4px", color: "gray" }}>{dataFreelancer.job}</p>
                                         </div>
-                                        <div>
-                                            <p className="ion-no-margin profile-desc" style={{ marginRight: "12px" }}>Rp. {data.price}M</p>
-                                        </div>
-
                                     </div>
 
 
                                     <div className="profile-reputasi">
-                                        {data.length !== 0 &&
-                                            [...Array(data.star)].map((x, i) =>
+                                        {dataFreelancer.length !== 0 && dataFreelancer.star !== undefined &&
+                                            [...Array(dataFreelancer.star)].map((x, i) =>
                                                 <IonIcon icon={star} key={i} />
                                             )
                                         }
-                                        {data.length !== 0 &&
-                                            [...Array(5 - data.star)].map((x, i) =>
+                                        {dataFreelancer.length !== 0 && dataFreelancer.star !== undefined &&
+                                            [...Array(5 - dataFreelancer.star)].map((x, i) =>
                                                 <IonIcon icon={starOutline} key={5 - i} />
                                             )
                                         }
-                                        <IonText className="profile-rating"> {data.star}.0</IonText>
-                                        <IonText className="profile-rating"> ({data.review} Review)</IonText>
+                                        <IonText className="profile-rating"> {dataFreelancer.star}.0</IonText>
+                                        <IonText className="profile-rating"> ({dataFreelancer.review} Review)</IonText>
                                     </div>
 
                                 </div>
@@ -116,20 +107,20 @@ const CheckoutPage: React.FC = () => {
                     </IonGrid>
                 </div>
                 <div className="summary-box ion-margin">
-                    <h3 className="summary-box-title">{state.state && state.state[2]} Virtual Account</h3>
+                    <h3 className="summary-box-title">{data.bank} Virtual Account</h3>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <h3 className="summary-detail">No. Virtual Account</h3>
-                        <h3 className="summary-price">{state.state && state.state[3]}</h3>
+                        <h3 className="summary-price">{data.va}</h3>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <h3 className="summary-detail">Total</h3>
-                        <h3 className="summary-price">Rp. xxxx</h3>
+                        <h3 className="summary-price">Rp. {dataFreelancer.price}M</h3>
                     </div>
                     <hr style={{ height: "2px", borderWidth: "0", color: "gray", backgroundColor: "gray" }} />
                     {/* generate  */}
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <h3 className="summary-detail"></h3>
-                        <h3 className="summary-price">{currTime.toLocaleString()}</h3>
+                        <h3 className="summary-price">{currTime}</h3>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <h4></h4>
@@ -139,16 +130,16 @@ const CheckoutPage: React.FC = () => {
                 </div>
                 <div className="summary-box ion-margin">
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px', marginTop: '5px' }}>
-                        <h3 className="summary-detail" style={{fontWeight:'bold'}}>Subject</h3>
+                        <h3 className="summary-detail" style={{ fontWeight: 'bold' }}>Subject</h3>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px' }}>
-                        <h3 className="summary-detail">{state.state && state.state[0]}</h3>
+                        <h3 className="summary-detail">{data.subject}</h3>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px' }}>
-                        <h3 className="summary-detail" style={{fontWeight:'bold'}}>Description</h3>
+                        <h3 className="summary-detail" style={{ fontWeight: 'bold' }}>Description</h3>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px' }}>
-                        <h3 className="summary-detail">{state.state && state.state[1]}</h3>
+                        <h3 className="summary-detail">{data.description}</h3>
                     </div>
                 </div>
 

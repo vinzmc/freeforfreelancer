@@ -1,18 +1,28 @@
-import { IonButton, IonContent, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import { useState } from 'react';
 
 //theme
 import { FaStar } from 'react-icons/fa'
+import { useParams } from 'react-router';
 import './ReviewPage.css'
 
 
 const ReviewPage: React.FC = () => {
     const [rating, setRating] = useState<number>(0);
+    const uriData = useParams<any>();
+
+    // submit review
+    const handleSubmitReview = () => {
+        console.log(rating);
+    }
 
     return (
         <IonPage>
             <IonToolbar className="ion-margin-top">
                 <IonTitle className="titleMiddle" style={{ fontWeight: "500", fontSize: "16px" }}>Review</IonTitle>
+                <IonButtons slot="start">
+                    <IonBackButton defaultHref={`/OrderDetail/Freelancer/${uriData.id}`} />
+                </IonButtons>
             </IonToolbar>
             <IonContent fullscreen>
 
@@ -25,7 +35,7 @@ const ReviewPage: React.FC = () => {
                             const ratingValue = i + 1;
 
                             return (
-                                <label>
+                                <label key={i}>
                                     <input
                                         type="radio"
                                         name="rating"
@@ -41,7 +51,7 @@ const ReviewPage: React.FC = () => {
                         <div>
                             <IonTextarea placeholder="Write your experience with this freelancer....." className="form-input" rows={6} style={{ color: "gray" }}></IonTextarea>
                         </div>
-                        <IonButton className="summary-button ion-margin-top" onClick={() => console.log(rating)}>Review</IonButton>
+                        <IonButton className="summary-button ion-margin-top" onClick={() => handleSubmitReview()}>Review</IonButton>
                     </div>
                 </div>
 

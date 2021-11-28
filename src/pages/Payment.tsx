@@ -8,18 +8,36 @@ import { useHistory, useLocation, useParams } from 'react-router';
 import './Payment.css'
 
 const Payment: React.FC = () => {
-    const [data, setData] = useState<any>([]);
-    const [dataReviewer, setDataReviewer] = useState<any>([]);
-    const [payMethod, setPayMethod] = useState<string>("");
     const uriData = useParams<any>();
-    const [showModal, setShowModal] = useState(false);
-    const state = useLocation();
+    const state = useLocation<any>();
     const history = useHistory();
 
+    const [data, setData] = useState<any>([]);
+    const [payMethod, setPayMethod] = useState<string>("");
+    const [showModal, setShowModal] = useState(false);
+    const [userId, setUserId] = useState<string>();
+
+    //user data
     useEffect(() => {
-        firebase
-            .firestore()
-            .collection('users')
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                setUserId(user.uid);
+            } else {
+                // User is signed out
+                // redirect to login page
+                var url = '/LoginPage';
+                history.push(url);
+                window.location.href = url;
+            }
+        });
+    }, []);
+
+    // freelancer data
+    useEffect(() => {
+        const db = firebase.firestore();
+        db.collection('users')
             .doc(uriData.id)
             .onSnapshot((snapshot) => {
                 const newData = {
@@ -29,39 +47,40 @@ const Payment: React.FC = () => {
 
                 setData(newData);
             })
-    }, [])
+    }, []);
 
-    useEffect(() => {
-        firebase
-            .firestore()
-            .collection('users')
-            .doc(uriData.id)
-            .collection('order')
-            .onSnapshot((snapshot) => {
-                const newReviewerData = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data()
-                }))
-
-                setDataReviewer(newReviewerData);
-            });
-    }, [])
-
-    const checkout = (id: string) => {
-        var url = '/CheckoutPage/Freelancer/'.concat(id);
-        var curState:any = state.state
-
+    const checkout = async (id: string) => {
+        var curState: any = state.state
+        // virtual account
         var min = 10000000000000;
         var max = 99999999999999;
-        var rand=  Math.floor(min + (Math.random() * (max-min)));
+        var va = Math.floor(min + (Math.random() * (max - min)));
+        let url = '/CheckoutPage/Freelancer/';
 
-
-        var nextState = [...curState, payMethod, rand]
-
-
-        history.push(url, nextState);
-
-        window.location.href = url;
+        // insert data
+        const db = firebase.firestore();
+        await db.collection("orders")
+            .add({
+                bank: payMethod,
+                va: va,
+                freelancer: id,
+                client: userId,
+                created: firebase.firestore.Timestamp.fromDate(new Date()),
+                status:'Finished',
+                subject:state.state[0],
+                description:state.state[1]
+                
+            })
+            .then(function (docRef) {
+                // console.log("Document written with ID: ", docRef.id);
+                url = url.concat(docRef.id);
+            })
+            .catch(function (error) {
+                console.error("Error adding document: ", error);
+            }).finally(() => {
+                history.push(url);
+                window.location.href = url;
+            });
     }
 
     return (

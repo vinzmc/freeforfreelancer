@@ -288,7 +288,6 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
                                 <IonSelectOption value="Photography">Photography</IonSelectOption>
                                 <IonSelectOption value="T-shirt Design">T-shirt Design</IonSelectOption>
                             </IonSelect>
-
                         </IonList>
                         <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem", marginBottom: "1rem" }}>
                             <IonButton className="modal-btn" onClick={() => updateProfile()} style={{ marginRight: "1rem" }} disabled={(profileData1 === props.userDataName && profileData2 === props.bio && profileData3 === props.portofolio && profileData4 === props.location && profileData5 === props.userDataJob && profileData6 === props.userDataCategory) ? true : false}>Save</IonButton>
@@ -314,8 +313,6 @@ const Profile: React.FC = () => {
     const [userDocRef, setUserDocRef] = useState("")
     const uriData = useParams<any>();
     const history = useHistory();
-
-    const name = ""
 
     //user data
     useEffect(() => {
@@ -382,7 +379,7 @@ const Profile: React.FC = () => {
                         <IonRow>
                             <IonCol size="2.2" className=" ion-padding">
                                 <IonAvatar className="profile-avatar">
-                                    <img src={userData.photo = null ? profilePlaceHolder : userData.photo} onClick={()=>{window.open('https://myaccount.google.com/profile/photo/edit?pli=1')}}/>
+                                    <img src={userData.photo = null ? profilePlaceHolder : userData.photo} onClick={() => { window.open('https://myaccount.google.com/profile/photo/edit?pli=1') }} />
                                 </IonAvatar>
                             </IonCol>
 

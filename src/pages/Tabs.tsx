@@ -14,6 +14,7 @@ const Tabs: React.FC = () => {
     const [userData, setUserData] = useState<any>([]);
     const [id, setId] = useState<any>();
     const history = useHistory();
+
     //user data
     useEffect(() => {
         firebase.auth().onAuthStateChanged((user) => {
@@ -53,10 +54,10 @@ const Tabs: React.FC = () => {
                 <Redirect exact path="/Tabs" to="/Tabs/Homepage" />
                 <Route exact path="/Tabs/Homepage" component={HomePage} />
                 <Route exact path="/Tabs/Searchpage" component={SearchPage} />
-                <Route exact path="/Tabs/Profilepage/:id">
+                <Route exact path="/Tabs/Profilepage/:id?">
                     <ProfilePage />
                 </Route>
-                <Route exact path="/Tabs/Freelancer/:id">
+                <Route exact path="/Tabs/Freelancer/:id?">
                     <FreelancerDetail />
                 </Route>
             </IonRouterOutlet>

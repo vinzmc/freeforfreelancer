@@ -50,11 +50,11 @@ const App: React.FC = () => (
           <Dummy />
         </Route>
         {/* ProfilePage */}
-        <Route exact path="/ProfilePage/:id">
+        <Route exact path="/ProfilePage/:id?">
           <ProfilePage />
         </Route>
         {/* Freelancer Profile */}
-        <Route exact path="/Freelancer/:id">
+        <Route exact path="/Freelancer/:id?">
           <FreelancerDetail />
         </Route>
         {/* HomePage */}
@@ -62,7 +62,7 @@ const App: React.FC = () => (
           <HomePage />
         </Route>
         {/* CategoryPage */}
-        <Route exact path="/CategoryPage/:id">
+        <Route exact path="/CategoryPage/:id?">
           <CategoryPage />
         </Route>
         {/* Login page */}
@@ -74,17 +74,17 @@ const App: React.FC = () => (
           <SearchPage />
         </Route>
         {/* Checkout Page */}
-        <Route exact path="/CheckoutPage/Freelancer/:id">
+        <Route exact path="/CheckoutPage/Freelancer/:id?">
           <CheckoutPage />
         </Route>
         {/* Order Detail Page */}
-        <Route exact path="/OrderDetail/Freelancer/:id">
+        <Route exact path="/OrderDetail/Freelancer/:id?">
           <OrderDetail />
         </Route>
-        <Route exact path="/Payment/Freelancer/:id">
+        <Route exact path="/Payment/Freelancer/:id?">
             <Payment/>
         </Route>
-        <Route exact path="/Payment/Freelancer/:id/review">
+        <Route exact path="/Payment/Freelancer/:id?/review">
             <ReviewPage/>
         </Route>
         {/* root */}
