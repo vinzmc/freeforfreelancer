@@ -23,7 +23,6 @@ import './theme/variables.css';
 import './theme/form-styling.css';
 
 /* import page */
-import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
