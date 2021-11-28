@@ -12,8 +12,8 @@ const SearchPage: React.FC = () => {
     useEffect(() => {
         firebase
             .firestore()
-            .collection('freelancer')
-            .where('name', '!=', 'Sergio Nathaniel') //temporary solution untuk auth
+            .collection('users')
+            .where('type', '==', 'freelancer')
             .onSnapshot((snapshot) => {
                 const newData = snapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -51,7 +51,7 @@ const SearchPage: React.FC = () => {
                     <IonLabel className="label">{renderedData.length} Freelancers Found</IonLabel>
                     {renderedData.map((doc: any) =>
                         <div key={doc.id} onClick={() => cardOnClick(doc.id)}>
-                            <Freelancer key={doc.id} name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} />
+                            <Freelancer key={doc.id} name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.photo} />
                         </div>
                     )
                     }
