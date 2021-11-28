@@ -14,7 +14,6 @@ const Payment: React.FC = () => {
 
     const [data, setData] = useState<any>([]);
     const [payMethod, setPayMethod] = useState<string>("");
-    const [showModal, setShowModal] = useState(false);
     const [userId, setUserId] = useState<string>();
 
     //user data
@@ -50,7 +49,6 @@ const Payment: React.FC = () => {
     }, []);
 
     const checkout = async (id: string) => {
-        var curState: any = state.state
         // virtual account
         var min = 10000000000000;
         var max = 99999999999999;

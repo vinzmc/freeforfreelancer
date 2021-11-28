@@ -1,8 +1,7 @@
-import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar } from "@ionic/react";
-import { star, starOutline, document, time } from "ionicons/icons";
+import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { star, starOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 import firebase from '../firebase';
 
 const OrderDetail: React.FC = () => {
@@ -12,7 +11,7 @@ const OrderDetail: React.FC = () => {
     const [dataFreelancer, setDataFreelancer] = useState<any>([]);
     const [currTime, setCurrTime] = useState<string>();
 
-    // freelancer data
+    // orders data
     useEffect(() => {
         const db = firebase.firestore();
         db.collection('orders')
@@ -133,12 +132,14 @@ const OrderDetail: React.FC = () => {
                     </div>
                 </div>
                 <div className="summary-box ion-margin">
-                    <h3 className="summary-detail" style={{ marginTop: '5px' , fontWeight:'bold'}}>Delivery Files</h3>
+                    <h3 className="summary-detail" style={{ marginTop: '5px', fontWeight: 'bold' }}>Delivery Files</h3>
                     <h3 className="summary-detail" style={{ marginTop: '5px' }}>dummy-files.mp4</h3>
                 </div>
 
                 <div className="ion-margin ion-padding" style={{ display: "flex", justifyContent: "space-around" }}>
-                    <IonButton onClick={() => finishOrder(uriData.id)} className="ion-padding summary-button" >Finish Order</IonButton>
+                    {data.status !== 'Reviewed' &&
+                        <IonButton onClick={() => finishOrder(uriData.id)} className="ion-padding summary-button" >Finish Order</IonButton>
+                    }
                     <IonButton className="ion-padding summary-button" >Complaint Order</IonButton>
                 </div>
             </IonContent>

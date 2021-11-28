@@ -1,19 +1,74 @@
 import { IonBackButton, IonButton, IonButtons, IonContent, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import firebase from '../firebase';
+import { FaStar } from 'react-icons/fa'
+import { useHistory, useParams } from 'react-router';
 
 //theme
-import { FaStar } from 'react-icons/fa'
-import { useParams } from 'react-router';
 import './ReviewPage.css'
 
 
 const ReviewPage: React.FC = () => {
-    const [rating, setRating] = useState<number>(0);
     const uriData = useParams<any>();
+    const history = useHistory();
+
+    const [data, setData] = useState<any>([]);
+    const [feedback, setFeedback] = useState<any>('');
+    const [rating, setRating] = useState<number>(5);
+
+    // orders data
+    useEffect(() => {
+        const db = firebase.firestore();
+        db.collection('orders')
+            .doc(uriData.id)
+            .onSnapshot((snapshot) => {
+                const newData = {
+                    id: snapshot.id,
+                    ...snapshot.data()
+                }
+
+                setData(newData);
+            })
+    }, []);
 
     // submit review
-    const handleSubmitReview = () => {
+    const handleSubmitReview = async () => {
         console.log(rating);
+        const url = '/Tabs/Homepage/';
+
+        // insert data
+        const db = firebase.firestore();
+        await db.collection("reviews")
+            .add({
+                orderId: data.id,
+                client: data.client,
+                freelancer: data.freelancer,
+                rating: rating,
+                feedback: feedback,
+                created: firebase.firestore.Timestamp.fromDate(new Date())
+            })
+            .catch(function (error) {
+                console.error("Error adding document: ", error);
+            })
+        // .finally(() => {
+        //     history.push(url);
+        //     window.location.href = url;
+        // });
+
+        const db2 = firebase.firestore();
+        db2.collection('orders')
+        .doc(uriData.id)
+        .set({
+            status:'Reviewed'
+        }, { merge: true })
+        .then(() => {
+            console.log('success')
+        }).catch(() => {
+            console.log("error")
+        }).finally(() => {
+            history.push(url);
+            window.location.href = url;
+        })
     }
 
     return (
@@ -49,7 +104,7 @@ const ReviewPage: React.FC = () => {
                     </div>
                     <div className="ion-margin-top">
                         <div>
-                            <IonTextarea placeholder="Write your experience with this freelancer....." className="form-input" rows={6} style={{ color: "gray" }}></IonTextarea>
+                            <IonTextarea placeholder="Write your experience with this freelancer....." className="form-input" rows={6} style={{ color: "gray" }} value={feedback} onIonChange={e => setFeedback(e.detail.value)}></IonTextarea>
                         </div>
                         <IonButton className="summary-button ion-margin-top" onClick={() => handleSubmitReview()}>Review</IonButton>
                     </div>

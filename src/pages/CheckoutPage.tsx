@@ -12,7 +12,7 @@ const CheckoutPage: React.FC = () => {
     const [dataFreelancer, setDataFreelancer] = useState<any>([]);
     const [currTime, setCurrTime] = useState<string>();
 
-    // freelancer data
+    // orders data
     useEffect(() => {
         const db = firebase.firestore();
         db.collection('orders')
