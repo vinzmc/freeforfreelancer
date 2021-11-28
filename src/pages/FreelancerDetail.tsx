@@ -11,7 +11,7 @@ const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
     return (
         // di loop
         <div>
-            {props.data.map((doc: any) =>
+            {props.data && props.data.map((doc: any) =>
                 <div className="ion-padding" key={doc.id}>
                     {/* bintang */}
                     <div className="bintang-review">
@@ -33,6 +33,10 @@ const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
                     <p className="justify review-content" >{doc.reviewContent}</p>
                 </div>
             )}
+            {props.data.length == 0 && (
+                <p className="justify">anda belum memiliki review</p>
+            )}
+            
         </div>
     )
 }
@@ -41,7 +45,7 @@ const ProjectSegment: React.FC<{ data: any[] }> = (props) => {
     return (
         // di loop
         <div>
-            {props.data.map((doc: any) =>
+            {props.data && props.data.map((doc: any) =>
                 <div className="ion-padding" key={doc.id}>
                     <div>
                         {/* gambar project */}
@@ -72,6 +76,9 @@ const ProjectSegment: React.FC<{ data: any[] }> = (props) => {
                     </div>
                 </div>
             )}
+            {props.data.length == 0 && (
+                <p className="justify">anda belum memiliki project</p>
+            )}
         </div>
     )
 }
@@ -82,18 +89,33 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any }> = (pr
             {/* Bio */}
             <div className="about-section bordered">
                 <h2>Bio</h2>
-                <p className="justify">{props.bio}</p>
+                {props.bio && (
+                    <p className="justify">{props.bio}</p>
+                )}
+                {!props.bio && (
+                    <p className="justify">Masukan Bio anda disini</p>
+                )}
             </div>
             {/* Portofolio */}
             <div className="ion-margin-top about-section bordered">
                 <h2>Portofolio</h2>
                 {/* loop */}
-                <p>{props.portofolio}</p>
+                {props.portofolio && (
+                    <p className="justify">{props.bio}</p>
+                )}
+                {!props.portofolio && (
+                    <p className="justify">Masukan Portofolio anda disini</p>
+                )}
             </div>
             {/* Lokasi */}
             <div className="ion-margin-top about-section bordered">
                 <h2>location</h2>
-                <p><IonIcon icon={location} style={{ marginRight: "1rem" }} />{props.location}</p>
+                {props.location && (
+                    <p><IonIcon icon={location} style={{ marginRight: "1rem" }} />{props.location}</p>
+                )}
+                {!props.location && (
+                    <p className="justify">Masukan Lokasi anda disini</p>
+                )}
             </div>
         </div>
     )
@@ -121,7 +143,7 @@ const FreelancerDetail: React.FC = () => {
     useEffect(() => {
         firebase
             .firestore()
-            .collection('freelancer')
+            .collection('users')
             .doc(uriData.id)
             .onSnapshot((snapshot) => {
                 const newData = {
@@ -136,7 +158,7 @@ const FreelancerDetail: React.FC = () => {
     useEffect(() => {
         firebase
             .firestore()
-            .collection('freelancer')
+            .collection('users')
             .doc(uriData.id)
             .collection('order')
             .onSnapshot((snapshot) => {
@@ -146,6 +168,7 @@ const FreelancerDetail: React.FC = () => {
                 }))
 
                 setDataReviewer(newReviewerData);
+                console.log(dataReviewer)
             });
     }, [])
 
@@ -185,7 +208,7 @@ const FreelancerDetail: React.FC = () => {
                         <IonRow>
                             <IonCol size="2.2" className=" ion-padding">
                                 <IonAvatar className="profile-avatar">
-                                    <img src={data.pic} />
+                                    <img src={data.photo} />
                                 </IonAvatar>
                             </IonCol>
                             <IonCol style={{ marginLeft: "1.5rem" }}>

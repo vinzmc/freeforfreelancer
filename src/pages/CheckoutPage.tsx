@@ -19,7 +19,7 @@ const CheckoutPage: React.FC = () => {
     useEffect(() => {
         firebase
             .firestore()
-            .collection('freelancer')
+            .collection('users')
             .doc(uriData.id)
             .onSnapshot((snapshot) => {
                 const newData = {
@@ -34,7 +34,7 @@ const CheckoutPage: React.FC = () => {
     useEffect(() => {
         firebase
             .firestore()
-            .collection('freelancer')
+            .collection('users')
             .doc(uriData.id)
             .collection('order')
             .onSnapshot((snapshot) => {
@@ -78,7 +78,7 @@ const CheckoutPage: React.FC = () => {
                         <IonRow>
                             <IonCol size="2.2" className=" ion-padding">
                                 <IonAvatar className="profile-avatar" style={{ top: "5px" }}>
-                                    <img src={data.pic} />
+                                    <img src={data.photo} />
                                 </IonAvatar>
                             </IonCol>
                             <IonCol style={{ marginLeft: "1.5rem" }}>
