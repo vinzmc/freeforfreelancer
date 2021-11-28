@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonCol, IonContent, IonGrid, IonIcon, IonInput, IonLabel, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonTextarea } from '@ionic/react';
+import { IonAvatar, IonButton, IonCol, IonContent, IonGrid, IonIcon, IonInput, IonLabel, IonList, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonVirtualScroll } from '@ionic/react';
 import firebase from '../firebase';
 import { useEffect, useState } from 'react';
 import { star, starOutline, location } from 'ionicons/icons';
@@ -131,14 +131,21 @@ const ProjectSegment: React.FC<{ data: any[] }> = (props) => {
     )
 }
 
-const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef: any, userDataName: any, userDataEmail: any, userDataPhoto: any }> = (props) => {
-
+const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef: any, userDataName: any, userDataPhoto: any, userDataType: any, userDataJob: any, userDataCategory: any }> = (props) => {
     const [postData, setPostData] = useState<any>('');
     const [postData2, setPostData2] = useState<any>('');
     const [showModal, setShowModal] = useState(false);
+    const [editModal, setEditModal] = useState(false);
+    const [profileData1, setProfileData1] = useState<any>();
+    const [profileData2, setProfileData2] = useState<any>();
+    const [profileData3, setProfileData3] = useState<any>();
+    const [profileData4, setProfileData4] = useState<any>();
+    const [profileData5, setProfileData5] = useState<any>();
+    const [profileData6, setProfileData6] = useState<any>();
 
     const [category, setCat] = useState<string>();
 
+    // Update user jadi freelancer
     const updateType = () => {
         console.log(props.docRef)
         console.log(postData)
@@ -146,25 +153,55 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
 
         const db = firebase.firestore();
         db.collection('users').doc(props.docRef).set({
-            email: props.userDataEmail,
             fee: 0.1,
             star: 0,
             category: category,
-            name: props.userDataName,
-            photo: props.userDataPhoto,
             type: "freelancer",
             job: postData,
             price: postData2
-        }).then(() => {
+        }, { merge: true }).then(() => {
+            console.log('success')
+        }).catch(() => {
+            console.log("error")
+        }).finally(() => {
+            setShowModal(false);
+            window.location.reload();
+        })
+    }
+
+    // default value untuk profile data (props kedalam useState)
+    useEffect(() => {
+        setProfileData1(props.userDataName);
+        setProfileData2(props.bio);
+        setProfileData3(props.portofolio);
+        setProfileData4(props.location);
+        setProfileData5(props.userDataJob);
+        setProfileData6(props.userDataCategory);
+    }, [props]);
+
+    // update profile user
+    const updateProfile = () => {
+        const db = firebase.firestore();
+        db.collection('users').doc(props.docRef).set({
+            name: profileData1 === null ? props.userDataName : profileData1,
+            bio: profileData2 === null ? '' : profileData2,
+            portofolio: profileData3 === null ? '' : profileData3,
+            location: profileData4 === null ? '' : profileData4,
+            job: profileData5 === null ? props.userDataJob : profileData5,
+            category: profileData6 === null ? props.userDataCategory : profileData6
+        }, { merge: true }).then(() => {
             console.log('success')
 
         }).catch(() => {
             console.log("error")
+        }).finally(() => {
+            setShowModal(false);
+            window.location.reload();
         })
-
-        setShowModal(false)
-
     }
+
+
+
     return (
         <div className="ion-padding">
             {/* Bio */}
@@ -183,15 +220,17 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
                 <h2>Location</h2>
                 <p><IonIcon icon={location} style={{ marginRight: "1rem" }} />{props.location === undefined ? 'Tambahkan lokasi' : props.location}</p>
             </div>
+            {/* Settings  */}
             <div className="ion-margin-top about-section bordered">
                 <h2>Setting</h2>
+                {/* modal untuk daftar freelancer */}
                 <IonModal isOpen={showModal} cssClass='modal-class' backdropDismiss={false}>
                     <div className="form-inputs">
                         <div className="ion-padding">
                             <p className="form-name">Job<span style={{ color: 'red' }}>*</span></p>
                             <IonInput placeholder="Job name" className="form-input" style={{ color: "gray" }} value={postData} onIonChange={(e: any) => setPostData(e.target.value)}></IonInput>
 
-                            <p className="form-name">Price<span style={{ color: 'red' }}>*</span></p>
+                            <p className="form-name">Price (Jt)<span style={{ color: 'red' }}>*</span></p>
                             <IonInput placeholder="Your price" className="form-input" style={{ color: "gray" }} value={postData2} onIonChange={(e: any) => setPostData2(e.target.value)} type="number"></IonInput>
 
                             <p className="form-name">Category<span style={{ color: 'red' }}>*</span></p>
@@ -209,9 +248,47 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
                             <IonButton onClick={() => setShowModal(false)} className="modal-btn">Cancel</IonButton>
                         </div>
                     </div>
-
                 </IonModal>
-                <IonButton className="summary-button ion-margin-bottom" onClick={() => setShowModal(true)}>Start Freelance</IonButton>
+                {props.userDataType !== 'freelancer' &&
+                    <IonButton className="summary-button ion-margin-bottom" onClick={() => setShowModal(true)}>Start Freelance</IonButton>
+                }
+                {/* modal untuk edit aboutme */}
+                <IonModal isOpen={editModal} cssClass='modal-class' backdropDismiss={false}>
+                    <div className="form-inputs" style={{overflow:'scroll'}}>
+                        <IonList className="ion-padding">
+                            <p className="form-name">Nama<span style={{ color: 'red' }}>*</span></p>
+                            <IonInput placeholder="Full Name" className="form-input" style={{ color: "gray" }} value={profileData1} onIonChange={(e: any) => setProfileData1(e.target.value)}></IonInput>
+
+                            <p className="form-name">Biodata<span style={{ color: 'red' }}>*</span></p>
+                            <IonInput placeholder="Biodata kamu" className="form-input" style={{ color: "gray" }} value={profileData2} onIonChange={(e: any) => setProfileData2(e.target.value)}></IonInput>
+
+                            <p className="form-name">Portofolio<span style={{ color: 'red' }}>*</span></p>
+                            <IonInput placeholder="Link website pribadi atau portofolio" className="form-input" style={{ color: "gray" }} value={profileData3} onIonChange={(e: any) => setProfileData3(e.target.value)}></IonInput>
+
+                            <p className="form-name">Location<span style={{ color: 'red' }}>*</span></p>
+                            <IonInput placeholder="Kota, Negara" className="form-input" style={{ color: "gray" }} value={profileData4} onIonChange={(e: any) => setProfileData4(e.target.value)}></IonInput>
+
+                            <p className="form-name">Jobs Desc<span style={{ color: 'red' }}>*</span></p>
+                            <IonInput placeholder="Jobs" className="form-input" style={{ color: "gray" }} value={profileData5} onIonChange={(e: any) => setProfileData5(e.target.value)}></IonInput>
+                            
+                            <p className="form-name">Jobs Category<span style={{ color: 'red' }}>*</span></p>
+                            <IonSelect value={profileData6} placeholder="Select category" onIonChange={e => setProfileData6(e.detail.value)}>
+                                <IonSelectOption value="Design">Design</IonSelectOption>
+                                <IonSelectOption value="Programming">Programming</IonSelectOption>
+                                <IonSelectOption value="Marketing">Marketing</IonSelectOption>
+                                <IonSelectOption value="Videography">Videography</IonSelectOption>
+                                <IonSelectOption value="Photography">Photography</IonSelectOption>
+                                <IonSelectOption value="T-shirt Design">T-shirt Design</IonSelectOption>
+                            </IonSelect>
+
+                        </IonList>
+                        <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem", marginBottom:"1rem" }}>
+                            <IonButton className="modal-btn" onClick={() => updateProfile()} style={{ marginRight: "1rem" }} disabled={(profileData1 === props.userDataName && profileData2 === props.bio && profileData3 === props.portofolio && profileData4 === props.location && profileData5 === props.userDataJob && profileData6 === props.userDataCategory) ? true : false}>Save</IonButton>
+                            <IonButton onClick={() => setEditModal(false)} className="modal-btn">Cancel</IonButton>
+                        </div>
+                    </div>
+                </IonModal>
+                <IonButton className="summary-button ion-margin-bottom" onClick={() => setEditModal(true)}>Edit Profile</IonButton>
             </div>
         </div>
     )
@@ -261,9 +338,8 @@ const Profile: React.FC = () => {
         });
     }, []);
 
-
+    //data freelancer
     useEffect(() => {
-        //data freelancer
         if (userData.type !== 'user') {
             firebase
                 .firestore()
@@ -280,9 +356,9 @@ const Profile: React.FC = () => {
         }
     }, [])
 
-
+    //data reviewer
     useEffect(() => {
-        //data reviewer
+
         if (userData.type !== 'user') {
             firebase
                 .firestore()
@@ -319,22 +395,22 @@ const Profile: React.FC = () => {
                             <IonCol style={{ marginLeft: "1.8rem" }}>
                                 <div>
                                     <h1 className="ion-no-margin profile-name">{userData.name}</h1>
+                                    {/* Jobs dan rating */}
                                     {userData.type !== 'user' &&
                                         <div>
-                                            <p className="ion-no-margin profile-desc">{data.job}</p>
+                                            <p className="ion-no-margin profile-desc">{userData.job}</p>
                                             <div className="profile-reputasi">
-                                                {data.length !== 0 && data.length !== undefined &&
-                                                    [...Array(data.star)].map((_, i) =>
+                                                {userData.length !== 0 && userData.star !== undefined &&
+                                                    [...Array(userData.star)].map((_, i) =>
                                                         <IonIcon icon={star} key={i} />
                                                     )
                                                 }
-                                                {data.length !== 0 && data.length !== undefined &&
-                                                    [...Array(5 - data.star)].map((_, i) =>
+                                                {userData.length !== 0 && userData.star !== undefined &&
+                                                    [...Array(5 - userData.star)].map((_, i) =>
                                                         <IonIcon icon={starOutline} key={5 - i} />
                                                     )
                                                 }
-                                                <IonText className="profile-rating"> {data.star}.0</IonText>
-                                                <IonText className="profile-rating"> ({data.review} Review)</IonText>
+                                                <IonText className="profile-rating"> {userData.star}.0</IonText>
                                             </div>
                                         </div>
                                     }
@@ -368,7 +444,7 @@ const Profile: React.FC = () => {
                         'review': <ReviewSegment data={dataReviewer} />,
                         'order': <OrderSegment data={dataReviewer} />,
                         'project': <ProjectSegment data={dataReviewer} />,
-                        'about': <AboutSegment bio={userData.bio} location={userData.location} portofolio={userData.portofolio} docRef={userDocRef} userDataName={userData.name} userDataEmail={userData.email} userDataPhoto={userData.photo} />
+                        'about': <AboutSegment bio={userData.bio} location={userData.location} portofolio={userData.portofolio} docRef={userDocRef} userDataName={userData.name} userDataPhoto={userData.photo} userDataType={userData.type} userDataJob={userData.job} userDataCategory={userData.category} />
                     }[page]
                 }
             </IonContent>
