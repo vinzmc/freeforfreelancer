@@ -369,7 +369,7 @@ const Profile: React.FC = () => {
                         <IonRow>
                             <IonCol size="2.2" className=" ion-padding">
                                 <IonAvatar className="profile-avatar">
-                                    <img src={userData.photo = null ? profilePlaceHolder : userData.photo} />
+                                    <img src={userData.photo = null ? profilePlaceHolder : userData.photo} onClick={()=>{window.open('https://myaccount.google.com/profile/photo/edit?pli=1')}}/>
                                 </IonAvatar>
                             </IonCol>
 
