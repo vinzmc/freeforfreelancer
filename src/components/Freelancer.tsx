@@ -23,14 +23,21 @@ const Freelancer: React.FC<{ name: string, job: string, star: number, review: nu
                         <IonIcon icon={star} />
                         <IonIcon icon={star} />
                     </div> */}
-                    <h2 className="review-qty">
-                        {[...Array(props.star)].map((_, i) =>
-                            <IonIcon icon={star} key={i} />
-                        )}
-                        {[...Array(5 - props.star)].map((_, i) =>
-                            <IonIcon icon={starOutline} key={5 - i} />
-                        )} ({props.review} reviews)
-                    </h2>
+                    {props.star !== 0 &&
+                        <h2 className="review-qty">
+                            {[...Array(props.star)].map((_, i) =>
+                                <IonIcon icon={star} key={i} />
+                            )}
+                            {[...Array(5 - props.star)].map((_, i) =>
+                                <IonIcon icon={starOutline} key={5 - i} />
+                            )} ({props.review} reviews)
+                        </h2>
+                    }
+                    {props.star === 0 &&
+                        <div style={{fontSize:'xx-small', fontWeight:'lighter'}}>
+                            Belum ada review
+                        </div>
+                    }
                 </div>
             </div>
 
