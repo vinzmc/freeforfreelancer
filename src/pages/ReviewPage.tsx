@@ -19,7 +19,7 @@ const ReviewPage: React.FC = () => {
                 <div className="summary-box ion-margin">
                     <div className="ion-text-center">
                         <div>
-                            <p>Whats your review?</p>
+                            <p>What is your review?</p>
                         </div>
                         {[...Array(5)].map((star, i) => {
                             const ratingValue = i + 1;
