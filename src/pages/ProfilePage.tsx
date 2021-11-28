@@ -37,8 +37,10 @@ const ReviewSegment: React.FC<{ data: any[] }> = (props) => {
                 </div>
             )}
             {props.data.length === 0 &&
-                <div>
-                    Belum ada Review
+                <div className="container">
+                    <div className="center">
+                        Belum ada Review
+                    </div>
                 </div>
             }
         </div>
@@ -71,8 +73,11 @@ const OrderSegment: React.FC<{ data: any[] }> = (props) => {
                 </div>
             )}
             {props.data.length === 0 &&
-                <div>
-                    Belum ada Order
+                <div className="container">
+                    <div className="center">
+                        <div>Belum Ada Order</div>
+                        <div><IonButton routerLink="/Tabs/SearchPage" className="ion-padding form-button">Mulai Order</IonButton></div>
+                    </div>
                 </div>
             }
         </div>
@@ -116,8 +121,10 @@ const ProjectSegment: React.FC<{ data: any[] }> = (props) => {
                 </div>
             )}
             {props.data.length === 0 &&
-                <div>
-                    Belum ada Project
+                <div className="container">
+                    <div className="center">
+                        Belum ada Project
+                    </div>
                 </div>
             }
         </div>
