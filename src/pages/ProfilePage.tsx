@@ -420,11 +420,11 @@ const Profile: React.FC = () => {
                     <IonSegmentButton value="order">
                         <IonLabel>Orders</IonLabel>
                     </IonSegmentButton>
-                    {userData.type !== 'user' &&
+                    {/* {userData.type !== 'user' &&
                         <IonSegmentButton value="project">
                             <IonLabel>Projects</IonLabel>
                         </IonSegmentButton>
-                    }
+                    } */}
                     <IonSegmentButton value="about">
                         <IonLabel>About</IonLabel>
                     </IonSegmentButton>
@@ -434,7 +434,7 @@ const Profile: React.FC = () => {
                     {
                         'review': <ReviewSegment data={dataReviewer} />,
                         'order': <OrderSegment data={dataReviewer} />,
-                        'project': <ProjectSegment data={dataReviewer} />,
+                        // 'project': <ProjectSegment data={dataReviewer} />,
                         'about': <AboutSegment bio={userData.bio} location={userData.location} portofolio={userData.portofolio} docRef={userDocRef} userDataName={userData.name} userDataPhoto={userData.photo} userDataType={userData.type} userDataJob={userData.job} userDataCategory={userData.category} />
                     }[page]
                 }

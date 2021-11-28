@@ -274,9 +274,9 @@ const FreelancerDetail: React.FC = () => {
                     <IonSegmentButton value="review" >
                         <IonLabel>Review</IonLabel>
                     </IonSegmentButton>
-                    <IonSegmentButton value="project">
+                    {/* <IonSegmentButton value="project">
                         <IonLabel>Projects</IonLabel>
-                    </IonSegmentButton>
+                    </IonSegmentButton> */}
                     <IonSegmentButton value="about">
                         <IonLabel>About</IonLabel>
                     </IonSegmentButton>
@@ -286,7 +286,7 @@ const FreelancerDetail: React.FC = () => {
                 {
                     {
                         'review': <ReviewSegment data={dataReviewer} />,
-                        'project': <ProjectSegment data={dataReviewer} />,
+                        // 'project': <ProjectSegment data={dataReviewer} />,
                         'about': <AboutSegment bio={data.bio} location={data.location} portofolio={data.portofolio} />
 
 
