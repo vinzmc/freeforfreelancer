@@ -48,10 +48,10 @@ const LoginPage: React.FC = () => {
     }
 
     const LoginUser = async (result: firebase.auth.UserCredential) => {
+        const db = firebase.firestore();
+        const user = result.user;
         //input data kalau user baru
         if (result.additionalUserInfo?.isNewUser) {
-            const db = firebase.firestore();
-            const user = result.user;
             await db.collection("users")
                 .doc(user?.uid).set({
                     name: user?.displayName,
@@ -59,6 +59,17 @@ const LoginPage: React.FC = () => {
                     photo: user?.photoURL,
                     type: 'user'
                 })
+                .then(() => {
+                    console.log("Document successfully written!");
+                })
+                .catch((error) => {
+                    console.error("Error writing document: ", error);
+                });
+        } else { //update profile ketika login
+            await db.collection("users")
+                .doc(user?.uid).set({
+                    photo: user?.photoURL
+                }, { merge: true })
                 .then(() => {
                     console.log("Document successfully written!");
                 })

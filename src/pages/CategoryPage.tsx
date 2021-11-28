@@ -14,8 +14,8 @@ const CategoryPage: React.FC = (props) => {
     useEffect(() => {
         firebase
             .firestore()
-            .collection('freelancer')
-            .where('kategori', '==', uriData.id)
+            .collection('users')
+            .where('category', '==', uriData.id)
             .onSnapshot((snapshot) => {
                 var newData = snapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -52,7 +52,7 @@ const CategoryPage: React.FC = (props) => {
                 <IonList>
                     {renderedData.map((doc: any) =>
                         <div key={doc.id} onClick={() => cardOnClick(doc.id)}>
-                            <Freelancer key={doc.id} name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} />
+                            <Freelancer key={doc.id} name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.photo} />
                         </div>
                     )
                     }

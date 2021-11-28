@@ -308,7 +308,6 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
 }
 
 const Profile: React.FC = () => {
-    const [data, setData] = useState<any>([]);
     const [userData, setUserData] = useState<any>([]);
     const [dataReviewer, setDataReviewer] = useState<any>([]);
     const [page, setPage] = useState("about");
@@ -351,24 +350,6 @@ const Profile: React.FC = () => {
         });
     }, []);
 
-    //data freelancer
-    useEffect(() => {
-        if (userData.type !== 'user') {
-            firebase
-                .firestore()
-                .collection('freelancer')
-                .doc(uriData.id)
-                .onSnapshot((snapshot) => {
-                    const newData = {
-                        id: snapshot.id,
-                        ...snapshot.data()
-                    }
-
-                    setData(newData);
-                })
-        }
-    }, [])
-
     //data reviewer
     useEffect(() => {
 
@@ -401,7 +382,7 @@ const Profile: React.FC = () => {
                         <IonRow>
                             <IonCol size="2.2" className=" ion-padding">
                                 <IonAvatar className="profile-avatar">
-                                    <img src={userData.photo = null ? profilePlaceHolder : userData.photo} />
+                                    <img src={userData.photo = null ? profilePlaceHolder : userData.photo} onClick={()=>{window.open('https://myaccount.google.com/profile/photo/edit?pli=1')}}/>
                                 </IonAvatar>
                             </IonCol>
 

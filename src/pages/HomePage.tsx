@@ -48,8 +48,8 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     firebase
       .firestore()
-      .collection('freelancer')
-      .where('name', '!=', 'Sergio Nathaniel')//temporary solution untuk auth
+      .collection('users')
+      .where('type', '==', 'freelancer')
       .onSnapshot((snapshot) => {
         const newData = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -120,7 +120,7 @@ const HomePage: React.FC = () => {
           <h2 className="featured-freelancer-title">Featured Freelancers</h2>
           {data.slice(0, 4).map((doc: any) =>
             <div onClick={() => redirectWithId('Freelancer', doc.id)} key={doc.id}>
-              <Freelancer name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.pic} />
+              <Freelancer name={doc.name} job={doc.job} star={doc.star} review={doc.review} price={doc.price + 'M'} pic={doc.photo} />
             </div>
           )}
         </div>
