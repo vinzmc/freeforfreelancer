@@ -46,9 +46,9 @@ const App: React.FC = () => (
         <Tabs/>
 
         {/*dummy untuk database  */}
-        <Route exact path="/DummyPage">
+        {/* <Route exact path="/DummyPage">
           <Dummy />
-        </Route>
+        </Route> */}
         {/* ProfilePage */}
         <Route exact path="/ProfilePage/:id?">
           <ProfilePage />
