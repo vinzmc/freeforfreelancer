@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">freeforfreelancer</string>
+    <string name="title_activity_main">freeforfreelancer</string>
+    <string name="package_name">id.umn.ac.freeforfreelancer</string>
+    <string name="custom_url_scheme">id.umn.ac.freeforfreelancer</string>
+</resources>
