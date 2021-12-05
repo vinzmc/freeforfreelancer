@@ -1,8 +1,15 @@
-import { IonPage, IonContent, IonInput, IonButton, IonApp, IonIcon } from "@ionic/react"
-import { Link, useHistory } from "react-router-dom";
+import { useEffect } from "react";
+import { IonContent, IonButton, IonApp, IonIcon } from "@ionic/react"
+import { Device, DeviceInfo } from "@capacitor/device";
+import { useHistory } from "react-router-dom";
 import { logoGoogle } from 'ionicons/icons';
 import firebase from "firebase/app";
 import "firebase/auth";
+import { User } from 'firebase/app'
+import { cfaSignIn, GoogleSignInResult } from 'capacitor-firebase-auth';
+
+
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 //assets
 import logo3F from '../assets/logo.png'
@@ -10,13 +17,30 @@ import logo3F from '../assets/logo.png'
 //theme
 import './LoginPage.css';
 
+
 const LoginPage: React.FC = () => {
     const history = useHistory();
+
+    //signin google bukan firebase
+    // const loginGoogle = async () => {
+    //     try {
+    //         const deviceInfo = await Device.getInfo();
+
+    //         if ((deviceInfo as unknown as DeviceInfo).platform === "web") {
+    //             console.log("Web");
+    //             await GoogleAuth.init();
+    //         }
+    //     }
+    //     finally{
+    //         const googleUser = (await GoogleAuth.signIn())
+    //         console.log(googleUser.authentication);
+    //     }
+    // }
 
     const SignInWithFirebase = () => {
         var google_provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth()
-            .signInWithPopup(google_provider)
+            .signInWithRedirect(google_provider)
             .then((result) => {
                 /** @type {firebase.auth.OAuthCredential} */
                 // var credential = result.credential as firebase.auth.OAuthCredential;;
@@ -26,7 +50,7 @@ const LoginPage: React.FC = () => {
                 // // The signed-in user info.
                 // var user = result.user;
 
-                LoginUser(result)
+                LoginUser(result!)
                     .finally(
                         () => {
                             //redirect to tabs
@@ -47,11 +71,28 @@ const LoginPage: React.FC = () => {
             });
     }
 
-    const LoginUser = async (result: firebase.auth.UserCredential) => {
+    //sign in with plugin
+    const SignInPlugin = () => {
+        cfaSignIn('google.com')
+            .subscribe((
+                user: User) => LoginUser(user).finally(
+                    () => {
+                        //redirect to tabs
+                        var url = '/Tabs';
+                        history.push(url);
+                        window.location.href = url;
+                    }
+                )
+            );
+
+    }
+
+    // handle hasil login
+    const LoginUser = async (user: User) => {
         const db = firebase.firestore();
-        const user = result.user;
-        //input data kalau user baru
-        if (result.additionalUserInfo?.isNewUser) {
+        const result = db.collection('users').doc(user.uid).get();
+
+        if ((await result).exists) {
             await db.collection("users")
                 .doc(user?.uid).set({
                     name: user?.displayName,
@@ -88,7 +129,7 @@ const LoginPage: React.FC = () => {
                     <h1>FreeForFreelancer</h1>
                     <p>Free To Freelance, Free To Get User</p>
                     <h2 className="title">Sign In</h2>
-                    <IonButton onClick={SignInWithFirebase} fill="outline">
+                    <IonButton onClick={SignInPlugin} fill="outline">
                         <IonIcon size="large" icon={logoGoogle}></IonIcon>
                     </IonButton>
                 </div>

@@ -4,6 +4,10 @@
 		"classpath": "com.capacitorjs.plugins.app.AppPlugin"
 	},
 	{
+		"pkg": "@capacitor/device",
+		"classpath": "com.capacitorjs.plugins.device.DevicePlugin"
+	},
+	{
 		"pkg": "@capacitor/haptics",
 		"classpath": "com.capacitorjs.plugins.haptics.HapticsPlugin"
 	},
@@ -14,5 +18,17 @@
 	{
 		"pkg": "@capacitor/status-bar",
 		"classpath": "com.capacitorjs.plugins.statusbar.StatusBarPlugin"
+	},
+	{
+		"pkg": "@codetrix-studio/capacitor-google-auth",
+		"classpath": "com.codetrixstudio.capacitor.GoogleAuth.GoogleAuth"
+	},
+	{
+		"pkg": "capacitor-dynamic-links",
+		"classpath": "joshuva.links.dynamic.firebase.capacitor.CapacitorDynamicLinks"
+	},
+	{
+		"pkg": "capacitor-firebase-auth",
+		"classpath": "com.baumblatt.capacitor.firebase.auth.CapacitorFirebaseAuth"
 	}
 ]

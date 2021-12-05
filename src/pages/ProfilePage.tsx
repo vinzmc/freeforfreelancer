@@ -9,6 +9,7 @@ import profilePlaceHolder from '../assets/profilePlaceHolder.png'
 
 //theme
 import './ProfilePage.css';
+import { cfaSignOut } from 'capacitor-firebase-auth';
 
 const OrderSegment: React.FC<{ data: any[] }> = (props) => {
     const history = useHistory();
@@ -174,6 +175,7 @@ const AboutSegment: React.FC<{ bio: any, portofolio: any, location: any, docRef:
     const [category, setCat] = useState<string>();
 
     const signout = () => {
+        cfaSignOut().subscribe()
         firebase.auth().signOut().then(() => {
             window.location.replace('LoginPage.tsx');
         }).catch((error) => {

@@ -38,7 +38,6 @@ import CheckoutPage from './pages/CheckoutPage';
 import OrderDetail from './pages/OrderDetail';
 import ReviewPage from './pages/ReviewPage';
 
-
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>

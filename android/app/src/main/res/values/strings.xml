@@ -4,4 +4,5 @@
     <string name="title_activity_main">freeforfreelancer</string>
     <string name="package_name">id.umn.ac.freeforfreelancer</string>
     <string name="custom_url_scheme">id.umn.ac.freeforfreelancer</string>
+    <string name="server_client_id">162291917995-1h019nsidnbe79vrr5sjsi51882k3m71.apps.googleusercontent.com</string>
 </resources>

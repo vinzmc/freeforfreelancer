@@ -21,6 +21,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    signingConfigs{
+        release{
+            storeFile file("keystore.jks")
+            storePassword 'KeysStorePasswordIsLong'
+            keyAlias '3fkey0'
+            keyPassword 'KeysStorePasswordIsLong'
+        }
+        debug{
+            storeFile file("keystore.jks")
+            storePassword 'KeysStorePasswordIsLong'
+            keyAlias '3fkey0'
+            keyPassword 'KeysStorePasswordIsLong'
+        }
+    }
 }
 
 repositories {
@@ -30,6 +44,10 @@ repositories {
 }
 
 dependencies {
+    implementation platform('com.google.firebase:firebase-bom:29.0.1')
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
+    implementation 'com.google.firebase:firebase-core:9.6.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation project(':capacitor-android')
@@ -40,6 +58,7 @@ dependencies {
 }
 
 apply from: 'capacitor.build.gradle'
+apply plugin: 'com.google.gms.google-services'
 
 try {
     def servicesJSON = file('google-services.json')
@@ -49,3 +68,4 @@ try {
 } catch(Exception e) {
     logger.warn("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
 }
+

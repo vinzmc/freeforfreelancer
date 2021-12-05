@@ -2,5 +2,30 @@
 	"appId": "id.umn.ac.freeforfreelancer",
 	"appName": "freeforfreelancer",
 	"webDir": "build",
-	"bundledWebRuntime": false
+	"bundledWebRuntime": false,
+	"plugins": {
+		"GoogleAuth": {
+			"scopes": [
+				"profile",
+				"email"
+			],
+			"serverClientId": "162291917995-3sl6a1ivon1kbt2bptqphk0nhegucu79.apps.googleusercontent.com",
+			"forceCodeForRefreshToken": true
+		},
+		"CapacitorFirebaseAuth": {
+			"providers": [
+				"google.com"
+			],
+			"languageCode": "en",
+			"nativeAuth": true,
+			"properties": {
+			},
+			"permissions": {
+				"google": [
+					"profile",
+					"https://www.googleapis.com/auth/drive"
+				]
+			}
+		}
+	}
 }
