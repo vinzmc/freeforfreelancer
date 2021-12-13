@@ -7,14 +7,15 @@
 - ### React
   - React Router v6
   - React Hook
+  - React Icon
 - ### Firebase
   - Firestore
   - Storage
   - Authentication
 - ### Ionic
+- ### Capacitor
+- ### Community Package
+  - Capacitor React-Firebase Auth
 
-
-
-
-# Initialize Project
-npm i
+# Poster
+![FreeForFreelancer](./src/assets/poster.png "Application Poster")
